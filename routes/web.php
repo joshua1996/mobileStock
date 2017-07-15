@@ -17,6 +17,13 @@
 
 Route::get('/', 'mainController@home')->name('home');
 Route::get('/salesHistory', 'mainController@salesHistory')->name('salesHistory');
+Route::get('/supply', 'mainController@supply')->name('supply');
+Route::get('/supplyHistory', 'mainController@supplyHistory')->name('supplyHistory');
+
+
 
 Route::post('/sales', 'mainController@sales')->name('sales');
+Route::post('/salesSearchDate', 'mainController@salesSearchDate')->name('salesSearchDate');
+Route::post('/supply', 'mainController@supplyP')->name('supplyP');
+
 
