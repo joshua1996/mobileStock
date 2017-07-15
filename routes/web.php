@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/', 'mainController@home')->name('home');
+Route::get('/salesHistory', 'mainController@salesHistory')->name('salesHistory');
+
+Route::post('/sales', 'mainController@sales')->name('sales');
+
