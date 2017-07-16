@@ -1,5 +1,12 @@
 @extends('layout.header')
 @section('body')
+    <div>
+        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+document.getElementById('logout').submit();">Log Out</a>
+        <form id="logout" action="{{ route('logout') }}" method="post">
+            {{ csrf_field() }}
+        </form>
+    </div>
 
     <div>
         <a href="{{ route('home') }}">Home</a>

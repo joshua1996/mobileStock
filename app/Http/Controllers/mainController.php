@@ -11,6 +11,11 @@ use Illuminate\Http\Response;
 
 class mainController extends Controller
 {
+    public function login()
+    {
+        return view('user.login');
+    }
+
     public function home()
     {
         $stock = new stockModel();
@@ -80,5 +85,9 @@ class mainController extends Controller
         $supply = new supplyModel();
         $supplyR = $supply->all();
         return view('user.supply.supplyHistory', ['supply' => $supplyR]);
+    }
+
+    public function admin(){
+
     }
 }

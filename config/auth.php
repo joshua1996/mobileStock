@@ -45,7 +45,19 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admin',
+        ],
+
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'user',
+        ],
     ],
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -68,6 +80,16 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\adminModel::class,
+        ],
+
+        'user' => [
+            'driver' => 'eloquent',
+            'model' => App\userModel::class,
         ],
 
         // 'users' => [
