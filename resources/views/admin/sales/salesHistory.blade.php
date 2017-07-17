@@ -1,16 +1,16 @@
-@extends('layout.sideBar')
+@extends('layout.sideBarAdmin')
 @section('section')
-
+    {{--<form action="{{ route('salesSearchDate') }}" method="post">--}}
     <input type="text" name="searchDate" id="searchDate">
     <input type="text" name="searchDateEnd" id="searchDateEnd">
     <button id="searchBtn">Search</button>
+    {{--</form>--}}
 
     <table>
         <thead>
         <tr>
             <th>No</th>
-            <th>Person</th>
-            <th>Stock Name</th>
+            <th>Name</th>
             <th>Quantity</th>
             <th>Price</th>
             <th>Time</th>
@@ -18,12 +18,11 @@
         </tr>
         </thead>
         <tbody id="tableBody">
-        @foreach($supply as $index=>$value)
+        @foreach($sales as $index=>$value)
 
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $value->person }}</td>
-                <td>{{ $value->stockName }}</td>
+                <td>{{ $value->name }}</td>
                 <td>{{ $value->quantity }}</td>
                 <td>{{ $value->price }}</td>
                 <td>{{ $value->dateTime }}</td>
@@ -34,7 +33,7 @@
     </table>
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('#searchDate').datepicker();
             $('#searchDate').datepicker('option', 'dateFormat', 'yy-mm-dd');
             $("#searchDate").datepicker( "setDate" , new Date() );
@@ -53,19 +52,22 @@
                 };
                 console.log(data);
                 $.ajax({
-                    url:'{{ route('supplySearchDate') }}',
+                    url:'{{ route('salesSearchDate') }}',
                     type: 'post',
                     data: data,
                     dataType: 'json',
                     success: function (data) {
                         $('#tableBody').empty();
                         $.each(data.data, function(index, value){
-                            $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.person +'</td><td>'+ value.stockName +'</td><td>'+ value.quantity +'</td><td>'+ value.price +'</td><td>'+value.dateTime+'</td><td>'+value.userID+'</td></tr>')
+                            $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.name +'</td><td>'+ value.quantity +'</td><td>'+ value.price +'</td><td>'+ value.dateTime +'</td><td>'+ value.userID +'</td></tr>')
                         });
 
                     }
                 });
             });
+
+
+            {{--});--}}
         });
     </script>
 @stop

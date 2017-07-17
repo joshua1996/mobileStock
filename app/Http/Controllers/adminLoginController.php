@@ -11,7 +11,7 @@ class adminLoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/admin/sales';
 
     public function __construct()
     {

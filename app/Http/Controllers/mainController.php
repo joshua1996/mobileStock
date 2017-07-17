@@ -8,6 +8,7 @@ use App\salesModel;
 use App\supplyModel;
 use App\supplyPersonModel;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class mainController extends Controller
 {
@@ -33,7 +34,8 @@ class mainController extends Controller
                 'name' => $r->input('stock')[$i],
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
-                'dateTime' => $datetime
+                'dateTime' => $datetime,
+                'userID' => Auth::guard('user')->user()->userID
             ]);
         }
         return redirect()->route('home');
@@ -74,7 +76,8 @@ class mainController extends Controller
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
-                'person' => $r->input('person')
+                'person' => $r->input('person'),
+                'userID' => Auth::guard('user')->user()->userID
             ]);
         }
         return redirect()->route('supply');
@@ -85,6 +88,14 @@ class mainController extends Controller
         $supply = new supplyModel();
         $supplyR = $supply->all();
         return view('user.supply.supplyHistory', ['supply' => $supplyR]);
+    }
+
+    public function supplySearchDate(Request $r)
+    {
+        $supply = new supplyModel();
+        $supplyR = $supply->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])->get();
+        return Response()->json(['data' =>$supplyR]);
+        // return view('user.sales.salesHistory', ['sales'=> $salesR]);
     }
 
     public function admin(){

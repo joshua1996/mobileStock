@@ -1,6 +1,7 @@
 @extends('layout.header')
 @section('body')
     <div>
+        <a href="">{{ Auth::guard('user')->user()->username   }}</a>
         <a href="{{ route('logout') }}" onclick="event.preventDefault();
 document.getElementById('logout').submit();">Log Out</a>
         <form id="logout" action="{{ route('logout') }}" method="post">

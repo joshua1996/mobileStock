@@ -15,39 +15,53 @@
 //    return view('welcome');
 //});
 
-//user get
 
-Route::get('/salesHistory', 'mainController@salesHistory')->name('salesHistory');
-Route::get('/supply', 'mainController@supply')->name('supply');
-Route::get('/supplyHistory', 'mainController@supplyHistory')->name('supplyHistory');
+
 
 Route::group(['middleware' => 'user'], function() {
+    //
     Route::get('/login', 'mainController@login')->name('login');
+    //
+    Route::post('/login', 'userLoginController@login')->name('loginP');
+
+
 });
 
 Route::group(['middleware' => 'notUser'], function (){
+    //
     Route::get('/', 'mainController@home')->name('home');
+    Route::get('/salesHistory', 'mainController@salesHistory')->name('salesHistory');
+    Route::get('/supply', 'mainController@supply')->name('supply');
+    Route::get('/supplyHistory', 'mainController@supplyHistory')->name('supplyHistory');
+
+    //
+    Route::post('/logout', 'userLoginController@logout')->name('logout');
+    Route::post('/sales', 'mainController@sales')->name('sales');
+    Route::post('/salesSearchDate', 'mainController@salesSearchDate')->name('salesSearchDate');
+    Route::post('/supply', 'mainController@supplyP')->name('supplyP');
+    Route::post('/supplySearchDate', 'mainController@supplySearchDate')->name('supplySearchDate');
+
 });
 
-//user post
-Route::post('/sales', 'mainController@sales')->name('sales');
-Route::post('/salesSearchDate', 'mainController@salesSearchDate')->name('salesSearchDate');
-Route::post('/supply', 'mainController@supplyP')->name('supplyP');
-Route::post('/login', 'userLoginController@login')->name('loginP');
-Route::post('/logout', 'userLoginController@logout')->name('logout');
 
 
-//admin get
 Route::group(['middleware' => 'admin'], function() {
+    //
     Route::get('/admin/login', 'adminLoginController@adminLogin');
+    //
+    Route::post('/admin/login', 'adminLoginController@login')->name('adminLoginP');
 
 });
 Route::group(['middleware' => 'notAdmin'], function (){
-    Route::get('/admin/sales', 'adminController@sales');
+    //
+    Route::get('/admin/sales', 'adminController@sales')->name('adminSales');
+    Route::get('/admin/salesHistory', 'adminController@salesHistory')->name('salesHistoryAdmin');
+    //
+    Route::post('/admin/logout', 'adminLoginController@logout')->name('adminLogout');
+    Route::post('/admin/sales', 'adminController@adminSalesP')->name('adminSalesP');
 });
 
 
-//admin post
-Route::post('/admin/login', 'adminLoginController@login')->name('adminLoginP');
+
 
 

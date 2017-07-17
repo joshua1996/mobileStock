@@ -1,7 +1,6 @@
 @extends('layout.sideBar')
 @section('section')
     {{--<form action="{{ route('salesSearchDate') }}" method="post">--}}
-        {{ csrf_field() }}
         <input type="text" name="searchDate" id="searchDate">
     <input type="text" name="searchDateEnd" id="searchDateEnd">
         <button id="searchBtn">Search</button>
@@ -15,6 +14,7 @@
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Time</th>
+                <th>User ID</th>
             </tr>
         </thead>
         <tbody id="tableBody">
@@ -26,6 +26,7 @@
                     <td>{{ $value->quantity }}</td>
                     <td>{{ $value->price }}</td>
                     <td>{{ $value->dateTime }}</td>
+                    <td>{{ $value->userID }}</td>
                 </tr>
                 @endforeach
         </tbody>
@@ -58,7 +59,7 @@
                    success: function (data) {
                        $('#tableBody').empty();
                        $.each(data.data, function(index, value){
-                           $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.name +'</td><td>'+ value.quantity +'</td><td>'+ value.price +'</td><td>'+ value.dateTime +'</td></tr>')
+                           $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.name +'</td><td>'+ value.quantity +'</td><td>'+ value.price +'</td><td>'+ value.dateTime +'</td><td>'+ value.userID +'</td></tr>')
                        });
 
                    }
