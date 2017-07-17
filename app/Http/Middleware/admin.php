@@ -18,7 +18,11 @@ class admin
     {
         if (Auth::guard('admin')->check())
         {
+
             return redirect('/admin/sales');
+        }elseif(Auth::guard('user')->check())
+        {
+            return redirect()->route('home');
         }
         return $next($request);
     }

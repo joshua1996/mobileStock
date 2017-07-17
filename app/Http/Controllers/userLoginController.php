@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Session;
 
 class userLoginController extends Controller
 {
@@ -17,6 +18,11 @@ class userLoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function userLogin()
+    {
+        return view('user.login');
+    }
+
     protected function guard()
     {
         return Auth::guard('user');
@@ -25,5 +31,11 @@ class userLoginController extends Controller
     public function username()
     {
         return 'username';
+    }
+
+    public function saveSession()
+    {
+        Session::put('shopID', Auth::guard('user')->user()->shopID);
+       // return true;
     }
 }

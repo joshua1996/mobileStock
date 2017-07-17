@@ -9,18 +9,18 @@ use App\supplyModel;
 use App\supplyPersonModel;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class mainController extends Controller
 {
-    public function login()
-    {
-        return view('user.login');
-    }
+
 
     public function home()
     {
         $stock = new stockModel();
-        $stockR = $stock->all();
+       // $stockR = $stock->all();
+        $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
+       // echo $stockR;
         return view('user.sales.sales', ['stock' => $stockR]);
     }
 

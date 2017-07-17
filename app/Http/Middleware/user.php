@@ -19,6 +19,9 @@ class user
         if (Auth::guard('user')->check())
         {
             return redirect('/');
+        }elseif (Auth::guard('admin')->check())
+        {
+            return redirect()->route('adminSales');
         }
         return $next($request);
     }

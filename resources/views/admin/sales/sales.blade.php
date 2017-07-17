@@ -13,7 +13,6 @@
         <input type="submit" value="Save">
     </form>
     <button class="addList">ADD</button>
-
     <script>
         var stockList = [
             @foreach($stock as $i)

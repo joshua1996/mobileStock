@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Support\Facades\Session;
 
 class adminLoginController extends Controller
 {
@@ -31,5 +31,11 @@ class adminLoginController extends Controller
     public function username()
     {
         return 'adminName';
+    }
+
+    public function saveSession()
+    {
+        Session::put('shopID', Auth::guard('admin')->user()->shopID);
+        // return true;
     }
 }

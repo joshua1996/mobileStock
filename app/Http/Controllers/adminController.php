@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use App\stockModel;
 use App\salesModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class adminController extends Controller
 {
     public function sales()
     {
         $stock = new stockModel();
-        $stockR = $stock->all();
+        $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
         return view('admin.sales.sales',  ['stock' => $stockR]);
     }
 

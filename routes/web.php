@@ -20,7 +20,7 @@
 
 Route::group(['middleware' => 'user'], function() {
     //
-    Route::get('/login', 'mainController@login')->name('login');
+    Route::get('/login', 'userLoginController@userLogin')->name('login');
     //
     Route::post('/login', 'userLoginController@login')->name('loginP');
 
