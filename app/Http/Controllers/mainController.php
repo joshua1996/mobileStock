@@ -44,7 +44,9 @@ class mainController extends Controller
     public function salesHistory()
     {
         $sales = new salesModel();
-        $salesR = $sales->all();
+       // $salesR = $sales->all();
+        $salesR = $sales->where('shopID', '=', Session::get('shopID'))
+            ->whereDate('dateTime', '=', date('Y-m-d'))->get();
         return view('user.sales.salesHistory', ['sales' => $salesR]);
     }
 
@@ -52,7 +54,9 @@ class mainController extends Controller
     {
         $sales = new salesModel();
         //$salesR = $sales->whereDate('dateTime', '=', $r->dateTime)->get();
-        $salesR = $sales->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])->get();
+        $salesR = $sales
+            ->where('shopID', '=', Session::get('shopID'))
+            ->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])->get();
         return Response()->json(['data' =>$salesR]);
        // return view('user.sales.salesHistory', ['sales'=> $salesR]);
     }
@@ -60,9 +64,9 @@ class mainController extends Controller
     public function supply()
     {
         $supplyPerson = new supplyPersonModel();
-        $supplyPersonR = $supplyPerson->all();
+        $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))->get();
         $stock = new stockModel();
-        $stockR = $stock->all();
+        $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
         return view('user.supply.supply', ['supplyPerson' => $supplyPersonR, 'stock' => $stockR]);
     }
 
@@ -70,13 +74,17 @@ class mainController extends Controller
     {
         $datetime = date('Y-m-d H:i:s');
         $supply = new supplyModel();
+        $supplyPerson = new supplyPersonModel();
         foreach ($r->input('stockName') as $i=>$item) {
+            $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))
+                                            ->where('name', '=', $r->input('person'))
+                                            ->first();
             $supply->insert([
                'stockName' => $r->input('stockName')[$i],
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
-                'person' => $r->input('person'),
+                'person' => $supplyPersonR->supplyID,//$r->input('person'),
                 'userID' => Auth::guard('user')->user()->userID
             ]);
         }
