@@ -35,7 +35,8 @@ class mainController extends Controller
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
-                'userID' => Auth::guard('user')->user()->userID
+                'userID' => Auth::guard('user')->user()->userID,
+                'shopID' => Session::get('shopID')
             ]);
         }
         return redirect()->route('home');
@@ -85,7 +86,8 @@ class mainController extends Controller
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
                 'person' => $supplyPersonR->supplyID,//$r->input('person'),
-                'userID' => Auth::guard('user')->user()->userID
+                'userID' => Auth::guard('user')->user()->userID,
+                'shopID' => Session::get('shopID')
             ]);
         }
         return redirect()->route('supply');
@@ -94,19 +96,19 @@ class mainController extends Controller
     public function supplyHistory()
     {
         $supply = new supplyModel();
-        $supplyR = $supply->all();
+        $supplyR = $supply->where('shopID', '=', Session::get('shopID'))
+            ->whereDate('dateTime', '=', date('Y-m-d'))->get();
         return view('user.supply.supplyHistory', ['supply' => $supplyR]);
     }
 
     public function supplySearchDate(Request $r)
     {
         $supply = new supplyModel();
-        $supplyR = $supply->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])->get();
+        $supplyR = $supply->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])
+            ->where('shopID', '=', Session::get('shopID'))
+            ->get();
         return Response()->json(['data' =>$supplyR]);
         // return view('user.sales.salesHistory', ['sales'=> $salesR]);
     }
 
-    public function admin(){
-
-    }
 }

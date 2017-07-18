@@ -13,6 +13,8 @@ document.getElementById('logout').submit();">Log Out</a>
     <div>
         <a href="{{ route('adminSales') }}">Sales</a>
         <a href="{{ route('salesHistoryAdmin') }}">Sales History</a>
+        <a href="{{ route('adminSupply') }}">Supply</a>
+        <a href="{{ route('supplyHistoryAdmin') }}">Supply History</a>
     </div>
     @yield('section')
 
