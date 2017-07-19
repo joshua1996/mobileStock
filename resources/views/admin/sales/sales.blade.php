@@ -21,7 +21,7 @@
         ];
         $(document).ready(function () {
             $('#stock').autocomplete({
-                source:[stockList]
+                source:stockList
             });
 
             $('.addList').on('click', function () {

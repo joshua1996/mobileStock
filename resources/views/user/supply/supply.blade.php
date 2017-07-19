@@ -28,11 +28,11 @@
         ]
         $(document).ready(function () {
             $('#stock').autocomplete({
-                source:[stockList]
+                source:stockList
             });
 
             $('#person').autocomplete({
-                source: [personList]
+                source: personList
             });
 
             $('.addList').on('click', function () {

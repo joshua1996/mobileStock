@@ -13,26 +13,25 @@
 
     <script src="{{ asset("js/jquery-3.2.1.js") }}" type="text/javascript"></script>
     <script src="{{ asset("js/tether.min.js") }}" type="text/javascript"></script>
-    <script src="{{ asset("js/jquery-ui.js") }}" type="text/javascript"></script>
+    <script src="{{ asset("materialize/js/materialize.js") }}" type="text/javascript"></script>
+    {{--<script src="{{ asset("js/jquery-ui.js") }}" type="text/javascript"></script>--}}
 
-    {{--<link rel="stylesheet" href="{{ asset("assets/stylesheets/styles.css") }}" />--}}
-    <link rel="stylesheet" href="{{ asset("css/bootstrap.css") }}" />
-    <link rel="stylesheet" href="{{ asset("css/jquery.autocomplete.css") }}">
+    {{--<link rel="stylesheet" href="{{ asset("css/bootstrap.css") }}" />--}}
     <link rel="stylesheet" href="{{ asset("css/jquery-ui.css") }}">
+    <link rel="stylesheet" href="{{ asset("materialize/css/materialize.css") }}">
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-<script>
-    $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-    });
-</script>
 @yield('body')
 
-<script src="{{ asset("js/bootstrap.js") }}" type="text/javascript"></script>
-<script src="{{ asset("js/jquery.autocomplete.js") }}" type="text/javascript"></script>
+{{--<script src="{{ asset("js/bootstrap.js") }}" type="text/javascript"></script>--}}
 </body>
 </html>
