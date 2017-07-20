@@ -58,6 +58,7 @@ Route::group(['middleware' => 'notAdmin'], function (){
     Route::get('/admin/salesHistory', 'adminController@salesHistory')->name('salesHistoryAdmin');
     Route::get('/admin/supply', 'adminController@supply')->name('adminSupply');
     Route::get('/admin/supplyHistory', 'adminController@supplyHistory')->name('supplyHistoryAdmin');
+    Route::get('/admin/stock', 'adminController@stock')->name('stockAdmin');
     //
     Route::post('/admin/logout', 'adminLoginController@logout')->name('adminLogout');
     Route::post('/admin/sales', 'adminController@adminSalesP')->name('adminSalesP');

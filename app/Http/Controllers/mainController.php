@@ -7,6 +7,7 @@ use App\stockModel;
 use App\salesModel;
 use App\supplyModel;
 use App\supplyPersonModel;
+use App\staffModel;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -18,10 +19,10 @@ class mainController extends Controller
     public function home()
     {
         $stock = new stockModel();
-       // $stockR = $stock->all();
+        $staff = new staffModel();
         $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
-       // echo $stockR;
-        return view('user.sales.sales', ['stock' => $stockR]);
+        $staffR = $staff->where('userID', '=', Auth::guard('user')->user()->userID)->get();
+        return view('user.sales.sales', ['stock' => $stockR, 'staff'=> $staffR]);
     }
 
     public function sales(Request $r)
@@ -35,7 +36,7 @@ class mainController extends Controller
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
-                'userID' => Auth::guard('user')->user()->userID,
+                'staffID' => $r->input('staff'),
                 'shopID' => Session::get('shopID')
             ]);
         }
@@ -47,7 +48,9 @@ class mainController extends Controller
         $sales = new salesModel();
        // $salesR = $sales->all();
         $salesR = $sales->where('shopID', '=', Session::get('shopID'))
-            ->whereDate('dateTime', '=', date('Y-m-d'))->get();
+            ->whereDate('dateTime', '=', date('Y-m-d'))
+            ->join('staff', 'sales.staffID', '=', 'staff.staffID')
+            ->get(['staff.*', 'sales.*', 'staff.name as staffName']);
         return view('user.sales.salesHistory', ['sales' => $salesR]);
     }
 
@@ -68,7 +71,9 @@ class mainController extends Controller
         $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))->get();
         $stock = new stockModel();
         $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
-        return view('user.supply.supply', ['supplyPerson' => $supplyPersonR, 'stock' => $stockR]);
+        $staff = new staffModel();
+        $staffR = $staff->where('userID', '=', Auth::guard('user')->user()->userID)->get();
+        return view('user.supply.supply', ['supplyPerson' => $supplyPersonR, 'stock' => $stockR, 'staff' => $staffR]);
     }
 
     public function supplyP(Request $r)
@@ -86,7 +91,7 @@ class mainController extends Controller
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
                 'person' => $supplyPersonR->supplyID,//$r->input('person'),
-                'userID' => Auth::guard('user')->user()->userID,
+                'staffID' => $r->input('staff'),
                 'shopID' => Session::get('shopID')
             ]);
         }
@@ -96,8 +101,12 @@ class mainController extends Controller
     public function supplyHistory()
     {
         $supply = new supplyModel();
-        $supplyR = $supply->where('shopID', '=', Session::get('shopID'))
-            ->whereDate('dateTime', '=', date('Y-m-d'))->get();
+        $supplyR = $supply->where('supply.shopID', '=', Session::get('shopID'))
+            ->whereDate('dateTime', '=', date('Y-m-d'))
+            ->join('staff', 'supply.staffID', '=', 'staff.staffID')
+            ->join('supplyperson', 'supply.person', '=', 'supplyperson.supplyID')
+            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'staff.name as staffName', 'supplyperson.name as supplyName']);
+
         return view('user.supply.supplyHistory', ['supply' => $supplyR]);
     }
 
@@ -105,8 +114,11 @@ class mainController extends Controller
     {
         $supply = new supplyModel();
         $supplyR = $supply->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])
-            ->where('shopID', '=', Session::get('shopID'))
-            ->get();
+            ->where('supply.shopID', '=', Session::get('shopID'))
+            ->join('staff', 'supply.staffID', '=', 'staff.staffID')
+            ->join('supplyperson', 'supply.person', '=', 'supplyperson.supplyID')
+            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'staff.name as staffName', 'supplyperson.name as supplyName']);
+
         return Response()->json(['data' =>$supplyR]);
         // return view('user.sales.salesHistory', ['sales'=> $salesR]);
     }

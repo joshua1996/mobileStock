@@ -4,14 +4,22 @@
     <div class="row">
         <form action="{{ route('supplyP') }}" method="post">
             {{ csrf_field() }}
-            <div class="formList">
-                <div class="input-field col s12">
-                    <input id="person" type="text" class="validate" name="person">
-                    <label for="last_name">Supply Person</label>
+            <div class="formList row">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="person" type="text" class="validate" name="person" autocomplete="off">
+                        <label for="last_name">Supply Person</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="hidden" name="staff" value="">
+                        <input id="" class="staff" type="text" class="validate" name="" autocomplete="off">
+                        <label for="staff">Staff</label>
+                    </div>
                 </div>
-                <div class="formListTool">
+
+                <div class="formListTool row">
                     <div class="input-field col s4">
-                        <input id="stock" type="text" class="validate" name="stockName[]">
+                        <input id="stock" type="text" class="validate" name="stockName[]" autocomplete="off">
                         <label for="last_name">Stock Name</label>
                     </div>
                     <div class="input-field col s4">
@@ -24,8 +32,11 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Save" class="waves-effect waves-light btn">
-            <a class="addList waves-effect waves-light btn" style="float: right;">ADD</a>
+            <div class="row">
+                <input type="submit" value="Save" class="waves-effect waves-light btn">
+                <a class="addList waves-effect waves-light btn" style="float: right;">ADD</a>
+            </div>
+
         </form>
 
 
@@ -40,13 +51,21 @@
                 '{{ $value->name }}': null,
                 @endforeach
             };
+            var staffList = [
+                @foreach($staff as $i)
+            {id: '{{ $i->staffID }}', text: '{{ $i->name }}'},
+                @endforeach
+            ];
+
             $(document).ready(function () {
                 $('#stock').autocomplete({
                     data:stockList
                 });
-
                 $('#person').autocomplete({
                     data: personList
+                });
+                $('.staff').autocomplete2({
+                    data: staffList
                 });
 
                 $('.addList').on('click', function () {

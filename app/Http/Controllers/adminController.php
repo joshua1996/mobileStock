@@ -101,4 +101,11 @@ class adminController extends Controller
             ->get();
         return Response()->json(['data' =>$supplyR]);
     }
+
+    public function stock()
+    {
+        $stock = new stockModel();
+        $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
+        return view('admin.stock.stock', ['stock'=> $stockR]);
+    }
 }

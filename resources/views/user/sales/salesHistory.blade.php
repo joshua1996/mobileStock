@@ -20,19 +20,18 @@
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Time</th>
-                <th>User ID</th>
+                <th>Staff Name</th>
             </tr>
             </thead>
             <tbody id="tableBody">
             @foreach($sales as $index=>$value)
-
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $value->name }}</td>
                     <td>{{ $value->quantity }}</td>
                     <td>{{ $value->price }}</td>
                     <td>{{ $value->dateTime }}</td>
-                    <td>{{ $value->userID }}</td>
+                    <td>{{ $value->staffName }}</td>
                 </tr>
             @endforeach
             </tbody>
