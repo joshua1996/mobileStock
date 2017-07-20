@@ -4,7 +4,7 @@
     <script src="{{ asset("js/jquery-3.2.1.js") }}" type="text/javascript"></script>
     <script src="{{ asset("materialize/js/materialize.js") }}" type="text/javascript"></script>
     <link rel="stylesheet" href="{{ asset("materialize/css/materialize.css") }}">
-    {{--<link rel="stylesheet" href="{{ asset("css/bootstrap.css") }}" />--}}
+    <link rel="stylesheet" href="{{ asset("css/bootstrap.css") }}" />
     <style>
 
     </style>
@@ -29,18 +29,14 @@
                             <input id="last_name" type="text" class="validate" name="password">
                             <label for="last_name">Password</label>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <input type="submit" value="Login" class="waves-effect waves-light btn" style="margin-top: 20px;">
 
                     </div>
 
-
-
+                    <button type="submit"  class="waves-effect waves-light btn" >Login</button>
 
                 </form>
             </div>
+            <div class="col s3"></div>
         </div>
 
     </div>

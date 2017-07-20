@@ -48,6 +48,9 @@
                     {
                         var date = new Date();
                         this.set('select', [date.getFullYear(), date.getMonth(), date.getDate()]);
+                    },
+                    onClose: function(){
+                        $(document.activeElement).blur()
                     }
                 });
 

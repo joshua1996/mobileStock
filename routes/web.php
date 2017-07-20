@@ -61,6 +61,7 @@ Route::group(['middleware' => 'notAdmin'], function (){
     //
     Route::post('/admin/logout', 'adminLoginController@logout')->name('adminLogout');
     Route::post('/admin/sales', 'adminController@adminSalesP')->name('adminSalesP');
+    Route::post('/admin/salesSearchDate', 'adminController@salesSearchDate')->name('salesSearchDateAdmin');
     Route::post('/admin/supply', 'adminController@adminSupplyP')->name('adminSupplyP');
     Route::post('/admin/supplySearchDate', 'adminController@supplySearchDate')->name('supplyAdminSearchDate');
 });

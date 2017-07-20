@@ -45,6 +45,15 @@ class adminController extends Controller
         return view('admin.sales.salesHistory', ['sales' => $salesR]);
     }
 
+    public function salesSearchDate(Request $r)
+    {
+        $sales = new salesModel();
+        $salesR = $sales
+            ->where('shopID', '=', Session::get('shopID'))
+            ->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])->get();
+        return Response()->json(['data' =>$salesR]);
+    }
+
     public function supply()
     {
         $supplyPerson = new supplyPersonModel();

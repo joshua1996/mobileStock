@@ -23,7 +23,7 @@
                    </div>
                </div>
                <a class="addList waves-effect waves-light btn" style="float: right;">ADD</a>
-               <input type="submit" value="Save" class="waves-effect waves-light btn" >
+               <button type="submit"  class="waves-effect waves-light btn" >Save</button>
            </form>
        </div>
 

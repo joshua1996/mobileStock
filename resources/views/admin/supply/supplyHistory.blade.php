@@ -1,11 +1,18 @@
 @extends('layout.sidebarAdmin')
 @section('section')
+<div class="row">
+    <div class="col s6">
+        <label for="">Start Date</label>
+        <input type="date" class="datepicker" name="searchDate" id="searchDate">
+    </div>
+    <div class="col s6">
+        <label for="">End Date</label>
+        <input type="date" class="datepicker" name="searchDateEnd" id="searchDateEnd">
 
-    <input type="text" name="searchDate" id="searchDate">
-    <input type="text" name="searchDateEnd" id="searchDateEnd">
-    <button id="searchBtn">Search</button>
+    </div>
+    <button id="searchBtn" class="waves-effect waves-light btn">Search</button>
 
-    <table>
+    <table class="highlight">
         <thead>
         <tr>
             <th>No</th>
@@ -35,13 +42,20 @@
 
     <script>
         $(document).ready(function(){
-            $('#searchDate').datepicker();
-            $('#searchDate').datepicker('option', 'dateFormat', 'yy-mm-dd');
-            $("#searchDate").datepicker( "setDate" , new Date() );
 
-            $('#searchDateEnd').datepicker();
-            $('#searchDateEnd').datepicker('option', 'dateFormat', 'yy-mm-dd');
-            $("#searchDateEnd").datepicker( "setDate" , new Date() );
+            $('.datepicker').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 15, // Creates a dropdown of 15 years to control year
+                format : 'yyyy-mm-dd',
+                onStart: function ()
+                {
+                    var date = new Date();
+                    this.set('select', [date.getFullYear(), date.getMonth(), date.getDate()]);
+                },
+                onClose: function(){
+                    $(document.activeElement).blur()
+                }
+            });
 
             $('#searchBtn').on('click', function(){
                 var tomo = new Date($('#searchDateEnd').val());
@@ -68,4 +82,6 @@
             });
         });
     </script>
+</div>
+
 @stop
