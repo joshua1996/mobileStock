@@ -3398,43 +3398,7 @@ if (jQuery) {
             oldVal = val;
           });
 
-          $input.off('keydown.autocomplete').on('keydown.autocomplete', function (e) {
-            // Arrow keys and enter key usage
-            var keyCode = e.which,
-                liElement,
-                numItems = $autocomplete.children('li').length,
-                $active = $autocomplete.children('.active').first();
-
-            // select element on Enter
-            if (keyCode === 13 && activeIndex >= 0) {
-              liElement = $autocomplete.children('li').eq(activeIndex);
-              if (liElement.length) {
-                liElement.trigger('mousedown.autocomplete');
-                e.preventDefault();
-              }
-              return;
-            }
-
-            // Capture up and down key
-            if ( keyCode === 38 || keyCode === 40 ) {
-              e.preventDefault();
-
-              if (keyCode === 38 &&
-                  activeIndex > 0) {
-                activeIndex--;
-              }
-
-              if (keyCode === 40 &&
-                  activeIndex < (numItems - 1)) {
-                activeIndex++;
-              }
-
-              $active.removeClass('active');
-              if (activeIndex >= 0) {
-                $autocomplete.children('li').eq(activeIndex).addClass('active');
-              }
-            }
-          });
+         
 
           // Set input value
           $autocomplete.on('mousedown.autocomplete touchstart.autocomplete', 'li', function () {

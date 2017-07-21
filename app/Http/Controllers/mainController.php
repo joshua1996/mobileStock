@@ -60,7 +60,9 @@ class mainController extends Controller
         //$salesR = $sales->whereDate('dateTime', '=', $r->dateTime)->get();
         $salesR = $sales
             ->where('shopID', '=', Session::get('shopID'))
-            ->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])->get();
+            ->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])
+            ->join('staff', 'sales.staffID', '=', 'staff.staffID')
+            ->get(['staff.*', 'sales.*', 'staff.name as staffName']);
         return Response()->json(['data' =>$salesR]);
        // return view('user.sales.salesHistory', ['sales'=> $salesR]);
     }

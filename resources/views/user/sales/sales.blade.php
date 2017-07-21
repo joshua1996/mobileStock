@@ -40,11 +40,6 @@
                     '{{ $i->stockName }}' : null,
                 @endforeach
             };
-            {{--var staffList = {--}}
-                {{--@foreach($staff as $i)--}}
-                    {{--'{{ $i->name }}' : '{{ $i->staffID }}',--}}
-                {{--@endforeach--}}
-            {{--};--}}
             var staffList = [
                 @foreach($staff as $i)
                 {id: '{{ $i->staffID }}', text: '{{ $i->name }}'},

@@ -21,7 +21,7 @@
             <th>Quantity</th>
             <th>Price</th>
             <th>Time</th>
-            <th>User ID</th>
+            <th>Staff Name</th>
         </tr>
         </thead>
         <tbody id="tableBody">
@@ -29,12 +29,12 @@
 
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $value->person }}</td>
+                <td>{{ $value->supplyName }}</td>
                 <td>{{ $value->stockName }}</td>
                 <td>{{ $value->quantity }}</td>
                 <td>{{ $value->price }}</td>
                 <td>{{ $value->dateTime }}</td>
-                <td>{{ $value->userID }}</td>
+                <td>{{ $value->staffName }}</td>
             </tr>
         @endforeach
         </tbody>
@@ -74,7 +74,7 @@
                     success: function (data) {
                         $('#tableBody').empty();
                         $.each(data.data, function(index, value){
-                            $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.person +'</td><td>'+ value.stockName +'</td><td>'+ value.quantity +'</td><td>'+ value.price +'</td><td>'+value.dateTime+'</td><td>'+value.userID+'</td></tr>')
+                            $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.supplyName +'</td><td>'+ value.stockName +'</td><td>'+ value.quantity +'</td><td>'+ value.price +'</td><td>'+value.dateTime+'</td><td>'+value.staffName+'</td></tr>')
                         });
 
                     }

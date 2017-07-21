@@ -7,6 +7,7 @@ use App\stockModel;
 use App\salesModel;
 use App\supplyPersonModel;
 use App\supplyModel;
+use App\stockTypeModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -41,7 +42,9 @@ class adminController extends Controller
     {
         $sales = new salesModel();
         $salesR = $sales->where('shopID', '=', Session::get('shopID'))
-            ->whereDate('dateTime', '=', date('Y-m-d'))->get();
+            ->whereDate('dateTime', '=', date('Y-m-d'))
+            ->join('staff', 'sales.staffID', '=', 'staff.staffID')
+            ->get(['staff.*', 'sales.*', 'staff.name as staffName']);
         return view('admin.sales.salesHistory', ['sales' => $salesR]);
     }
 
@@ -60,6 +63,7 @@ class adminController extends Controller
         $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))->get();
         $stock = new stockModel();
         $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
+
         return view('admin.supply.supply', ['supplyPerson' => $supplyPersonR, 'stock' => $stockR]);
     }
 
@@ -88,8 +92,11 @@ class adminController extends Controller
     public function supplyHistory()
     {
         $supply = new supplyModel();
-        $supplyR = $supply->where('shopID', '=', Session::get('shopID'))
-            ->whereDate('dateTime', '=', date('Y-m-d'))->get();
+        $supplyR = $supply->where('supply.shopID', '=', Session::get('shopID'))
+            ->whereDate('dateTime', '=', date('Y-m-d'))
+            ->join('staff', 'supply.staffID', '=', 'staff.staffID')
+            ->join('supplyperson', 'supply.person', '=', 'supplyperson.supplyID')
+            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'staff.name as staffName', 'supplyperson.name as supplyName']);
         return view('admin.supply.supplyHistory', ['supply' => $supplyR]);
     }
 
@@ -97,15 +104,26 @@ class adminController extends Controller
     {
         $supply = new supplyModel();
         $supplyR = $supply->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])
-            ->where('shopID', '=', Session::get('shopID'))
-            ->get();
+            ->where('supply.shopID', '=', Session::get('shopID'))
+            ->join('staff', 'supply.staffID', '=', 'staff.staffID')
+            ->join('supplyperson', 'supply.person', '=', 'supplyperson.supplyID')
+            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'staff.name as staffName', 'supplyperson.name as supplyName']);
         return Response()->json(['data' =>$supplyR]);
     }
 
     public function stock()
     {
         $stock = new stockModel();
-        $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
-        return view('admin.stock.stock', ['stock'=> $stockR]);
+        $stockR = $stock->where('stock.shopID', '=', Session::get('shopID'))
+            ->join('stockType', 'stock.stockType', '=', 'stockType.stockTypeID')
+            ->get();
+        $stockType = new stockTypeModel();
+        $stockTypeR = $stockType->where('shopID', '=', Session::get('shopID'))->get();
+        return view('admin.stock.stock', ['stock'=> $stockR, 'stockType'=> $stockTypeR]);
+    }
+
+    public function stockEdit()
+    {
+
     }
 }
