@@ -3354,6 +3354,7 @@ if (jQuery) {
           // Perform search
           $input.off('keyup.autocomplete focus.autocomplete').on('keyup.autocomplete focus.autocomplete', function (e) {
             // Reset count.
+			
             count = 0;
             var val = $input.val().toLowerCase();
 
@@ -3398,7 +3399,45 @@ if (jQuery) {
             oldVal = val;
           });
 
-         
+          $input.off('keydown.autocomplete').on('keydown.autocomplete', function (e) {
+			 
+            // Arrow keys and enter key usage
+            var keyCode = e.which,
+                liElement,
+                numItems = $autocomplete.children('li').length,
+                $active = $autocomplete.children('.active').first();
+            // select element on Enter
+			
+            if (keyCode === 13 && activeIndex >= 0) {
+              liElement = $autocomplete.children('li').eq(activeIndex);
+              if (liElement.length) {
+                liElement.trigger('mousedown.autocomplete');
+                e.preventDefault();
+              }
+              return;
+            }
+
+            // Capture up and down key
+            if ( keyCode === 38 || keyCode === 40 ) {
+              e.preventDefault();
+
+              if (keyCode === 38 &&
+                  activeIndex > 0) {
+                activeIndex--;
+              }
+
+              if (keyCode === 40 &&
+                  activeIndex < (numItems - 1)) {
+                activeIndex++;
+              }
+
+              $active.removeClass('active');
+              if (activeIndex >= 0) {
+				  
+                $autocomplete.children('li').eq(activeIndex).addClass('active');
+              }
+            }
+          });
 
           // Set input value
           $autocomplete.on('mousedown.autocomplete touchstart.autocomplete', 'li', function () {
@@ -3412,9 +3451,15 @@ if (jQuery) {
               options.onAutocomplete.call(this, text);
             }
           });
+		  
+
         }
       });
     };
+	
+	 /**************************
+     * Auto complete 2 plugin  222222222222222222222*
+     *************************/
 	
 	$.fn.autocomplete2 = function (options) {
       // Defaults
@@ -3425,7 +3470,8 @@ if (jQuery) {
       //   img: 'img',
       // }
       var defaults = {
-        data: []
+        data: [],
+		minLength: 1
       };
 
       options = $.extend(defaults, options);
@@ -3433,6 +3479,8 @@ if (jQuery) {
       return this.each(function () {
         var $input = $(this);
         var data = options.data,
+			activeIndex = -1,
+			oldVal,
           $inputDiv = $input.closest('.input-field'); // Div to append on
 
         // Check if data isn't empty
@@ -3460,25 +3508,46 @@ if (jQuery) {
               $el.prepend(img);
             }
           };
+		  
+		    // Reset current element position
+          var resetCurrentElement = function() {
+            activeIndex = -1;
+            $autocomplete.find('.active').removeClass('active');
+          }
+		  
+		     // Remove autocomplete elements
+          var removeAutocomplete = function() {
+            $autocomplete.empty();
+            resetCurrentElement();
+            oldVal = undefined;
+          };
+		  
+		   $input.off('blur.autocomplete').on('blur.autocomplete', function() {
+            removeAutocomplete();
+          });
 
           // Perform search
-          $input.on('keyup', function (e) {
+         $input.off('keyup.autocomplete focus.autocomplete').on('keyup.autocomplete focus.autocomplete', function (e) {
             // Capture Enter
-            if(e.which === 13) {
-              $autocomplete.find('li').first().click();
+            if (e.which === 13 ||
+                e.which === 38 ||
+                e.which === 40) {
               return;
             }
 
             var val = $input.val().toLowerCase();
-            $autocomplete.empty();
+            //$autocomplete.empty();
 
             // Check if the input isn't empty
-            if(val !== '') {
-              for(var key of data) {
+            if(oldVal !== val) {
+				removeAutocomplete();
+				if (val.length >= options.minLength) {
+					for(var key of data) {
                 if(key.hasOwnProperty('text') &&
                   key.text.toLowerCase().indexOf(val) !== -1 &&
                   key.text.toLowerCase() !== val) {
                   var autocompleteOption = $('<li data-id=' + key.id + '></li>');
+				  
                   if(!!key.img) {
                     autocompleteOption.append('<img src="' + key.img + '" class="right circle"><span>' + key.text + '</span>');
                   }
@@ -3490,6 +3559,8 @@ if (jQuery) {
                   highlight(val, autocompleteOption);
                 }
               }
+				}
+              
             }
           });
 
@@ -3502,6 +3573,61 @@ if (jQuery) {
 			$input.prev().val($input.data('id'));
             $autocomplete.empty();
           });
+		  
+		  $input.off('keydown.autocomplete').on('keydown.autocomplete', function (e) {
+			 
+            // Arrow keys and enter key usage
+            var keyCode = e.which,
+                liElement,
+                numItems = $autocomplete.children('li').length,
+                $active = $autocomplete.children('.active').first();
+
+            // select element on Enter
+			
+            if (keyCode === 13 && activeIndex >= 0) {
+              liElement = $autocomplete.children('li').eq(activeIndex);
+              if (liElement.length) {
+                liElement.trigger('mousedown.autocomplete');
+                e.preventDefault();
+              }
+              return;
+            }
+
+            // Capture up and down key
+            if ( keyCode === 38 || keyCode === 40 ) {
+              e.preventDefault();
+
+              if (keyCode === 38 &&
+                  activeIndex > 0) {
+                activeIndex--;
+              }
+
+              if (keyCode === 40 &&
+                  activeIndex < (numItems - 1)) {
+                activeIndex++;
+              }
+
+              $active.removeClass('active');
+              if (activeIndex >= 0) {
+                $autocomplete.children('li').eq(activeIndex).addClass('active');
+              }
+            }
+          });
+		  
+		    $autocomplete.on('mousedown.autocomplete touchstart.autocomplete', 'li', function () {
+            var text = $(this).text().trim();
+			console.log($input);
+			$input.attr('autoID', $(this).attr('data-id'));
+            $input.val(text);
+            $input.trigger('change');
+            removeAutocomplete();
+
+            // Handle onAutocomplete callback.
+            if (typeof(options.onAutocomplete) === "function") {
+              options.onAutocomplete.call(this, text);
+            }
+          });
+		 
         }
       });
     };

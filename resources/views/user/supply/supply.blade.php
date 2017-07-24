@@ -12,7 +12,7 @@
                     </div>
                     <div class="input-field col s6">
                         <input type="hidden" name="staff" value="">
-                        <input id="" class="staff" type="text" class="validate" name="" autocomplete="off">
+                        <input id="" type="text" class="validate staff" name="" autocomplete="off">
                         <label for="staff">Staff</label>
                     </div>
                 </div>

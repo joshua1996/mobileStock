@@ -4,7 +4,14 @@
     <div class="row">
         <form action="{{ route('adminSalesP') }}" method="post">
             {{ csrf_field() }}
-            <div class="formList">
+            <div class="formList row">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="hidden" name="staff" value="" class="staffHidden">
+                        <input id="" type="text" class="validate staff" name="" autocomplete="off">
+                        <label for="staff">Staff</label>
+                    </div>
+                </div>
                 <div class="formListTool row">
                     <div class="input-field col s4">
                         <input id="stock" class="" type="text" class="validate" name="stock[]" autocomplete="off">
@@ -20,9 +27,11 @@
                     </div>
                 </div>
             </div>
-            <a class="addList waves-effect waves-light btn">ADD</a>
-            <button type="submit"  class="waves-effect waves-light btn">Save</button>
-        </form>
+            <div class="row">
+                <a class="addList waves-effect waves-light btn">ADD</a>
+                <button type="submit"  class="waves-effect waves-light btn">Save</button>
+            </div>
+             </form>
 
         <script>
             var stockList = {
@@ -30,9 +39,18 @@
                 '{{ $i->stockName }}': null,
                 @endforeach
             };
+            var staffList = [
+                    @foreach($staff as $i)
+                {id: '{{ $i->staffID }}', text: '{{ $i->name }}'},
+                @endforeach
+            ];
+
             $(document).ready(function () {
                 $('#stock').autocomplete({
                     data:stockList
+                });
+                $('input.staff').autocomplete2({
+                    data:staffList
                 });
 
                 $('.addList').on('click', function () {

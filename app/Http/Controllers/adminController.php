@@ -8,6 +8,7 @@ use App\salesModel;
 use App\supplyPersonModel;
 use App\supplyModel;
 use App\stockTypeModel;
+use App\staffModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -17,7 +18,10 @@ class adminController extends Controller
     {
         $stock = new stockModel();
         $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
-        return view('admin.sales.sales',  ['stock' => $stockR]);
+        $staff = new staffModel();
+        $staffR = $staff->join('user', 'staff.userID', '=', 'user.userID')
+            ->where('user.shopID', '=', Session::get('shopID'))->get();
+        return view('admin.sales.sales',  ['stock' => $stockR, 'staff'=> $staffR]);
     }
 
     public function adminSalesP(Request $r)
@@ -31,7 +35,7 @@ class adminController extends Controller
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
-                'userID' => Auth::guard('admin')->user()->adminID,
+                'staffID' => $r->input('staff'),
                 'shopID' => Session::get('shopID')
             ]);
         }
@@ -122,8 +126,14 @@ class adminController extends Controller
         return view('admin.stock.stock', ['stock'=> $stockR, 'stockType'=> $stockTypeR]);
     }
 
-    public function stockEdit()
+    public function stockEdit(Request $r)
     {
-
+        $stock = new stockModel();
+        $stock->where('stockID', '=', $r->input('stockID'))
+            ->update([
+                'stockName' => $r->input('stockName'),
+                'quantity' => $r->input('quantity'),
+                'price' => $r->input('price')
+            ]);
     }
 }

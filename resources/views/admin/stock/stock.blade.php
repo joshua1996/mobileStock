@@ -14,7 +14,7 @@
         </thead>
         <tbody>
             @foreach($stock as $i=>$value)
-                <tr>
+                <tr stockID="{{ $value->stockID }}" class="e{{ $i+1 }}">
                     <td>{{ $i + 1 }}</td>
                     <td class="a{{ $i+1 }}">{{ $value->stockName }}</td>
                     <td class="b{{ $i+1 }}">{{ $value->quantity }}</td>
@@ -29,6 +29,7 @@
 <div id="modal1" class="modal ">
     <div class="modal-content">
         <div class="row">
+            <input type="hidden" value="" id="stockID">
             <div class="input-field col s6">
                 <input id="stockName" value="" type="text" class="validate">
                 <label for="stockName">Stock Name</label>
@@ -73,6 +74,8 @@
                $('#quantity').val($('.b' + trigger.attr('ind')).text());
                $('#price').val($('.c' + trigger.attr('ind')).text());
                $('#stockType').val($('.d' + trigger.attr('ind')).text());
+               $('#stockID').val($('.e' + trigger.attr('ind')).attr('stockID'));
+               console.log(trigger);
                Materialize.updateTextFields();
            }
         });
@@ -82,7 +85,8 @@
                 stock:$('#stockName').val(),
                quantity:$('#quantity').val(),
                price:$('#price').val(),
-               stockType:$('#stockType').val()
+               stockType:$('#stockType').val(),
+               stockID: $('#stockID').val()
            };
            $.ajax({
                url:'{{ route('stockEditAdmin') }}',

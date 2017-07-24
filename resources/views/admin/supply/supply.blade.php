@@ -4,12 +4,20 @@
     <div class="row">
         <form action="{{ route('adminSupplyP') }}" method="post">
             {{ csrf_field() }}
-            <div class="formList">
-                <div class="input-field col s12">
-                    <input id="person" type="text" class="validate" name="person" autocomplete="off">
-                    <label for="person">Supply Person</label>
+            <div class="formList row">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="person" type="text" class="validate" name="person" autocomplete="off">
+                        <label for="person">Supply Person</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="hidden" name="staff" value="">
+                        <input id="" type="text" class="validate staff" name="" autocomplete="off">
+                        <label for="staff">Staff</label>
+                    </div>
                 </div>
-                <div class="formListTool">
+
+                <div class="formListTool row">
                     <div class="input-field col s4">
                         <input id="stock" type="text" class="validate" name="stockName[]" autocomplete="off">
                         <label for="stock">Stock Name</label>
@@ -24,8 +32,10 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Save" class="waves-effect waves-light btn">
-            <a class="addList waves-effect waves-light btn" style="float: right;">ADD</a>
+           <div class="row">
+               <input type="submit" value="Save" class="waves-effect waves-light btn">
+               <a class="addList waves-effect waves-light btn" style="float: right;">ADD</a>
+           </div>
 
         </form>
 
