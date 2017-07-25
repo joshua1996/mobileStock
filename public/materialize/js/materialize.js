@@ -3616,7 +3616,6 @@ if (jQuery) {
 		  
 		    $autocomplete.on('mousedown.autocomplete touchstart.autocomplete', 'li', function () {
             var text = $(this).text().trim();
-			console.log($input);
 			$input.attr('autoID', $(this).attr('data-id'));
             $input.val(text);
             $input.trigger('change');

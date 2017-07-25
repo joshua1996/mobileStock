@@ -66,6 +66,8 @@ Route::group(['middleware' => 'notAdmin'], function (){
     Route::post('/admin/supply', 'adminController@adminSupplyP')->name('adminSupplyP');
     Route::post('/admin/supplySearchDate', 'adminController@supplySearchDate')->name('supplyAdminSearchDate');
     Route::post('/admin/stockEdit', 'adminController@stockEdit')->name('stockEditAdmin');
+    Route::post('/admin/stockDelete', 'adminController@stockDelete')->name('stockDeleteAdmin');
+    Route::post('/admin/stockAdd', 'adminController@stockAdd')->name('stockAddAdmin');
 });
 
 

@@ -1,8 +1,12 @@
 @extends('layout.sidebarAdmin')
 @section('section')
 <div class="row">
-    <table>
-        <thead>
+    <div class="row">
+        <a href="#modal2" class="waves-effect waves-light btn">add stock</a>
+    </div>
+    <div class="row">
+        <table>
+            <thead>
             <tr>
                 <th>NO</th>
                 <th>Stock Name</th>
@@ -10,21 +14,25 @@
                 <th>Price</th>
                 <th>Stock Type</th>
                 <th>Edit</th>
+                <th>Delete</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             @foreach($stock as $i=>$value)
                 <tr stockID="{{ $value->stockID }}" class="e{{ $i+1 }}">
                     <td>{{ $i + 1 }}</td>
                     <td class="a{{ $i+1 }}">{{ $value->stockName }}</td>
                     <td class="b{{ $i+1 }}">{{ $value->quantity }}</td>
                     <td class="c{{ $i+1 }}">{{ $value->price }}</td>
-                    <td class="d{{ $i+1 }}">{{ $value->name }}</td>
+                    <td class="d{{ $i+1 }}" stockType="{{ $value->stockTypeID }}">{{ $value->name }}</td>
                     <td><a class="waves-effect waves-light btn" id="edit" href="#modal1" ind="{{ $i + 1 }}">edit</a></td>
+                    <td><a class="waves-effect waves-light btn delete" deleteid="{{ $value->stockID }}">delete</a></td>
                 </tr>
             @endforeach
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
 </div>
 <div id="modal1" class="modal ">
     <div class="modal-content">
@@ -43,7 +51,7 @@
                 <label for="price">Price</label>
             </div>
             <div class="input-field col s6">
-                <input id="stockType" type="text" class="validate">
+                <input id="stockType" type="text" class="validate" autoid="">
                 <label for="stockType">Stock Type</label>
             </div>
         </div>
@@ -53,39 +61,70 @@
     </div>
 </div>
 
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="" value="" type="text" class="validate addstock">
+                <label for="stockName">Stock Name</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="" type="text" class="validate addquantity">
+                <label for="quantity">Quantity</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="" type="text" class="validate addprice">
+                <label for="price">Price</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="addStockType" type="text" class="validate addstocktype" autoid="">
+                <label for="stockType">Stock Type</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat add">add</a>
+    </div>
+</div>
+
 <script>
     //3282 - 3454
     $(document).ready(function(){
+        var index=  0;
         var stockType = [
                 @foreach($stockType as $i)
             {id: '{{ $i->stockTypeID }}', text: '{{ $i->name }}'},
             @endforeach
         ];
-
         $('#stockType').autocomplete2({
             data:stockType
         });
-
+        $('#addStockType').autocomplete2({
+           data: stockType
+        });
 
         $('#modal1').modal();
         $('#modal1').modal({
            ready: function(modal, trigger){
+               index = trigger.attr('ind');
                $('#stockName').val($('.a' + trigger.attr('ind')).text());
                $('#quantity').val($('.b' + trigger.attr('ind')).text());
                $('#price').val($('.c' + trigger.attr('ind')).text());
                $('#stockType').val($('.d' + trigger.attr('ind')).text());
+               $('#stockType').attr('autoid', $('.d' + trigger.attr('ind')).attr('stockType'));
                $('#stockID').val($('.e' + trigger.attr('ind')).attr('stockID'));
-               console.log(trigger);
                Materialize.updateTextFields();
            }
         });
 
+        $('#modal2').modal();
+
         $('.edit').on('click', function(){
            var data = {
-                stock:$('#stockName').val(),
+                stockName:$('#stockName').val(),
                quantity:$('#quantity').val(),
                price:$('#price').val(),
-               stockType:$('#stockType').val(),
+               stockType: $('#stockType').attr('autoid'),
                stockID: $('#stockID').val()
            };
            $.ajax({
@@ -93,7 +132,42 @@
                type:'post',
                data:data,
                success: function (data) {
-                   
+                   $('.a' + index).text($('#stockName').val());
+                   $('.b' + index).text($('#quantity').val());
+                   $('.c' + index).text($('#price').val());
+                   $('.d' + index).text($('#stockType').val());
+                   $('.d' + index).attr('stocktype', $('#stockType').attr('autoid'));
+               }
+           });
+        });
+
+        $('.delete').on('click', function () {
+            var data = {
+                stockID :$(this).attr('deleteid')
+            }
+            $.ajax({
+                url:'{{ route('stockDeleteAdmin') }}',
+                type:'post',
+                data:data,
+                success: function (data) {
+
+                }
+            });
+        });
+
+        $('.add').on('click', function () {
+           var data = {
+               stockname: $('.addstock').val(),
+               quantity: $('.addquantity').val(),
+               price: $('.addprice').val(),
+               stocktype: $('.addstocktype').attr('autoid')
+           };
+           $.ajax({
+               url:'{{ route('stockAddAdmin') }}',
+               type:'post',
+               data:data,
+               success: function(data){
+
                }
            });
         });

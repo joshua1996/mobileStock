@@ -27,9 +27,9 @@
             @foreach($sales as $index=>$value)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $value->name }}</td>
-                    <td>{{ $value->quantity }}</td>
-                    <td>{{ $value->price }}</td>
+                    <td>{{ $value->stockName }}</td>
+                    <td>{{ $value->salesquantity }}</td>
+                    <td>{{ $value->salesprice }}</td>
                     <td>{{ $value->dateTime }}</td>
                     <td>{{ $value->staffName }}</td>
                 </tr>
@@ -70,7 +70,7 @@
                         success: function (data) {
                             $('#tableBody').empty();
                             $.each(data.data, function(index, value){
-                                $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.name +'</td><td>'+ value.quantity +'</td><td>'+ value.price +'</td><td>'+ value.dateTime +'</td><td>'+ value.staffName +'</td></tr>')
+                                $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.stockName +'</td><td>'+ value.salesquantity +'</td><td>'+ value.salesprice +'</td><td>'+ value.dateTime +'</td><td>'+ value.staffName +'</td></tr>')
                             });
 
                         }

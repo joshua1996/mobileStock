@@ -47,10 +47,11 @@ class mainController extends Controller
     {
         $sales = new salesModel();
        // $salesR = $sales->all();
-        $salesR = $sales->where('shopID', '=', Session::get('shopID'))
+        $salesR = $sales->where('sales.shopID', '=', Session::get('shopID'))
             ->whereDate('dateTime', '=', date('Y-m-d'))
             ->join('staff', 'sales.staffID', '=', 'staff.staffID')
-            ->get(['staff.*', 'sales.*', 'staff.name as staffName']);
+            ->join('stock', 'sales.name', '=', 'stock.stockID')
+            ->get(['staff.*', 'sales.*', 'stock.*', 'staff.name as staffName', 'sales.quantity as salesquantity', 'sales.price as salesprice']);
         return view('user.sales.salesHistory', ['sales' => $salesR]);
     }
 
@@ -59,12 +60,12 @@ class mainController extends Controller
         $sales = new salesModel();
         //$salesR = $sales->whereDate('dateTime', '=', $r->dateTime)->get();
         $salesR = $sales
-            ->where('shopID', '=', Session::get('shopID'))
+            ->where('sales.shopID', '=', Session::get('shopID'))
             ->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])
             ->join('staff', 'sales.staffID', '=', 'staff.staffID')
-            ->get(['staff.*', 'sales.*', 'staff.name as staffName']);
+            ->join('stock', 'sales.name', '=', 'stock.stockID')
+            ->get(['staff.*', 'sales.*', 'stock.*', 'staff.name as staffName', 'sales.quantity as salesquantity', 'sales.price as salesprice']);
         return Response()->json(['data' =>$salesR]);
-       // return view('user.sales.salesHistory', ['sales'=> $salesR]);
     }
 
     public function supply()

@@ -3,7 +3,7 @@
 
     <div class="row">
 
-        <form action="{{ route('sales') }}" method="post">
+        <form action="{{ route('sales') }}" method="post" id="stockform">
             {{ csrf_field() }}
             <div class="formList row">
                 <div class="row">
@@ -15,7 +15,8 @@
                 </div>
                 <div class="formListTool row" >
                     <div class="input-field col s4">
-                        <input id="" class="stock" type="text" class="validate" name="stock[]" autocomplete="off">
+                        <input type="hidden" name="stock[]" class="stocknamehidden">
+                        <input id="" class="stock" type="text" class="validate"  autocomplete="off">
                         <label for="last_name">Stock</label>
                     </div>
                     <div class="input-field col s4">
@@ -35,18 +36,18 @@
         </form>
 
         <script>
-            var stockList = {
+            var stockList = [
                 @foreach($stock as $i)
-                '{{ $i->stockName }}' : null,
-                @endforeach
-            };
+            {id: '{{ $i->stockID }}', text: '{{ $i->stockName }}'},
+            @endforeach
+            ];
             var staffList = [
                     @foreach($staff as $i)
                 {id: '{{ $i->staffID }}', text: '{{ $i->name }}'},
                 @endforeach
             ];
             $(document).ready(function () {
-                $('input.stock').autocomplete({
+                $('input.stock').autocomplete2({
                     data:stockList
                 });
                 $('input.staff').autocomplete2({
@@ -54,15 +55,18 @@
                 });
 
                 $('.addList').on('click', function () {
-                    var appendList = $(' <div class="formListTool row"> <div class="input-field col s4"> <input id="" class="stock" type="text" class="validate" name="stock[]"> <label for="last_name">Stock</label> </div> <div class="input-field col s4"> <input type="text" class="validate" name="quantity[]"> <label for="last_name">Quantity</label> </div> <div class="input-field col s4"> <input type="text" class="validate" name="price[]"> <label for="last_name">Price</label> </div> </div>');
+                    var appendList = $(' <div class="formListTool row" > <div class="input-field col s4"> <input type="hidden" name="stock[]" class="stocknamehidden"> <input id="" class="stock" type="text" class="validate" autocomplete="off"> <label for="last_name">Stock</label> </div> <div class="input-field col s4"> <input type="text" class="validate" name="quantity[]"> <label for="last_name">Quantity</label> </div> <div class="input-field col s4"> <input type="text" class="validate" name="price[]"> <label for="last_name">Price</label> </div> </div>');
                     $('.formList').append(appendList);
-                    $('input.stock', appendList).autocomplete({
+                    $('input.stock', appendList).autocomplete2({
                         data:stockList
                     });
                 });
+
+                $('#stockform').on('submit', function () {
+                    $('.staffHidden').val($('.staff').attr('autoid'));
+                    $('.stocknamehidden').val($('.stock').attr('autoid'));
+                });
             });
-
-
         </script>
 
 

@@ -35,7 +35,7 @@ class adminController extends Controller
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
-                'staffID' => $r->input('staff'),
+                'staffID' => $r->input('staffID'),
                 'shopID' => Session::get('shopID')
             ]);
         }
@@ -45,10 +45,11 @@ class adminController extends Controller
     public function salesHistory()
     {
         $sales = new salesModel();
-        $salesR = $sales->where('shopID', '=', Session::get('shopID'))
+        $salesR = $sales->where('sales.shopID', '=', Session::get('shopID'))
             ->whereDate('dateTime', '=', date('Y-m-d'))
             ->join('staff', 'sales.staffID', '=', 'staff.staffID')
-            ->get(['staff.*', 'sales.*', 'staff.name as staffName']);
+            ->join('stock', 'sales.name', '=', 'stock.stockID')
+            ->get(['staff.*', 'sales.*', 'stock.*', 'staff.name as staffName', 'sales.quantity as salesquantity', 'sales.price as salesprice']);
         return view('admin.sales.salesHistory', ['sales' => $salesR]);
     }
 
@@ -56,8 +57,11 @@ class adminController extends Controller
     {
         $sales = new salesModel();
         $salesR = $sales
-            ->where('shopID', '=', Session::get('shopID'))
-            ->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])->get();
+            ->where('sales.shopID', '=', Session::get('shopID'))
+            ->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])
+            ->join('staff', 'sales.staffID', '=', 'staff.staffID')
+            ->join('stock', 'sales.name', '=', 'stock.stockID')
+            ->get(['staff.*', 'sales.*', 'stock.*', 'staff.name as staffName', 'sales.quantity as salesquantity', 'sales.price as salesprice']);
         return Response()->json(['data' =>$salesR]);
     }
 
@@ -133,7 +137,28 @@ class adminController extends Controller
             ->update([
                 'stockName' => $r->input('stockName'),
                 'quantity' => $r->input('quantity'),
-                'price' => $r->input('price')
+                'price' => $r->input('price'),
+                'stockType' => $r->input('stockType')
             ]);
+    }
+
+    public function stockDelete(Request $r)
+    {
+        $stock = new stockModel();
+        $stock->where('stockID', '=', $r->input('stockID'))->delete();
+
+    }
+
+    public function stockAdd(Request $r)
+    {
+        $stock = new stockModel();
+        $stock->insert([
+           'stockID'=> 'stock'.uniqid(),
+            'stockName' => $r->input('stockname'),
+            'price' => $r->input('price'),
+            'quantity' => $r->input('quantity'),
+            'stocktype' => $r->input('stocktype'),
+            'shopID' => Session::get('shopID')
+        ]);
     }
 }
