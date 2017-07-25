@@ -30,9 +30,9 @@
             <tr>
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $value->supplyName }}</td>
-                <td>{{ $value->stockName }}</td>
-                <td>{{ $value->quantity }}</td>
-                <td>{{ $value->price }}</td>
+                <td>{{ $value->stockstockname }}</td>
+                <td>{{ $value->supplyquantity }}</td>
+                <td>{{ $value->supplyprice }}</td>
                 <td>{{ $value->dateTime }}</td>
                 <td>{{ $value->staffName }}</td>
             </tr>
@@ -74,7 +74,7 @@
                     success: function (data) {
                         $('#tableBody').empty();
                         $.each(data.data, function(index, value){
-                            $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.supplyName +'</td><td>'+ value.stockName +'</td><td>'+ value.quantity +'</td><td>'+ value.price +'</td><td>'+value.dateTime+'</td><td>'+value.staffName+'</td></tr>')
+                            $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.supplyName +'</td><td>'+ value.stockstockname +'</td><td>'+ value.supplyquantity +'</td><td>'+ value.supplyprice +'</td><td>'+value.dateTime+'</td><td>'+value.staffName+'</td></tr>');
                         });
 
                     }

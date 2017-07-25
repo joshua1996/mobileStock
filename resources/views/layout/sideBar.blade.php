@@ -1,6 +1,16 @@
 @extends('layout.header')
 @section('body')
-    <header style="    padding-left: 300px;">
+    <style>
+        header, main, footer {
+            padding-left: 300px;
+        }
+        @media only screen and (max-width : 992px) {
+            header, main, footer {
+                padding-left: 0;
+            }
+        }
+    </style>
+    <header style="">
         <nav class="top-nav" style="background-color: #338af7;">
             <div class="container">
                 <div class="nav-wrapper">
@@ -10,6 +20,7 @@
                         <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
 document.getElementById('logout').submit();">Log Out</a></li>
                     </ul>
+                    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
                     <form id="logout" action="{{ route('logout') }}" method="post">
                         {{ csrf_field() }}
                     </form>
@@ -43,10 +54,16 @@ document.getElementById('logout').submit();">Log Out</a></li>
             <li><a class="waves-effect" href="{{ route('supply') }}">Supply</a></li>
             <li><a class="waves-effect" href="{{ route('supplyHistory') }}">Supply History</a></li>
         </ul>
-        {{--<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>--}}
+
         <script !src="">
             $(document).ready(function () {
-                // $(".button-collapse").sideNav();
+                $('.button-collapse').sideNav({
+                    menuWidth: 300, // Default is 300
+                    edge: 'left', // Choose the horizontal origin
+                    closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                    draggable: true // Choose whether you can drag to open on touch screens,
+
+                });
             });
         </script>
     </header>
@@ -54,7 +71,7 @@ document.getElementById('logout').submit();">Log Out</a></li>
 
 
 
-    <main style="    padding-left: 300px;">
+    <main style="">
         <div class="container" style="margin-top: 20px;">
             @yield('section')
         </div>

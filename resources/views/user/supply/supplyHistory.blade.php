@@ -29,9 +29,9 @@
             <tr>
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $value->supplyName }}</td>
-                <td>{{ $value->stockName }}</td>
-                <td>{{ $value->quantity }}</td>
-                <td>{{ $value->price }}</td>
+                <td>{{ $value->stockstockname }}</td>
+                <td>{{ $value->supplyquantity }}</td>
+                <td>{{ $value->supplyprice }}</td>
                 <td>{{ $value->dateTime }}</td>
                 <td>{{ $value->staffName }}</td>
             </tr>
@@ -41,13 +41,6 @@
 
     <script>
         $(document).ready(function(){
-//            $('#searchDate').datepicker();
-//            $('#searchDate').datepicker('option', 'dateFormat', 'yy-mm-dd');
-//            $("#searchDate").datepicker( "setDate" , new Date() );
-//
-//            $('#searchDateEnd').datepicker();
-//            $('#searchDateEnd').datepicker('option', 'dateFormat', 'yy-mm-dd');
-//            $("#searchDateEnd").datepicker( "setDate" , new Date() );
 
             $('.datepicker').pickadate({
                 selectMonths: true, // Creates a dropdown to control month
@@ -80,7 +73,7 @@
                     success: function (data) {
                         $('#tableBody').empty();
                         $.each(data.data, function(index, value){
-                            $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.supplyName +'</td><td>'+ value.stockName +'</td><td>'+ value.quantity +'</td><td>'+ value.price +'</td><td>'+value.dateTime+'</td><td>'+value.staffName+'</td></tr>')
+                            $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.supplyName +'</td><td>'+ value.stockstockname +'</td><td>'+ value.supplyquantity +'</td><td>'+ value.supplyprice +'</td><td>'+value.dateTime+'</td><td>'+value.staffName+'</td></tr>');
                         });
 
                     }

@@ -15,7 +15,7 @@
                 <div class="formListTool row">
                     <div class="input-field col s4">
                         <input type="hidden" name="stock[]" id="stocknamehidden">
-                        <input id="stock" class="" type="text" class="validate"  autocomplete="off" autoid="">
+                        <input  type="text" class="validate stock"  autocomplete="off" autoid="">
                         <label for="stock">Stock</label>
                     </div>
                     <div class="input-field col s4">
@@ -47,7 +47,7 @@
             ];
 
             $(document).ready(function () {
-                $('#stock').autocomplete2({
+                $('.stock').autocomplete2({
                     data:stockList
                 });
                 $('input.staff').autocomplete2({
@@ -55,16 +55,19 @@
                 });
 
                 $('.addList').on('click', function () {
-                    var appendList = $('<div class="formListTool row"> <div class="input-field col s4"> <input id="stock" class="" type="text" class="validate" name="stock[]"> <label for="stock">Stock</label> </div> <div class="input-field col s4"> <input id="" class="" type="text" class="validate" name="quantity[]"> <label for="Quantity">Quantity</label> </div> <div class="input-field col s4"> <input id="" class="" type="text" class="validate" name="price[]"> <label for="price">Price</label> </div> </div>');
+                    var appendList = $(' <div class="formListTool row"> <div class="input-field col s4"> <input type="hidden" name="stock[]" id="stocknamehidden"> <input type="text" class="validate stock" autocomplete="off" autoid=""> <label for="stock">Stock</label> </div> <div class="input-field col s4"> <input id="" class="" type="text" class="validate" name="quantity[]"> <label for="Quantity">Quantity</label> </div> <div class="input-field col s4"> <input id="" class="" type="text" class="validate" name="price[]"> <label for="price">Price</label> </div> </div>');
                     $('.formList').append(appendList);
-                    $('#stock', appendList).autocomplete2({
-                        source:[stockList]
+                    $('.stock', appendList).autocomplete2({
+                        data:stockList
                     });
                 });
 
                 $('#stockform').on('submit', function () {
                     $('.staffHidden').val($('.staff').attr('autoid'));
-                    $('#stocknamehidden').val($('#stock').attr('autoid'));
+                    $('.stock').each(function (index) {
+                        $(this).prev().val($(this).attr('autoid'));
+                    });
+                   // $('#stocknamehidden').val($('#stock').attr('autoid'));
                 });
             });
         </script>

@@ -20,7 +20,7 @@
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Time</th>
-                <th>User ID</th>
+                <th>Staff Name</th>
             </tr>
             </thead>
             <tbody id="tableBody">

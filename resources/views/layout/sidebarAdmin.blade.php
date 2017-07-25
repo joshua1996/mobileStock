@@ -1,17 +1,26 @@
 @extends('layout.header')
 @section('body')
-
-    <header style="    padding-left: 300px;">
+    <style>
+        header, main, footer {
+            padding-left: 300px;
+        }
+        @media only screen and (max-width : 992px) {
+            header, main, footer {
+                padding-left: 0;
+            }
+        }
+    </style>
+    <header style=" ">
         <nav class="top-nav" style="background-color: #338af7;">
             <div class="container">
                 <div class="nav-wrapper">
                     <a href="#" class="brand-logo">Stock Management System</a>
-                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li> <a href="">{{ Auth::guard('admin')->user()->adminName }}</a></li>
                         <li><a href="{{ route('adminLogout') }}" onclick="event.preventDefault();
 document.getElementById('logout').submit();">Log Out</a></li>
                     </ul>
+                    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
                     <form id="logout" action="{{ route('adminLogout') }}" method="post">
                         {{ csrf_field() }}
                     </form>
@@ -19,7 +28,7 @@ document.getElementById('logout').submit();">Log Out</a></li>
             </div>
         </nav>
 
-        <ul id="nav-mobile" class="side-nav fixed">
+        <ul id="slide-out" class="side-nav fixed">
             <li>
                 <div class="user-view">
                     <div class="background">
@@ -39,20 +48,22 @@ document.getElementById('logout').submit();">Log Out</a></li>
             <li><a class="waves-effect" href="{{ route('supplyHistoryAdmin') }}">Supply History</a></li>
             <li><a class="subheader">Supply</a></li>
             <li><a class="waves-effect" href="{{ route('stockAdmin') }}">Stock</a></li>
+            <li><a class="waves-effect" href="{{ route('supplyPerson') }}">Supply Person</a></li>
         </ul>
         <script>
-            $('.button-collapse').sideNav({
-                menuWidth: 300, // Default is 300
-                edge: 'left', // Choose the horizontal origin
-                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                draggable: true // Choose whether you can drag to open on touch screens,
+           $(document).ready(function () {
+               $('.button-collapse').sideNav({
+                   menuWidth: 300, // Default is 300
+                   edge: 'left', // Choose the horizontal origin
+                   closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                   draggable: true // Choose whether you can drag to open on touch screens,
 
-             }
-             );
+               });
+           });
         </script>
     </header>
 
-    <main style="    padding-left: 300px;">
+    <main style="">
         <div class="container" style="margin-top: 20px;">
             @yield('section')
         </div>

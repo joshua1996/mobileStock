@@ -132,6 +132,7 @@
                type:'post',
                data:data,
                success: function (data) {
+                   Materialize.toast('Edit Success!', 4000)
                    $('.a' + index).text($('#stockName').val());
                    $('.b' + index).text($('#quantity').val());
                    $('.c' + index).text($('#price').val());
@@ -150,7 +151,7 @@
                 type:'post',
                 data:data,
                 success: function (data) {
-
+                    Materialize.toast('Delete Success!', 4000)
                 }
             });
         });
@@ -167,7 +168,7 @@
                type:'post',
                data:data,
                success: function(data){
-
+                   Materialize.toast('Add Success!', 4000)
                }
            });
         });

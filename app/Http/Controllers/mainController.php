@@ -84,16 +84,13 @@ class mainController extends Controller
         $datetime = date('Y-m-d H:i:s');
         $supply = new supplyModel();
         $supplyPerson = new supplyPersonModel();
-        foreach ($r->input('stockName') as $i=>$item) {
-            $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))
-                                            ->where('name', '=', $r->input('person'))
-                                            ->first();
+        foreach ($r->input('stock') as $i=>$item) {
             $supply->insert([
-               'stockName' => $r->input('stockName')[$i],
+               'stockName' => $r->input('stock')[$i],
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
-                'person' => $supplyPersonR->supplyID,//$r->input('person'),
+                'person' => $r->input('supply'),
                 'staffID' => $r->input('staff'),
                 'shopID' => Session::get('shopID')
             ]);
@@ -108,7 +105,8 @@ class mainController extends Controller
             ->whereDate('dateTime', '=', date('Y-m-d'))
             ->join('staff', 'supply.staffID', '=', 'staff.staffID')
             ->join('supplyperson', 'supply.person', '=', 'supplyperson.supplyID')
-            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'staff.name as staffName', 'supplyperson.name as supplyName']);
+            ->join('stock', 'supply.stockName', '=', 'stock.stockID')
+            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'stock.*', 'staff.name as staffName', 'supplyperson.name as supplyName', 'stock.stockName as stockstockname', 'supply.quantity as supplyquantity', 'supply.price as supplyprice']);
 
         return view('user.supply.supplyHistory', ['supply' => $supplyR]);
     }
@@ -120,7 +118,8 @@ class mainController extends Controller
             ->where('supply.shopID', '=', Session::get('shopID'))
             ->join('staff', 'supply.staffID', '=', 'staff.staffID')
             ->join('supplyperson', 'supply.person', '=', 'supplyperson.supplyID')
-            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'staff.name as staffName', 'supplyperson.name as supplyName']);
+            ->join('stock', 'supply.stockName', '=', 'stock.stockID')
+            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'stock.*', 'staff.name as staffName', 'supplyperson.name as supplyName', 'stock.stockName as stockstockname', 'supply.quantity as supplyquantity', 'supply.price as supplyprice']);
 
         return Response()->json(['data' =>$supplyR]);
         // return view('user.sales.salesHistory', ['sales'=> $salesR]);

@@ -64,7 +64,10 @@
 
                 $('#stockform').on('submit', function () {
                     $('.staffHidden').val($('.staff').attr('autoid'));
-                    $('.stocknamehidden').val($('.stock').attr('autoid'));
+                    $('.stock').each(function (index) {
+                        $(this).prev().val($(this).attr('autoid'));
+                    });
+                   // $('.stocknamehidden').val($('.stock').attr('autoid'));
                 });
             });
         </script>

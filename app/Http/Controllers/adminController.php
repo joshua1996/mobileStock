@@ -71,8 +71,10 @@ class adminController extends Controller
         $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))->get();
         $stock = new stockModel();
         $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
-
-        return view('admin.supply.supply', ['supplyPerson' => $supplyPersonR, 'stock' => $stockR]);
+        $staff = new staffModel();
+        $staffR = $staff->join('user', 'staff.userID', '=', 'user.userID')
+            ->where('user.shopID', '=', Session::get('shopID'))->get();
+        return view('admin.supply.supply', ['supplyPerson' => $supplyPersonR, 'stock' => $stockR, 'staff' => $staffR]);
     }
 
     public function adminSupplyP(Request $r)
@@ -80,17 +82,15 @@ class adminController extends Controller
         $datetime = date('Y-m-d H:i:s');
         $supply = new supplyModel();
         $supplyPerson = new supplyPersonModel();
-        foreach ($r->input('stockName') as $i=>$item) {
-            $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))
-                ->where('name', '=', $r->input('person'))
-                ->first();
+        foreach ($r->input('stock') as $i=>$item) {
+
             $supply->insert([
-                'stockName' => $r->input('stockName')[$i],
+                'stockName' => $r->input('stock')[$i],
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
-                'person' => $supplyPersonR->supplyID,//$r->input('person'),
-                'userID' => Auth::guard('admin')->user()->adminID,
+                'person' => $r->input('supply'),
+                'staffID' => $r->input('staff'),
                 'shopID' => Session::get('shopID')
             ]);
         }
@@ -104,7 +104,8 @@ class adminController extends Controller
             ->whereDate('dateTime', '=', date('Y-m-d'))
             ->join('staff', 'supply.staffID', '=', 'staff.staffID')
             ->join('supplyperson', 'supply.person', '=', 'supplyperson.supplyID')
-            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'staff.name as staffName', 'supplyperson.name as supplyName']);
+            ->join('stock', 'supply.stockName', '=', 'stock.stockID')
+            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'stock.*', 'staff.name as staffName', 'supplyperson.name as supplyName', 'stock.stockName as stockstockname', 'supply.quantity as supplyquantity', 'supply.price as supplyprice']);
         return view('admin.supply.supplyHistory', ['supply' => $supplyR]);
     }
 
@@ -115,7 +116,8 @@ class adminController extends Controller
             ->where('supply.shopID', '=', Session::get('shopID'))
             ->join('staff', 'supply.staffID', '=', 'staff.staffID')
             ->join('supplyperson', 'supply.person', '=', 'supplyperson.supplyID')
-            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'staff.name as staffName', 'supplyperson.name as supplyName']);
+            ->join('stock', 'supply.stockName', '=', 'stock.stockID')
+            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'stock.*', 'staff.name as staffName', 'supplyperson.name as supplyName', 'stock.stockName as stockstockname', 'supply.quantity as supplyquantity', 'supply.price as supplyprice']);
         return Response()->json(['data' =>$supplyR]);
     }
 
@@ -151,6 +153,7 @@ class adminController extends Controller
 
     public function stockAdd(Request $r)
     {
+        //todo dd
         $stock = new stockModel();
         $stock->insert([
            'stockID'=> 'stock'.uniqid(),
@@ -158,6 +161,32 @@ class adminController extends Controller
             'price' => $r->input('price'),
             'quantity' => $r->input('quantity'),
             'stocktype' => $r->input('stocktype'),
+            'shopID' => Session::get('shopID')
+        ]);
+    }
+
+    public function supplyPerson()
+    {
+        $supplyPerson = new supplyPersonModel();
+        $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))->get();
+        return view('admin.supply.supplyEdit', ['supplyPerson' => $supplyPersonR]);
+    }
+
+    public function supplyPersonEdit(Request $r)
+    {
+        $supplyPerson = new supplyPersonModel();
+        $supplyPerson->where('shopID', '=', Session::get('shopID'))
+            ->update([
+                'name' => $r->input('supplyPerson')
+            ]);
+    }
+
+    public function supplyPersonAdd(Request $r)
+    {
+        $supplyPerson = new supplyPersonModel();
+        $supplyPerson->insert([
+            'supplyID' => 'supply'.uniqid(),
+            'name' => $r->supplyPerson,
             'shopID' => Session::get('shopID')
         ]);
     }

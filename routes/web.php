@@ -59,6 +59,7 @@ Route::group(['middleware' => 'notAdmin'], function (){
     Route::get('/admin/supply', 'adminController@supply')->name('adminSupply');
     Route::get('/admin/supplyHistory', 'adminController@supplyHistory')->name('supplyHistoryAdmin');
     Route::get('/admin/stock', 'adminController@stock')->name('stockAdmin');
+    Route::get('/admin/supplyPerson', 'adminController@supplyPerson')->name('supplyPerson');
     //
     Route::post('/admin/logout', 'adminLoginController@logout')->name('adminLogout');
     Route::post('/admin/sales', 'adminController@adminSalesP')->name('adminSalesP');
@@ -68,6 +69,8 @@ Route::group(['middleware' => 'notAdmin'], function (){
     Route::post('/admin/stockEdit', 'adminController@stockEdit')->name('stockEditAdmin');
     Route::post('/admin/stockDelete', 'adminController@stockDelete')->name('stockDeleteAdmin');
     Route::post('/admin/stockAdd', 'adminController@stockAdd')->name('stockAddAdmin');
+    Route::post('/admin/supplyPersonEdit', 'adminController@supplyPersonEdit')->name('supplyPersonEditAdmin');
+    Route::post('/admin/supplyPersonAdd', 'adminController@supplyPersonAdd')->name('supplyPersonAddAdmin');
 });
 
 
