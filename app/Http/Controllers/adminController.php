@@ -9,6 +9,7 @@ use App\supplyPersonModel;
 use App\supplyModel;
 use App\stockTypeModel;
 use App\staffModel;
+use App\userModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -17,7 +18,9 @@ class adminController extends Controller
     public function sales()
     {
         $stock = new stockModel();
-        $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
+        $stockR = $stock->where('shopID', '=', Session::get('shopID'))
+            ->where('remove', '=', false)
+            ->get();
         $staff = new staffModel();
         $staffR = $staff->join('user', 'staff.userID', '=', 'user.userID')
             ->where('user.shopID', '=', Session::get('shopID'))->get();
@@ -27,6 +30,7 @@ class adminController extends Controller
     public function adminSalesP(Request $r)
     {
         $sales = new salesModel();
+        $stock = new stockModel();
         $datetime = date('Y-m-d H:i:s');
         foreach ($r->input('stock') as $i=>$value)
         {
@@ -38,7 +42,14 @@ class adminController extends Controller
                 'staffID' => $r->input('staffID'),
                 'shopID' => Session::get('shopID')
             ]);
+            $stockR = $stock->where('stockID', '=', $r->input('stock')[$i])->first();
+            $stock->where('stockID', '=', $r->input('stock')[$i])
+                ->update([
+                    'quantity' => $stockR->quantity - $r->input('quantity')[$i]
+                ]);
         }
+
+
         return redirect()->route('adminSales');
     }
 
@@ -70,7 +81,8 @@ class adminController extends Controller
         $supplyPerson = new supplyPersonModel();
         $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))->get();
         $stock = new stockModel();
-        $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
+        $stockR = $stock->where('shopID', '=', Session::get('shopID'))
+            ->where('remove', '=', false)->get();
         $staff = new staffModel();
         $staffR = $staff->join('user', 'staff.userID', '=', 'user.userID')
             ->where('user.shopID', '=', Session::get('shopID'))->get();
@@ -125,6 +137,7 @@ class adminController extends Controller
     {
         $stock = new stockModel();
         $stockR = $stock->where('stock.shopID', '=', Session::get('shopID'))
+            ->where('stock.remove', '=', false)
             ->join('stockType', 'stock.stockType', '=', 'stockType.stockTypeID')
             ->get();
         $stockType = new stockTypeModel();
@@ -147,7 +160,10 @@ class adminController extends Controller
     public function stockDelete(Request $r)
     {
         $stock = new stockModel();
-        $stock->where('stockID', '=', $r->input('stockID'))->delete();
+        $stock->where('stockID', '=', $r->input('stockID'))
+        ->update([
+            'remove'=> true
+        ]);
 
     }
 
@@ -189,5 +205,34 @@ class adminController extends Controller
             'name' => $r->supplyPerson,
             'shopID' => Session::get('shopID')
         ]);
+    }
+
+    public function userEdit()
+    {
+        $user = new userModel();
+        $userR = $user->where('shopID', '=', Session::get('shopID'))->get();
+        return view('admin.user.user', ['user' => $userR]);
+    }
+
+    public function userAdd(Request $r)
+    {
+        $user = new userModel();
+        $user->insert([
+            'userID' => 'user'.uniqid(),
+            'username' => $r->username,
+            'password' => bcrypt($r->password),
+            'shopID' => Session::get('shopID')
+        ]);
+        return redirect()->route('userEditAdmin');
+    }
+
+    public function userEditP(Request $r)
+    {
+        $user = new userModel();
+        $user->where('userID', '=', $r->input('userID'))
+            ->update([
+                'username' => $r->input('username'),
+                'password' => bcrypt($r->input('password'))
+            ]);
     }
 }

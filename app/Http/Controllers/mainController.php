@@ -20,7 +20,8 @@ class mainController extends Controller
     {
         $stock = new stockModel();
         $staff = new staffModel();
-        $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
+        $stockR = $stock->where('shopID', '=', Session::get('shopID'))
+            ->where('remove', '=', false)->get();
         $staffR = $staff->where('userID', '=', Auth::guard('user')->user()->userID)->get();
         return view('user.sales.sales', ['stock' => $stockR, 'staff'=> $staffR]);
     }
@@ -73,7 +74,8 @@ class mainController extends Controller
         $supplyPerson = new supplyPersonModel();
         $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))->get();
         $stock = new stockModel();
-        $stockR = $stock->where('shopID', '=', Session::get('shopID'))->get();
+        $stockR = $stock->where('shopID', '=', Session::get('shopID'))
+            ->where('remove', '=', false)->get();
         $staff = new staffModel();
         $staffR = $staff->where('userID', '=', Auth::guard('user')->user()->userID)->get();
         return view('user.supply.supply', ['supplyPerson' => $supplyPersonR, 'stock' => $stockR, 'staff' => $staffR]);

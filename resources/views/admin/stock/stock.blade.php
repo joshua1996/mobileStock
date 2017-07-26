@@ -25,7 +25,7 @@
                     <td class="b{{ $i+1 }}">{{ $value->quantity }}</td>
                     <td class="c{{ $i+1 }}">{{ $value->price }}</td>
                     <td class="d{{ $i+1 }}" stockType="{{ $value->stockTypeID }}">{{ $value->name }}</td>
-                    <td><a class="waves-effect waves-light btn" id="edit" href="#modal1" ind="{{ $i + 1 }}">edit</a></td>
+                    <td><a class="waves-effect waves-light btn" href="#modal1" ind="{{ $i + 1 }}">edit</a></td>
                     <td><a class="waves-effect waves-light btn delete" deleteid="{{ $value->stockID }}">delete</a></td>
                 </tr>
             @endforeach
@@ -84,6 +84,32 @@
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat add">add</a>
+    </div>
+</div>
+
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="" value="" type="text" class="validate addstock">
+                <label for="stockName">Stock Name</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="" type="text" class="validate addquantity">
+                <label for="quantity">Quantity</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="" type="text" class="validate addprice">
+                <label for="price">Price</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="addStockType" type="text" class="validate addstocktype" autoid="">
+                <label for="stockType">Stock Type</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat add">Delete</a>
     </div>
 </div>
 
@@ -151,7 +177,7 @@
                 type:'post',
                 data:data,
                 success: function (data) {
-                    Materialize.toast('Delete Success!', 4000)
+                    Materialize.toast('Delete Success!', 4000);
                 }
             });
         });
@@ -168,7 +194,7 @@
                type:'post',
                data:data,
                success: function(data){
-                   Materialize.toast('Add Success!', 4000)
+                   Materialize.toast('Add Success!', 4000);
                }
            });
         });
