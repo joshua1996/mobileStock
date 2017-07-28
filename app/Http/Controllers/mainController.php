@@ -48,13 +48,17 @@ class mainController extends Controller
     {
         $sales = new salesModel();
        // $salesR = $sales->all();
-        $salesR = $sales->where('sales.shopID', '=', Session::get('shopID'))
+        $salesR = $sales
+            ->select(['staff.*', 'sales.*', 'stock.*', 'staff.name as staffName', 'sales.quantity as salesquantity', 'sales.price as salesprice'])
+            ->where('sales.shopID', '=', Session::get('shopID'))
             ->whereDate('dateTime', '=', date('Y-m-d'))
             ->join('staff', 'sales.staffID', '=', 'staff.staffID')
             ->join('stock', 'sales.name', '=', 'stock.stockID')
-            ->get(['staff.*', 'sales.*', 'stock.*', 'staff.name as staffName', 'sales.quantity as salesquantity', 'sales.price as salesprice']);
+            ->paginate(1);
         return view('user.sales.salesHistory', ['sales' => $salesR]);
     }
+
+
 
     public function salesSearchDate(Request $r)
     {

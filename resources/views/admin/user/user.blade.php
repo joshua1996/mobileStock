@@ -1,6 +1,7 @@
 @extends('layout.sidebarAdmin')
 @section('section')
     <div class="row">
+
         <div class="row">
             <a href="#modal2" class="waves-effect waves-light btn">add user</a>
         </div>
@@ -10,7 +11,6 @@
                 <tr>
                     <th>No</th>
                     <th>Username</th>
-                    <th>Password</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -20,9 +20,8 @@
                     <tr userid="{{ $value->userID }}" class="c{{ $i+1 }}">
                         <td>{{ $i+1 }}</td>
                         <td class="a{{ $i+1 }}">{{ $value->username }}</td>
-                        <th class="b{{ $i+1 }}">{{ $value->password }}</th>
                         <td><a class="waves-effect waves-light btn" href="#modal1" ind="{{ $i + 1 }}">edit</a></td>
-                        <td><a class="waves-effect waves-light btn delete" deleteid="{{ $value->stockID }}">delete</a></td>
+                        <td><a class="waves-effect waves-light btn delete" deleteid="{{ $value->userID }}">delete</a></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -71,6 +70,9 @@
 
         <script>
             $(document).ready(function () {
+                        @if ($errors->any())
+                         Materialize.toast(' {{ $errors->first('password') }}', 4000);
+                        @endif
                 var index = 0;
                 $('#modal1').modal();
                 $('#modal1').modal({
@@ -98,6 +100,20 @@
                            Materialize.toast('Edit Success!', 4000);
                        }
                    });
+                });
+
+                $('.delete').on('click', function () {
+                    var data = {
+                        userID :$(this).attr('deleteid')
+                    }
+                    $.ajax({
+                        url:'{{ route('userDeleteAdmin') }}',
+                        type:'post',
+                        data:data,
+                        success: function (data) {
+                            Materialize.toast('Delete Success!', 4000);
+                        }
+                    });
                 });
             });
         </script>

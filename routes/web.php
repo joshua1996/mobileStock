@@ -61,6 +61,7 @@ Route::group(['middleware' => 'notAdmin'], function (){
     Route::get('/admin/stock', 'adminController@stock')->name('stockAdmin');
     Route::get('/admin/supplyPerson', 'adminController@supplyPerson')->name('supplyPerson');
     Route::get('/admin/user', 'adminController@userEdit')->name('userEditAdmin');
+    Route::get('/admin/staff', 'adminController@staff')->name('staffAdmin');
     //
     Route::post('/admin/logout', 'adminLoginController@logout')->name('adminLogout');
     Route::post('/admin/sales', 'adminController@adminSalesP')->name('adminSalesP');
@@ -72,8 +73,16 @@ Route::group(['middleware' => 'notAdmin'], function (){
     Route::post('/admin/stockAdd', 'adminController@stockAdd')->name('stockAddAdmin');
     Route::post('/admin/supplyPersonEdit', 'adminController@supplyPersonEdit')->name('supplyPersonEditAdmin');
     Route::post('/admin/supplyPersonAdd', 'adminController@supplyPersonAdd')->name('supplyPersonAddAdmin');
+    Route::post('/admin/supplyPersonDelete', 'adminController@supplyPersonDelete')->name('supplyPersonDeleteAdmin');
     Route::post('/admin/userAdd', 'adminController@userAdd')->name('userAddAdmin');
     Route::post('/admin/userEdit', 'adminController@userEditP')->name('userEditAdminP');
+    Route::post('/admin/userDelete', 'adminController@userDelete')->name('userDeleteAdmin');
+    Route::post('/admin/staff', 'adminController@staffSelect')->name('staffSelectAdmin');
+    Route::post('/admin/staffEdit', 'adminController@staffEdit')->name('staffEditAdmin');
+    Route::post('/admin/staffDelete', 'adminController@staffDelete')->name('staffDeleteAdmin');
+    Route::post('/admin/staffAdd', 'adminController@staffAdd')->name('staffAddAdmin');
+
+
 });
 
 

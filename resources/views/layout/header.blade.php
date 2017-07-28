@@ -19,6 +19,7 @@
     {{--<link rel="stylesheet" href="{{ asset("css/bootstrap.css") }}" />--}}
     <link rel="stylesheet" href="{{ asset("css/jquery-ui.css") }}">
     <link rel="stylesheet" href="{{ asset("materialize/css/materialize.css") }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script>
         $(document).ready(function () {
             $.ajaxSetup({

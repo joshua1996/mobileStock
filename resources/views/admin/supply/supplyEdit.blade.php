@@ -21,7 +21,7 @@
                         <td>{{ $i+1 }}</td>
                         <td class="a{{ $i+1 }}">{{ $value->name }}</td>
                         <td><a class="waves-effect waves-light btn" id="edit" href="#modal1" ind="{{ $i + 1 }}">edit</a></td>
-                        <td><a class="waves-effect waves-light btn delete" deleteid="{{ $value->stockID }}">delete</a></td>
+                        <td><a class="waves-effect waves-light btn delete" deleteid="{{ $value->supplyID }}">delete</a></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -96,6 +96,20 @@
                     data: data,
                     success: function(){
                         Materialize.toast('Add Success!', 4000);
+                    }
+                });
+            });
+
+            $('.delete').on('click', function () {
+                var data = {
+                    supplyID :$(this).attr('deleteid')
+                }
+                $.ajax({
+                    url:'{{ route('supplyPersonDeleteAdmin') }}',
+                    type:'post',
+                    data:data,
+                    success: function (data) {
+                        Materialize.toast('Delete Success!', 4000);
                     }
                 });
             });

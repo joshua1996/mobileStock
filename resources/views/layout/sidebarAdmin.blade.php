@@ -50,6 +50,7 @@ document.getElementById('logout').submit();">Log Out</a></li>
             <li><a class="waves-effect" href="{{ route('stockAdmin') }}">Stock</a></li>
             <li><a class="waves-effect" href="{{ route('supplyPerson') }}">Supply Person</a></li>
             <li><a class="waves-effect" href="{{ route('userEditAdmin') }}">User</a></li>
+            <li><a class="waves-effect" href="{{ route('staffAdmin') }}">Staff</a></li>
         </ul>
         <script>
            $(document).ready(function () {

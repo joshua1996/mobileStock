@@ -10,8 +10,10 @@ use App\supplyModel;
 use App\stockTypeModel;
 use App\staffModel;
 use App\userModel;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class adminController extends Controller
 {
@@ -79,7 +81,8 @@ class adminController extends Controller
     public function supply()
     {
         $supplyPerson = new supplyPersonModel();
-        $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))->get();
+        $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))
+            ->where('remove', '=', false)->get();
         $stock = new stockModel();
         $stockR = $stock->where('shopID', '=', Session::get('shopID'))
             ->where('remove', '=', false)->get();
@@ -184,7 +187,8 @@ class adminController extends Controller
     public function supplyPerson()
     {
         $supplyPerson = new supplyPersonModel();
-        $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))->get();
+        $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))
+            ->where('remove', '=', false)->get();
         return view('admin.supply.supplyEdit', ['supplyPerson' => $supplyPersonR]);
     }
 
@@ -207,23 +211,44 @@ class adminController extends Controller
         ]);
     }
 
+    public function supplyPersonDelete(Request $r)
+    {
+        $supplyPerson = new supplyPersonModel();
+        $supplyPerson->where('supplyID', '=', $r->input('supplyID'))
+            ->update([
+                'remove' => true
+            ]);
+    }
+
     public function userEdit()
     {
         $user = new userModel();
-        $userR = $user->where('shopID', '=', Session::get('shopID'))->get();
+        $userR = $user->where('shopID', '=', Session::get('shopID'))
+            ->where('remove', '=', false)->get();
         return view('admin.user.user', ['user' => $userR]);
     }
 
+
     public function userAdd(Request $r)
     {
-        $user = new userModel();
-        $user->insert([
-            'userID' => 'user'.uniqid(),
-            'username' => $r->username,
-            'password' => bcrypt($r->password),
-            'shopID' => Session::get('shopID')
+        $vali =  Validator::make($r->all(), [
+            'username' => 'required|string|max:255|unique:user',
+            'password' => 'required|string|min:6',
         ]);
-        return redirect()->route('userEditAdmin');
+        if ($vali->fails())
+        {
+            return redirect()->route('userEditAdmin')->withErrors($vali)->withInput();
+        }else{
+            $user = new userModel();
+            $user->insert([
+                'userID' => 'user'.uniqid(),
+                'username' => $r->username,
+                'password' => bcrypt($r->password),
+                'shopID' => Session::get('shopID')
+            ]);
+            return redirect()->route('userEditAdmin');
+        }
+
     }
 
     public function userEditP(Request $r)
@@ -234,5 +259,55 @@ class adminController extends Controller
                 'username' => $r->input('username'),
                 'password' => bcrypt($r->input('password'))
             ]);
+    }
+
+    public function userDelete(Request $r)
+    {
+        $user = new userModel();
+        $user->where('userID', '=', $r->input('userID'))
+            ->update([
+                'remove' => true
+            ]);
+    }
+
+    public function staff()
+    {
+        $user = new userModel();
+        $userR = $user->where('shopID', '=', Session::get('shopID'))
+            ->where('remove', '=', false)->get();
+        return view('admin.staff.staff', ['user' =>$userR]);
+    }
+
+    public function staffSelect(Request $r)
+    {
+        $staff = new staffModel();
+        $staffR = $staff->where('userID', '=', $r->input('userid'))
+            ->where('remove', '=', false)
+            ->get();
+        return Response()->json(['staff' => $staffR]);
+    }
+
+    public function staffEdit(Request $r)
+    {
+        $staff = new staffModel();
+        $staff->where('staffID', '=', $r->input('staffID'))
+            ->update(['name' => $r->input('name')]);
+    }
+
+    public function staffDelete(Request $r)
+    {
+        $staff = new staffModel();
+        $staff->where('staffID', '=', $r->input('staffid'))
+            ->update(['remove' => true]);
+    }
+
+    public function staffAdd(Request $r)
+    {
+        $staff = new staffModel();
+        $staff->insert([
+            'staffID' => 'staff'.uniqid(),
+            'name' => $r->input('staffid'),
+            'userID' => $r->input('userid')
+        ]);
     }
 }
