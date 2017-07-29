@@ -39,7 +39,7 @@
         @endforeach
         </tbody>
     </table>
-
+    {{ $supply->render() }}
     <script>
         $(document).ready(function(){
 
@@ -66,19 +66,20 @@
                     dateTimeEnd : dd.getFullYear() + '-' + ("0" + (dd.getMonth() + 1)).slice(-2) + '-' + dd.getDate()
                 };
                 console.log(data);
-                $.ajax({
-                    url:'{{ route('supplyAdminSearchDate') }}',
-                    type: 'post',
-                    data: data,
-                    dataType: 'json',
-                    success: function (data) {
-                        $('#tableBody').empty();
-                        $.each(data.data, function(index, value){
-                            $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.supplyName +'</td><td>'+ value.stockstockname +'</td><td>'+ value.supplyquantity +'</td><td>'+ value.supplyprice +'</td><td>'+value.dateTime+'</td><td>'+value.staffName+'</td></tr>');
-                        });
+                window.location.replace('/admin/supplyHistory/'+$('#searchDate').val()+ '/' + dd.getFullYear() + '-' + ("0" + (dd.getMonth() + 1)).slice(-2) + '-' + dd.getDate());
+            {{--$.ajax({--}}
+                    {{--url:'{{ route('supplyAdminSearchDate') }}',--}}
+                    {{--type: 'post',--}}
+                    {{--data: data,--}}
+                    {{--dataType: 'json',--}}
+                    {{--success: function (data) {--}}
+                        {{--$('#tableBody').empty();--}}
+                        {{--$.each(data.data, function(index, value){--}}
+                            {{--$('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.supplyName +'</td><td>'+ value.stockstockname +'</td><td>'+ value.supplyquantity +'</td><td>'+ value.supplyprice +'</td><td>'+value.dateTime+'</td><td>'+value.staffName+'</td></tr>');--}}
+                        {{--});--}}
 
-                    }
-                });
+                    {{--}--}}
+                {{--});--}}
             });
         });
     </script>

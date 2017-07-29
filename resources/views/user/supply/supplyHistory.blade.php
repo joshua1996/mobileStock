@@ -1,43 +1,54 @@
 @extends('layout.sideBar')
 @section('section')
 <div class="row">
-    <div class="col s6">
-        <label for="">Start Date</label>
-        <input type="date" class="datepicker" name="searchDate" id="searchDate">
-    </div>
-    <div class="col s6">
-        <label for="">End Date</label>
-        <input type="date" class="datepicker" name="searchDateEnd" id="searchDateEnd">
+    <div class="row">
+        <div class="col s6">
+            <label for="">Start Date</label>
+            <input type="date" class="datepicker" name="searchDate" id="searchDate">
+        </div>
+        <div class="col s6">
+            <label for="">End Date</label>
+            <input type="date" class="datepicker" name="searchDateEnd" id="searchDateEnd">
 
+        </div>
     </div>
-    <button id="searchBtn" class="waves-effect waves-light btn">Search</button>
 
-    <table class="highlight">
-        <thead>
-        <tr>
-            <th>No</th>
-            <th>Person</th>
-            <th>Stock Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Time</th>
-            <th>Staff Name</th>
-        </tr>
-        </thead>
-        <tbody id="tableBody">
-        @foreach($supply as $index=>$value)
+    <div class="row">
+        <button id="searchBtn" class="waves-effect waves-light btn">Search</button>
+    </div>
+
+    <div class="row">
+        <table class="highlight">
+            <thead>
             <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $value->supplyName }}</td>
-                <td>{{ $value->stockstockname }}</td>
-                <td>{{ $value->supplyquantity }}</td>
-                <td>{{ $value->supplyprice }}</td>
-                <td>{{ $value->dateTime }}</td>
-                <td>{{ $value->staffName }}</td>
+                <th>No</th>
+                <th>Person</th>
+                <th>Stock Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Time</th>
+                <th>Staff Name</th>
             </tr>
-        @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody id="tableBody">
+            @foreach($supply as $index=>$value)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $value->supplyName }}</td>
+                    <td>{{ $value->stockstockname }}</td>
+                    <td>{{ $value->supplyquantity }}</td>
+                    <td>{{ $value->supplyprice }}</td>
+                    <td>{{ $value->dateTime }}</td>
+                    <td>{{ $value->staffName }}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+
+   <div class="row">
+       {{ $supply->render() }}
+   </div>
 
     <script>
         $(document).ready(function(){
@@ -65,19 +76,20 @@
                     dateTimeEnd : dd.getFullYear() + '-' + ("0" + (dd.getMonth() + 1)).slice(-2) + '-' + dd.getDate()
                 };
                 console.log(data);
-                $.ajax({
-                    url:'{{ route('supplySearchDate') }}',
-                    type: 'post',
-                    data: data,
-                    dataType: 'json',
-                    success: function (data) {
-                        $('#tableBody').empty();
-                        $.each(data.data, function(index, value){
-                            $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.supplyName +'</td><td>'+ value.stockstockname +'</td><td>'+ value.supplyquantity +'</td><td>'+ value.supplyprice +'</td><td>'+value.dateTime+'</td><td>'+value.staffName+'</td></tr>');
-                        });
+                window.location.replace('/supplyHistory/'+$('#searchDate').val()+ '/' + dd.getFullYear() + '-' + ("0" + (dd.getMonth() + 1)).slice(-2) + '-' + dd.getDate());
+            {{--$.ajax({--}}
+                    {{--url:'{{ route('supplySearchDate') }}',--}}
+                    {{--type: 'post',--}}
+                    {{--data: data,--}}
+                    {{--dataType: 'json',--}}
+                    {{--success: function (data) {--}}
+                        {{--$('#tableBody').empty();--}}
+                        {{--$.each(data.data, function(index, value){--}}
+                            {{--$('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.supplyName +'</td><td>'+ value.stockstockname +'</td><td>'+ value.supplyquantity +'</td><td>'+ value.supplyprice +'</td><td>'+value.dateTime+'</td><td>'+value.staffName+'</td></tr>');--}}
+                        {{--});--}}
 
-                    }
-                });
+                    {{--}--}}
+                {{--});--}}
             });
         });
     </script>

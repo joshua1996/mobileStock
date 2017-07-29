@@ -15,15 +15,15 @@
                 <div class="formListTool row">
                     <div class="input-field col s3">
                         <input type="hidden" name="stock[]" id="stocknamehidden">
-                        <input  type="text" class="validate stock"  autocomplete="off" autoid="">
+                        <input  type="text" class="validate stock"  autocomplete="off" autoid="" required>
                         <label for="stock">Stock</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="" class="" type="text" class="validate" name="quantity[]">
+                        <input id="" class="" type="text" class="validate" name="quantity[]" required>
                         <label for="Quantity">Quantity</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="" class="" type="text" class="validate" name="price[]">
+                        <input id="" class="" type="text" class="validate" name="price[]" required>
                         <label for="price">Price</label>
                     </div>
                     <div class="col s3">
@@ -58,7 +58,7 @@
                 });
 
                 $('.addList').on('click', function () {
-                    var appendList = $(' <div class="formListTool row"> <div class="input-field col s3"> <input type="hidden" name="stock[]" id="stocknamehidden"> <input type="text" class="validate stock" autocomplete="off" autoid=""> <label for="stock">Stock</label> </div> <div class="input-field col s3"> <input id="" class="" type="text" class="validate" name="quantity[]"> <label for="Quantity">Quantity</label> </div> <div class="input-field col s3"> <input id="" class="" type="text" class="validate" name="price[]"> <label for="price">Price</label> </div> <div class="col s3"> <a class="deleteList waves-effect waves-light btn">delete row</a> </div> </div>');
+                    var appendList = $('<div class="formListTool row"> <div class="input-field col s3"> <input type="hidden" name="stock[]" id="stocknamehidden"> <input type="text" class="validate stock" autocomplete="off" autoid="" required> <label for="stock">Stock</label> </div> <div class="input-field col s3"> <input id="" class="" type="text" class="validate" name="quantity[]" required> <label for="Quantity">Quantity</label> </div> <div class="input-field col s3"> <input id="" class="" type="text" class="validate" name="price[]" required> <label for="price">Price</label> </div> <div class="col s3"> <a class="deleteList waves-effect waves-light btn">ADD</a> </div> </div>');
                     $('.formList').append(appendList);
                     $('.stock', appendList).autocomplete2({
                         data:stockList

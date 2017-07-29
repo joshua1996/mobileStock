@@ -31,6 +31,8 @@
             @endforeach
             </tbody>
         </table>
+
+        {{ $stock->render() }}
     </div>
 
 </div>

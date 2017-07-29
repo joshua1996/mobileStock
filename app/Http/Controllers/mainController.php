@@ -29,6 +29,7 @@ class mainController extends Controller
     public function sales(Request $r)
     {
         $sales = new salesModel();
+        $stock = new stockModel();
         $datetime = date('Y-m-d H:i:s');
         foreach ($r->input('stock') as $i=>$value)
         {
@@ -40,6 +41,11 @@ class mainController extends Controller
                 'staffID' => $r->input('staff'),
                 'shopID' => Session::get('shopID')
             ]);
+            $stockR = $stock->where('stockID', '=', $r->input('stock')[$i])->first();
+            $stock->where('stockID', '=', $r->input('stock')[$i])
+                ->update([
+                    'quantity' => $stockR->quantity - $r->input('quantity')[$i]
+                ]);
         }
         return redirect()->route('home');
     }
@@ -47,14 +53,13 @@ class mainController extends Controller
     public function salesHistory()
     {
         $sales = new salesModel();
-       // $salesR = $sales->all();
         $salesR = $sales
             ->select(['staff.*', 'sales.*', 'stock.*', 'staff.name as staffName', 'sales.quantity as salesquantity', 'sales.price as salesprice'])
             ->where('sales.shopID', '=', Session::get('shopID'))
             ->whereDate('dateTime', '=', date('Y-m-d'))
             ->join('staff', 'sales.staffID', '=', 'staff.staffID')
             ->join('stock', 'sales.name', '=', 'stock.stockID')
-            ->paginate(1);
+            ->paginate(10);
         return view('user.sales.salesHistory', ['sales' => $salesR]);
     }
 
@@ -63,14 +68,21 @@ class mainController extends Controller
     public function salesSearchDate(Request $r)
     {
         $sales = new salesModel();
-        //$salesR = $sales->whereDate('dateTime', '=', $r->dateTime)->get();
         $salesR = $sales
+            ->select(['staff.*', 'sales.*', 'stock.*', 'staff.name as staffName', 'sales.quantity as salesquantity', 'sales.price as salesprice'])
             ->where('sales.shopID', '=', Session::get('shopID'))
-            ->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])
+            ->whereBetween('dateTime', [$r->startDate, $r->endDate])
             ->join('staff', 'sales.staffID', '=', 'staff.staffID')
             ->join('stock', 'sales.name', '=', 'stock.stockID')
-            ->get(['staff.*', 'sales.*', 'stock.*', 'staff.name as staffName', 'sales.quantity as salesquantity', 'sales.price as salesprice']);
-        return Response()->json(['data' =>$salesR]);
+            ->paginate(10);
+        return view('user.sales.salesHistory', ['sales' => $salesR]);
+        //        $salesR = $sales
+//            ->where('sales.shopID', '=', Session::get('shopID'))
+//            ->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])
+//            ->join('staff', 'sales.staffID', '=', 'staff.staffID')
+//            ->join('stock', 'sales.name', '=', 'stock.stockID')
+//            ->get(['staff.*', 'sales.*', 'stock.*', 'staff.name as staffName', 'sales.quantity as salesquantity', 'sales.price as salesprice']);
+//        return Response()->json(['data' =>$salesR]);
     }
 
     public function supply()
@@ -89,6 +101,7 @@ class mainController extends Controller
     {
         $datetime = date('Y-m-d H:i:s');
         $supply = new supplyModel();
+        $stock = new stockModel();
         $supplyPerson = new supplyPersonModel();
         foreach ($r->input('stock') as $i=>$item) {
             $supply->insert([
@@ -100,6 +113,12 @@ class mainController extends Controller
                 'staffID' => $r->input('staff'),
                 'shopID' => Session::get('shopID')
             ]);
+            $stockR = $stock->where('stockID', '=', $r->input('stock')[$i])->first();
+            $stock->where('stockID', '=', $r->input('stock')[$i])
+                ->update([
+                    'quantity' => $stockR->quantity - $r->input('quantity')[$i]
+                ]);
+
         }
         return redirect()->route('supply');
     }
@@ -107,12 +126,14 @@ class mainController extends Controller
     public function supplyHistory()
     {
         $supply = new supplyModel();
-        $supplyR = $supply->where('supply.shopID', '=', Session::get('shopID'))
+        $supplyR = $supply
+            ->select(['staff.*', 'supply.*', 'supplyperson.*', 'stock.*', 'staff.name as staffName', 'supplyperson.name as supplyName', 'stock.stockName as stockstockname', 'supply.quantity as supplyquantity', 'supply.price as supplyprice'])
+            ->where('supply.shopID', '=', Session::get('shopID'))
             ->whereDate('dateTime', '=', date('Y-m-d'))
             ->join('staff', 'supply.staffID', '=', 'staff.staffID')
             ->join('supplyperson', 'supply.person', '=', 'supplyperson.supplyID')
             ->join('stock', 'supply.stockName', '=', 'stock.stockID')
-            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'stock.*', 'staff.name as staffName', 'supplyperson.name as supplyName', 'stock.stockName as stockstockname', 'supply.quantity as supplyquantity', 'supply.price as supplyprice']);
+            ->paginate(10);
 
         return view('user.supply.supplyHistory', ['supply' => $supplyR]);
     }
@@ -120,14 +141,16 @@ class mainController extends Controller
     public function supplySearchDate(Request $r)
     {
         $supply = new supplyModel();
-        $supplyR = $supply->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])
+        $supplyR = $supply
+            ->select(['staff.*', 'supply.*', 'supplyperson.*', 'stock.*', 'staff.name as staffName', 'supplyperson.name as supplyName', 'stock.stockName as stockstockname', 'supply.quantity as supplyquantity', 'supply.price as supplyprice'])
+            ->whereBetween('dateTime', [$r->startDate, $r->endDate])
             ->where('supply.shopID', '=', Session::get('shopID'))
             ->join('staff', 'supply.staffID', '=', 'staff.staffID')
             ->join('supplyperson', 'supply.person', '=', 'supplyperson.supplyID')
             ->join('stock', 'supply.stockName', '=', 'stock.stockID')
-            ->get(['staff.*', 'supply.*', 'supplyperson.*', 'stock.*', 'staff.name as staffName', 'supplyperson.name as supplyName', 'stock.stockName as stockstockname', 'supply.quantity as supplyquantity', 'supply.price as supplyprice']);
-
-        return Response()->json(['data' =>$supplyR]);
+            ->paginate(10);
+        return view('user.supply.supplyHistory', ['supply' => $supplyR]);
+      //  return Response()->json(['data' =>$supplyR]);
         // return view('user.sales.salesHistory', ['sales'=> $salesR]);
     }
 

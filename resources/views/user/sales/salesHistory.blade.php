@@ -73,19 +73,20 @@
                         dateTimeEnd : dd.getFullYear() + '-' + ("0" + (dd.getMonth() + 1)).slice(-2) + '-' + dd.getDate()
                     };
                     console.log(data);
-                    $.ajax({
-                        url:'{{ route('salesSearchDate') }}',
-                        type: 'post',
-                        data: data,
-                        dataType: 'json',
-                        success: function (data) {
-                            $('#tableBody').empty();
-                            $.each(data.data, function(index, value){
-                                $('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.stockName +'</td><td>'+ value.salesquantity +'</td><td>'+ value.salesprice +'</td><td>'+ value.dateTime +'</td><td>'+ value.staffName +'</td></tr>')
-                            });
+                    window.location.replace('/salesHistory/'+$('#searchDate').val()+ '/' + dd.getFullYear() + '-' + ("0" + (dd.getMonth() + 1)).slice(-2) + '-' + dd.getDate());
+                    {{--$.ajax({--}}
+                        {{--url:'{{ route('salesSearchDate') }}',--}}
+                        {{--type: 'post',--}}
+                        {{--data: data,--}}
+                        {{--dataType: 'json',--}}
+                        {{--success: function (data) {--}}
+                            {{--$('#tableBody').empty();--}}
+                            {{--$.each(data.data, function(index, value){--}}
+                                {{--$('#tableBody').append('<tr><td>'+ (index+1) +'</td><td>'+ value.stockName +'</td><td>'+ value.salesquantity +'</td><td>'+ value.salesprice +'</td><td>'+ value.dateTime +'</td><td>'+ value.staffName +'</td></tr>')--}}
+                            {{--});--}}
 
-                        }
-                    });
+                        {{--}--}}
+                    {{--});--}}
                 });
 
             });

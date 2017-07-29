@@ -20,14 +20,14 @@
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="last_name" type="text" class="validate" name="username">
-                            <label for="last_name">Username</label>
+                            <input id="" type="text" class="validate" name="username">
+                            <label for="username">Username</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="last_name" type="text" class="validate" name="password">
-                            <label for="last_name">Password</label>
+                            <input id="" type="password" class="validate" name="password">
+                            <label for="password">Password</label>
                         </div>
 
                     </div>
