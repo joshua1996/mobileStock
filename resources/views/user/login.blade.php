@@ -10,12 +10,17 @@
     </style>
 </head>
 <body>
-aa
     <div class="container">
         <div class="row" style="padding-top: 200px;">
             <div class="col s3"></div>
             <div class="col s6">
-
+                @if (count($errors))
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
                 <form action="{{ route('loginP') }}" method="post" class="">
                     {{ csrf_field() }}
                     <div class="row">
@@ -39,6 +44,11 @@ aa
             <div class="col s3"></div>
         </div>
 
+        <script>
+            $(document).ready(function () {
+
+            });
+        </script>
     </div>
 
 
