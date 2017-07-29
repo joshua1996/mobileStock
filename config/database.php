@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => 'pgsql',//env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,13 +54,26 @@ return [
             'engine' => null,
         ],
 
+//        'pgsql' => [
+//            'driver' => 'pgsql',
+//            'host' => env('DB_HOST', 'ec2-23-23-248-162.compute-1.amazonaws.com'),
+//            'port' => env('DB_PORT', '5432'),
+//            'database' => env('DB_DATABASE', 'db5frbahsaqmva'),
+//            'username' => env('DB_USERNAME', 'unqyuhhjykitzm'),
+//            'password' => env('DB_PASSWORD', 'ccd1d1be5cbd4eeeb34039607be81c8bc05705f6612db28d81eafc438f31a5bc'),
+//            'charset' => 'utf8',
+//            'prefix' => '',
+//            'schema' => 'public',
+//            'sslmode' => 'prefer',
+//        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', 'ec2-23-23-248-162.compute-1.amazonaws.com'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'db5frbahsaqmva'),
-            'username' => env('DB_USERNAME', 'unqyuhhjykitzm'),
-            'password' => env('DB_PASSWORD', 'ccd1d1be5cbd4eeeb34039607be81c8bc05705f6612db28d81eafc438f31a5bc'),
+            'host' => 'localhost',
+            'port' => '5432',
+            'database' => '11_7_17_stocksystem',
+            'username' => 'postgres',
+            'password' => '',
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
