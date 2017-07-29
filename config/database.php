@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => 'mysql',//env('DB_CONNECTION', 'pgsql'),
+    'default' => 'pgsql',//env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
