@@ -3,6 +3,7 @@
     <div class="row">
         <div class="row">
             <div class="input-field col s12">
+                {{ $user }}
                 <select id="userselect">
                     <option value="" disabled selected>Choose your option</option>
                     @foreach($user as $i=>$value)
