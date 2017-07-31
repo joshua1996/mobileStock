@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\userModel;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Session;
@@ -20,7 +21,11 @@ class userLoginController extends Controller
 
     public function userLogin()
     {
-        return view('user.login');
+        $user = new userModel();
+        $userR = $user
+            ->where('remove', '=', null)
+            ->get();
+        return view('user.login', ['user' => $userR]);
     }
 
     protected function guard()

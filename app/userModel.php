@@ -8,4 +8,6 @@ class userModel extends Authenticatable
 {
     protected $table = 'user';
     public $timestamps = false;
+    public $incrementing = false;
+    protected $primaryKey = 'userID';
 }

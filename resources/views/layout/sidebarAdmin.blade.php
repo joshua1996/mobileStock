@@ -48,6 +48,7 @@ document.getElementById('logout').submit();">Log Out</a></li>
             <li><a class="waves-effect" href="{{ route('supplyHistoryAdmin') }}">Supply History</a></li>
             <li><a class="subheader">Other</a></li>
             <li><a class="waves-effect" href="{{ route('stockAdmin') }}">Stock</a></li>
+            <li><a class="waves-effect" href="{{ route('stockTypeAdmin') }}">Stock Type</a></li>
             <li><a class="waves-effect" href="{{ route('supplyPerson') }}">Supply Person</a></li>
             <li><a class="waves-effect" href="{{ route('userEditAdmin') }}">User</a></li>
             <li><a class="waves-effect" href="{{ route('staffAdmin') }}">Staff</a></li>

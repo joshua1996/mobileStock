@@ -72,7 +72,7 @@ class adminController extends Controller
         $salesR = $sales
             ->select(['staff.*', 'sales.*', 'stock.*', 'staff.name as staffName', 'sales.quantity as salesquantity', 'sales.price as salesprice'])
             ->where('sales.shopID', '=', Session::get('shopID'))
-            ->whereBetween('dateTime', [$r->dateTime, $r->dateTimeEnd])
+            ->whereBetween('dateTime', [$r->startDate, $r->endDate])
             ->join('staff', 'sales.staffID', '=', 'staff.staffID')
             ->join('stock', 'sales.name', '=', 'stock.stockID')
             ->paginate(10);
@@ -183,15 +183,15 @@ class adminController extends Controller
 
     public function stockAdd(Request $r)
     {
-
         $stock = new stockModel();
         $stock->insert([
            'stockID'=> 'stock'.uniqid(),
             'stockName' => $r->input('stockname'),
             'price' => $r->input('price'),
             'quantity' => $r->input('quantity'),
-            'stocktype' => $r->input('stocktype'),
-            'shopID' => Session::get('shopID')
+            'stockType' => $r->input('stocktype'),
+            'shopID' => Session::get('shopID'),
+            'remove' => false
         ]);
     }
 
@@ -218,7 +218,8 @@ class adminController extends Controller
         $supplyPerson->insert([
             'supplyID' => 'supply'.uniqid(),
             'name' => $r->supplyPerson,
-            'shopID' => Session::get('shopID')
+            'shopID' => Session::get('shopID'),
+            'remove' => false
         ]);
     }
 
@@ -318,7 +319,45 @@ class adminController extends Controller
         $staff->insert([
             'staffID' => 'staff'.uniqid(),
             'name' => $r->input('staffid'),
-            'userID' => $r->input('userid')
+            'userID' => $r->input('userid'),
+            'remove' => false
         ]);
+    }
+
+    public function stockType()
+    {
+        $stockType = new stockTypeModel();
+        $stockTypeR = $stockType->where('shopID', '=', Session::get('shopID'))
+            ->where('remove', '=', false)->get();
+        return view('admin.stock.stockType', ['stockType' => $stockTypeR]);
+    }
+
+    public function stockTypeAdd(Request $r)
+    {
+        $stockType = new stockTypeModel();
+        $stockType->insert([
+            'stockTypeID' => 'stockType'.uniqid(),
+            'name' => $r->input('name'),
+            'shopID' => Session::get('shopID'),
+            'remove' => false
+        ]);
+    }
+
+    public function stockTypeEdit(Request $r)
+    {
+        $stockType = new stockTypeModel();
+        $stockType->where('stockTypeID', '=', $r->input('stockTypeID'))
+            ->update([
+                'name' => $r->input('name')
+            ]);
+    }
+
+    public function  stockTypeDelete(Request $r)
+    {
+        $stockType = new stockTypeModel();
+        $stockType->where('stockTypeID', '=', $r->input('stockTypeID'))
+            ->update([
+                'remove' => true
+            ]);
     }
 }
