@@ -1,4 +1,4 @@
-@extends('layout.sideBarAdmin')
+@extends('layout.sidebarAdmin')
 @section('section')
     <div class="row">
         <div class="row">
