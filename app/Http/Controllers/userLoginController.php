@@ -38,10 +38,9 @@ class userLoginController extends Controller
         return 'username';
     }
 
-    public function saveSession()
+    protected function authenticated()
     {
         Session::put('shopID', Auth::guard('user')->user()->shopID);
-       // return true;
     }
 
     protected function attemptLogin(Request $r)
