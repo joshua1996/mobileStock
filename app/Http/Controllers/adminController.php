@@ -29,7 +29,7 @@ class adminController extends Controller
         Session::put('abc', 'aaa');
         return Response()->json([
             'ad' => Auth::guard('admin')->user()->shopID,
-            'session' =>  Session::get('shopID'),
+            'session' =>  Session::get('shopIDa'),
             'abc' => Session::get('abc')
         ]);//view('admin.sales.sales',  ['stock' => $stockR, 'staff'=> $staffR]);
     }
