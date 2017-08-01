@@ -35,7 +35,7 @@ class adminLoginController extends Controller
 
     protected function saveSession()
     {
-        Session::put('shopIDa', Auth::guard('admin')->user()->shopID);
+        Session::put('shopID', Auth::guard('admin')->user()->shopID);
         //session(['shopID' =>  Auth::guard('admin')->user()->shopID]);
         // return true;
     }
