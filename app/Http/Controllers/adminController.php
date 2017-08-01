@@ -286,7 +286,7 @@ class adminController extends Controller
     {
         $user = new userModel();
         $userR = $user->where('shopID', '=', Session::get('shopID'))
-            ->where('remove', '=', false)->get();
+            ->get();
         return view('admin.staff.staff', ['user' =>$userR]);
     }
 
