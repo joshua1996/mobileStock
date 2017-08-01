@@ -27,7 +27,6 @@ class adminController extends Controller
         $staffR = $staff->join('user', 'staff.userID', '=', 'user.userID')
             ->where('user.shopID', '=', Session::get('shopID'))->get();
         Session::put('abc', 'aaa');
-        Session::put('shopID', Auth::guard('admin')->user()->shopID);
         return Response()->json([
             'ad' => Auth::guard('admin')->user()->shopID,
             'session' =>  Session::get('shopID'),

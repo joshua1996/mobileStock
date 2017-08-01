@@ -37,6 +37,6 @@ class adminLoginController extends Controller
     {
         Session::put('shopID', Auth::guard('admin')->user()->shopID);
         //session(['shopID' =>  Auth::guard('admin')->user()->shopID]);
-        // return true;
+         return true;
     }
 }
