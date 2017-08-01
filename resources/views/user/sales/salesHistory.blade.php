@@ -1,7 +1,7 @@
 @extends('layout.sideBar')
 @section('section')
 
-    <div class="row">
+    <div class="">
         <div class="row">
             <div class="col s6">
                 <label for="">Start Date</label>

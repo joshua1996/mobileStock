@@ -12,7 +12,6 @@
 <body>
     <div class="container">
         <div class="row" style="padding-top: 200px;">
-            <div class="col s3"></div>
             <div class="col s6">
                 @if (count($errors))
                     <ul>
@@ -24,7 +23,7 @@
                 <form action="{{ route('loginP') }}" method="post" class="">
                     {{ csrf_field() }}
                     <div class="row">
-                        <div class="input-field col s12">
+                        <div class="input-field col s6">
                             <input id="" type="text" class="validate" name="username">
                             <label for="username">Username</label>
                         </div>
@@ -41,7 +40,6 @@
 
                 </form>
             </div>
-            <div class="col s3"></div>
         </div>
 
         <script>

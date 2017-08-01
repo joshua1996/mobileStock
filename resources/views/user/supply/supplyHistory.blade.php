@@ -1,6 +1,6 @@
 @extends('layout.sideBar')
 @section('section')
-<div class="row">
+<div class="">
     <div class="row">
         <div class="col s6">
             <label for="">Start Date</label>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="row">
-        <button id="searchBtn" class="waves-effect waves-light btn">Search</button>
+        <button id="searchBtn" class="waves-effect waves-light btn"><i class="material-icons left">search</i>Search</button>
     </div>
 
     <div class="row">

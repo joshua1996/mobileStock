@@ -1,7 +1,7 @@
 @extends('layout.sidebarAdmin')
 @section('section')
 
-    <div class="row">
+    <div class="">
         <form action="{{ route('adminSalesP') }}" method="post" id="stockform">
             {{ csrf_field() }}
             <div class="formList row">
@@ -19,11 +19,11 @@
                         <label for="stock">Stock</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="" class="" type="text" class="validate" name="quantity[]" required>
+                        <input id="" type="text" class="validate" name="quantity[]" required>
                         <label for="Quantity">Quantity</label>
                     </div>
                     <div class="input-field col s3">
-                        <input id="" class="" type="text" class="validate" name="price[]" required>
+                        <input id=""  type="text" class="validate" name="price[]" required>
                         <label for="price">Price</label>
                     </div>
                     <div class="col s3">
@@ -32,15 +32,15 @@
                 </div>
             </div>
             <div class="row">
-                <a class="addList waves-effect waves-light btn" style="float: right;">ADD</a>
-                <button type="submit"  class="waves-effect waves-light btn">Save</button>
+                <a class="addList waves-effect waves-light btn" style="float: right;"><i class="material-icons left">add</i>ADD</a>
+                <button type="submit"  class="waves-effect waves-light btn"><i class="material-icons left">save</i>Save</button>
             </div>
              </form>
 
         <script>
             var stockList = [
                 @foreach($stock as $i)
-                {id: '{{ $i->stockID }}', text: '{{ $i->stockName }}'},
+                {id: '{{ $i->stockID }}', text: '{{ $i->stockName }}', quantity: '{{ $i->quantity }}' },
                 @endforeach
             ];
             var staffList = [
@@ -51,14 +51,17 @@
 
             $(document).ready(function () {
                 $('.stock').autocomplete2({
-                    data:stockList
+                    data:stockList,
+                    change: function (event, ui) {
+                        console.log('ss');
+                    }
                 });
                 $('input.staff').autocomplete2({
                     data:staffList
                 });
 
                 $('.addList').on('click', function () {
-                    var appendList = $('<div class="formListTool row"> <div class="input-field col s3"> <input type="hidden" name="stock[]" id="stocknamehidden"> <input type="text" class="validate stock" autocomplete="off" autoid="" required> <label for="stock">Stock</label> </div> <div class="input-field col s3"> <input id="" class="" type="text" class="validate" name="quantity[]" required> <label for="Quantity">Quantity</label> </div> <div class="input-field col s3"> <input id="" class="" type="text" class="validate" name="price[]" required> <label for="price">Price</label> </div> <div class="col s3"> <a class="deleteList waves-effect waves-light btn">ADD</a> </div> </div>');
+                    var appendList = $('<div class="formListTool row"> <div class="input-field col s3"> <input type="hidden" name="stock[]" id="stocknamehidden"> <input type="text" class="validate stock" autocomplete="off" autoid="" required> <label for="stock">Stock</label> </div> <div class="input-field col s3"> <input id="" class="" type="text" class="validate" name="quantity[]" required> <label for="Quantity">Quantity</label> </div> <div class="input-field col s3"> <input id="" class="" type="text" class="validate" name="price[]" required> <label for="price">Price</label> </div> <div class="col s3"> <a class="deleteList waves-effect waves-light btn"><i class="material-icons left">delete</i>Delete</a> </div> </div>');
                     $('.formList').append(appendList);
                     $('.stock', appendList).autocomplete2({
                         data:stockList
@@ -73,10 +76,21 @@
                     $('.stock').each(function (index) {
                         $(this).prev().val($(this).attr('autoid'));
                     });
-                   // $('#stocknamehidden').val($('#stock').attr('autoid'));
                 });
 
+                $('.stock').on('blur', function () {
+                    var a = $(this).val();
+                    if(a.length)
+                    {
+                        var found_names = $.grep(stockList, function(v) {
+                            return v.text === a;
+                        });
+                        console.log(found_names);
+                    }else {
 
+                    }
+
+                });
 
 
 

@@ -31,8 +31,10 @@ class mainController extends Controller
         $sales = new salesModel();
         $stock = new stockModel();
         $datetime = date('Y-m-d H:i:s');
+
         foreach ($r->input('stock') as $i=>$value)
         {
+
             $sales->insert([
                 'name' => $r->input('stock')[$i],
                 'quantity' => $r->input('quantity')[$i],
@@ -59,6 +61,7 @@ class mainController extends Controller
             ->whereDate('dateTime', '=', date('Y-m-d'))
             ->join('staff', 'sales.staffID', '=', 'staff.staffID')
             ->join('stock', 'sales.name', '=', 'stock.stockID')
+            ->orderBy('dateTime', 'desc')
             ->paginate(10);
         return view('user.sales.salesHistory', ['sales' => $salesR]);
     }
@@ -133,6 +136,7 @@ class mainController extends Controller
             ->join('staff', 'supply.staffID', '=', 'staff.staffID')
             ->join('supplyperson', 'supply.person', '=', 'supplyperson.supplyID')
             ->join('stock', 'supply.stockName', '=', 'stock.stockID')
+            ->orderBy('dateTime', 'desc')
             ->paginate(10);
 
         return view('user.supply.supplyHistory', ['supply' => $supplyR]);

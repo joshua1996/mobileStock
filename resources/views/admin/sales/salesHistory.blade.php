@@ -13,7 +13,7 @@
         </div>
 
         <div class="row">
-            <a class="waves-effect waves-light btn" id="searchBtn">Search</a>
+            <a class="waves-effect waves-light btn" id="searchBtn"><i class="material-icons left">search</i>Search</a>
         </div>
 
         <div class="row">

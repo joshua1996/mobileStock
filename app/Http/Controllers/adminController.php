@@ -62,6 +62,7 @@ class adminController extends Controller
             ->whereDate('dateTime', '=', date('Y-m-d'))
             ->join('staff', 'sales.staffID', '=', 'staff.staffID')
             ->join('stock', 'sales.name', '=', 'stock.stockID')
+            ->orderBy('dateTime', 'desc')
             ->paginate(10);
         return view('admin.sales.salesHistory', ['sales' => $salesR]);
     }
@@ -129,6 +130,7 @@ class adminController extends Controller
             ->join('staff', 'supply.staffID', '=', 'staff.staffID')
             ->join('supplyperson', 'supply.person', '=', 'supplyperson.supplyID')
             ->join('stock', 'supply.stockName', '=', 'stock.stockID')
+            ->orderBy('dateTime', 'desc')
             ->paginate(10);
         return view('admin.supply.supplyHistory', ['supply' => $supplyR]);
     }

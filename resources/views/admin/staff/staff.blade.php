@@ -15,7 +15,7 @@
         </div>
 
         <div class="row">
-            <a class="btn disabled add modal-trigger" href="#modal3">Add Staff</a>
+            <a class="btn disabled add modal-trigger" href="#modal3"><i class="material-icons left">add</i>Add Staff</a>
         </div>
 
         <div class="row">

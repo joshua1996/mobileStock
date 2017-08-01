@@ -1,7 +1,7 @@
 @extends('layout.sideBar')
 @section('section')
 
-    <div class="row">
+    <div class="">
         <form action="{{ route('supplyP') }}" method="post" class="supplyform">
             {{ csrf_field() }}
             <div class="formList row">
@@ -38,9 +38,8 @@
                 </div>
             </div>
             <div class="row">
-                <button class="btn waves-effect waves-light" type="submit" name="action">Save
-                </button>
-                <a class="addList waves-effect waves-light btn" style="float: right;">ADD</a>
+                <button class="btn waves-effect waves-light" type="submit" name="action"><i class="material-icons left">save</i>Save</button>
+                <a class="addList waves-effect waves-light btn" style="float: right;"><i class="material-icons left">add</i>ADD</a>
             </div>
 
         </form>
@@ -75,7 +74,7 @@
                 });
 
                 $('.addList').on('click', function () {
-                    var appendList = $(' <div class="formListTool row"> <div class="input-field col s3"> <input type="hidden" name="stock[]" value="" class="stockhidden"> <input id="" type="text" class="validate stock" name="" autocomplete="off" required> <label for="last_name">Stock Name</label> </div> <div class="input-field col s3"> <input type="text" class="validate" name="quantity[]" required> <label for="last_name">Quantity</label> </div> <div class="input-field col s3"> <input type="text" class="validate" name="price[]" required> <label for="last_name">Price</label> </div> <div class="col s3"> <a class="deleteList waves-effect waves-light btn">delete row</a> </div> </div>');
+                    var appendList = $(' <div class="formListTool row"> <div class="input-field col s3"> <input type="hidden" name="stock[]" value="" class="stockhidden"> <input id="" type="text" class="validate stock" name="" autocomplete="off" required> <label for="last_name">Stock Name</label> </div> <div class="input-field col s3"> <input type="text" class="validate" name="quantity[]" required> <label for="last_name">Quantity</label> </div> <div class="input-field col s3"> <input type="text" class="validate" name="price[]" required> <label for="last_name">Price</label> </div> <div class="col s3"> <a class="deleteList waves-effect waves-light btn"><i class="material-icons left">delete</i>delete row</a> </div> </div>');
                     $('.formList').append(appendList);
                     $('.stock', appendList).autocomplete2({
                         data:stockList

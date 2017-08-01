@@ -10,7 +10,7 @@
         <input type="date" class="datepicker" name="searchDateEnd" id="searchDateEnd">
 
     </div>
-    <button id="searchBtn" class="waves-effect waves-light btn">Search</button>
+    <button id="searchBtn" class="waves-effect waves-light btn"><i class="material-icons left">search</i>Search</button>
 
     <table class="highlight">
         <thead>

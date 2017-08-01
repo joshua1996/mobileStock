@@ -2,7 +2,7 @@
 @section('section')
 <div class="row">
     <div class="row">
-        <a href="#modal2" class="waves-effect waves-light btn">add stock</a>
+        <a href="#modal2" class="waves-effect waves-light btn"><i class="material-icons left">add</i>add stock</a>
     </div>
     <div class="row">
         <table>
@@ -25,8 +25,8 @@
                     <td class="b{{ $i+1 }}">{{ $value->quantity }}</td>
                     <td class="c{{ $i+1 }}">{{ $value->price }}</td>
                     <td class="d{{ $i+1 }}" stockType="{{ $value->stockTypeID }}">{{ $value->name }}</td>
-                    <td><a class="waves-effect waves-light btn" href="#modal1" ind="{{ $i + 1 }}">edit</a></td>
-                    <td><a class="waves-effect waves-light btn delete" deleteid="{{ $value->stockID }}">delete</a></td>
+                    <td><a class="waves-effect waves-light btn" href="#modal1" ind="{{ $i + 1 }}"><i class="material-icons left">edit</i>edit</a></td>
+                    <td><a class="waves-effect waves-light btn delete" deleteid="{{ $value->stockID }}"><i class="material-icons left">delete</i>delete</a></td>
                 </tr>
             @endforeach
             </tbody>

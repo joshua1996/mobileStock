@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="row">
-            <a href="#modal2" class="waves-effect waves-light btn">add supply person</a>
+            <a href="#modal2" class="waves-effect waves-light btn"><i class="material-icons left">add</i>add supply person</a>
         </div>
         <div class="row">
             <table>
@@ -20,8 +20,8 @@
                     <tr>
                         <td>{{ $i+1 }}</td>
                         <td class="a{{ $i+1 }}">{{ $value->name }}</td>
-                        <td><a class="waves-effect waves-light btn" id="edit" href="#modal1" ind="{{ $i + 1 }}">edit</a></td>
-                        <td><a class="waves-effect waves-light btn delete" deleteid="{{ $value->supplyID }}">delete</a></td>
+                        <td><a class="waves-effect waves-light btn" id="edit" href="#modal1" ind="{{ $i + 1 }}"><i class="material-icons left">edit</i>edit</a></td>
+                        <td><a class="waves-effect waves-light btn delete" deleteid="{{ $value->supplyID }}"><i class="material-icons left">delete</i>delete</a></td>
                     </tr>
                     @endforeach
                 </tbody>

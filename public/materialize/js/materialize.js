@@ -3524,6 +3524,13 @@ if (jQuery) {
 		  
 		   $input.off('blur.autocomplete').on('blur.autocomplete', function() {
             removeAutocomplete();
+			var item = $.grep(data, function(item) {
+    return item.text == $input.val();
+});
+
+if (!item.length) {
+   $input.val('');
+}
           });
 
           // Perform search
