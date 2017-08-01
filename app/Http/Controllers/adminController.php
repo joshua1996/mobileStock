@@ -26,7 +26,7 @@ class adminController extends Controller
         $staff = new staffModel();
         $staffR = $staff->join('user', 'staff.userID', '=', 'user.userID')
             ->where('user.shopID', '=', Session::get('shopID'))->get();
-        return view('admin.sales.sales',  ['stock' => $stockR, 'staff'=> $staffR]);
+        return Auth::guard('admin')->user()->shopID;//view('admin.sales.sales',  ['stock' => $stockR, 'staff'=> $staffR]);
     }
 
     public function adminSalesP(Request $r)
@@ -256,7 +256,8 @@ class adminController extends Controller
                 'userID' => 'user'.uniqid(),
                 'username' => $r->username,
                 'password' => bcrypt($r->password),
-                'shopID' => Session::get('shopID')
+                'shopID' => Session::get('shopID'),
+                'remove' => false
             ]);
             return redirect()->route('userEditAdmin');
         }
@@ -286,7 +287,7 @@ class adminController extends Controller
     {
         $user = new userModel();
         $userR = $user->where('shopID', '=', Session::get('shopID'))
-            ->get();
+            ->where('remove', '=', false)->get();
         return view('admin.staff.staff', ['user' =>$userR]);
     }
 
