@@ -30,7 +30,6 @@ class adminLoginController extends Controller
 
     public function username()
     {
-        Session::put('shopID', Auth::guard('admin')->user()->shopID);
         return 'adminName';
     }
 
