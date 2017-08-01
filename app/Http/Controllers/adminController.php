@@ -26,7 +26,10 @@ class adminController extends Controller
         $staff = new staffModel();
         $staffR = $staff->join('user', 'staff.userID', '=', 'user.userID')
             ->where('user.shopID', '=', Session::get('shopID'))->get();
-        return Session::get('shopID');//view('admin.sales.sales',  ['stock' => $stockR, 'staff'=> $staffR]);
+        return Response()->json([
+            'ad' => Auth::guard('admin')->user()->shopID,
+            'session' =>  Session::get('shopID')
+        ]);//view('admin.sales.sales',  ['stock' => $stockR, 'staff'=> $staffR]);
     }
 
     public function adminSalesP(Request $r)
