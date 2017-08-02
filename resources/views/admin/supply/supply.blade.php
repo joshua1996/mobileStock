@@ -78,7 +78,7 @@
                 });
 
                 $('.addList').on('click', function () {
-                    var appendList = $(' <div class="formListTool row"> <div class="input-field col s3"> <input type="hidden" name="stock[]" value="" class="stockhidden"> <input id="" type="text" class="validate stock" name="" autocomplete="off" required> <label for="stock">Stock Name</label> </div> <div class="input-field col s3"> <input type="number" min="1" class="validate" name="quantity[]" required disabled> <label for="quantity">Quantity</label> </div> <div class="input-field col s3"> <input type="number" min="0.01" class="validate" name="price[]" required step="0.01" disabled> <label for="price">Price</label> </div> <div class="col s3"> {{--<a class="deleteList waves-effect waves-light btn">delete</a>--}} </div> </div>');
+                    var appendList = $(' <div class="formListTool row"> <div class="input-field col s3"> <input type="hidden" name="stock[]" value="" class="stockhidden"> <input id="" type="text" class="validate stock" name="" autocomplete="off" required> <label for="stock">Stock Name</label> </div> <div class="input-field col s3"> <input type="number" min="1" class="validate" name="quantity[]" required disabled> <label for="quantity">Quantity</label> </div> <div class="input-field col s3"> <input type="number" min="0.01" class="validate" name="price[]" required step="0.01" disabled> <label for="price">Price</label> </div> <div class="col s3"> <a class="deleteList waves-effect waves-light btn"><i class="material-icons left">delete</i>delete</a> </div> </div>');
                     $('.formList').append(appendList);
                     $('.stock', appendList).autocomplete2({
                         data: stockList
