@@ -55,32 +55,32 @@ return [
         ],
 
 
-//
-//        'pgsql' => [
-//            'driver' => 'pgsql',
-//            'host' => 'ec2-23-23-248-162.compute-1.amazonaws.com',
-//            'port' => '5432',
-//            'database' =>'db5frbahsaqmva',
-//            'username' => 'unqyuhhjykitzm',
-//            'password' => 'ccd1d1be5cbd4eeeb34039607be81c8bc05705f6612db28d81eafc438f31a5bc',
-//            'charset' => 'utf8',
-//            'prefix' => '',
-//            'schema' => 'public',
-//            'sslmode' => 'prefer',
-//        ],
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => 'localhost',
+            'host' => 'ec2-23-23-248-162.compute-1.amazonaws.com',
             'port' => '5432',
-            'database' => '11_7_17_stocksystem',
-            'username' => 'postgres',
-            'password' => '',
+            'database' =>'db5frbahsaqmva',
+            'username' => 'unqyuhhjykitzm',
+            'password' => 'ccd1d1be5cbd4eeeb34039607be81c8bc05705f6612db28d81eafc438f31a5bc',
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
+
+//        'pgsql' => [
+//            'driver' => 'pgsql',
+//            'host' => 'localhost',
+//            'port' => '5432',
+//            'database' => '11_7_17_stocksystem',
+//            'username' => 'postgres',
+//            'password' => '',
+//            'charset' => 'utf8',
+//            'prefix' => '',
+//            'schema' => 'public',
+//            'sslmode' => 'prefer',
+//        ],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
