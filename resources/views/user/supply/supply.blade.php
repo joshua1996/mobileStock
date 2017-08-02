@@ -25,11 +25,11 @@
                         <label for="last_name">Stock Name</label>
                     </div>
                     <div class="input-field col s3">
-                        <input  type="text" class="validate" name="quantity[]" required>
+                        <input  type="number" min="1" class="validate" name="quantity[]" required disabled>
                         <label for="last_name">Quantity</label>
                     </div>
                     <div class="input-field col s3">
-                        <input  type="text" class="validate" name="price[]" required>
+                        <input  type="number" min="0.01" class="validate" name="price[]" required disabled>
                         <label for="last_name">Price</label>
                     </div>
                     <div class="col s3">
@@ -48,7 +48,7 @@
         <script>
             var stockList = [
                 @foreach($stock as $i)
-                {id: '{{ $i->stockID }}', text: '{{ $i->stockName }}'},
+                {id: '{{ $i->stockID }}', text: '{{ $i->stockName }}', quantity: {{ $i->quantity }}},
                 @endforeach
             ];
             var personList = [
@@ -74,7 +74,7 @@
                 });
 
                 $('.addList').on('click', function () {
-                    var appendList = $(' <div class="formListTool row"> <div class="input-field col s3"> <input type="hidden" name="stock[]" value="" class="stockhidden"> <input id="" type="text" class="validate stock" name="" autocomplete="off" required> <label for="last_name">Stock Name</label> </div> <div class="input-field col s3"> <input type="text" class="validate" name="quantity[]" required> <label for="last_name">Quantity</label> </div> <div class="input-field col s3"> <input type="text" class="validate" name="price[]" required> <label for="last_name">Price</label> </div> <div class="col s3"> <a class="deleteList waves-effect waves-light btn"><i class="material-icons left">delete</i>delete row</a> </div> </div>');
+                    var appendList = $(' <div class="formListTool row"> <div class="input-field col s3"> <input type="hidden" name="stock[]" value="" class="stockhidden"> <input id="" type="text" class="validate stock" name="" autocomplete="off" required> <label for="last_name">Stock Name</label> </div> <div class="input-field col s3"> <input type="number" min="1" class="validate" name="quantity[]" required disabled> <label for="last_name">Quantity</label> </div> <div class="input-field col s3"> <input type="number" min="0.01" class="validate" name="price[]" required disabled> <label for="last_name">Price</label> </div> <div class="col s3"><a class="deleteList waves-effect waves-light btn"><i class="material-icons left">delete</i>delete row</a> </div> </div>');
                     $('.formList').append(appendList);
                     $('.stock', appendList).autocomplete2({
                         data:stockList
@@ -91,6 +91,26 @@
                         $(this).prev().val($(this).attr('autoid'));
                     });
                    // $('.stockhidden').val($('.stock').attr('autoid'));
+                });
+
+                $('.stock').on('blur', function () {
+                    var a = $(this).val();
+                    if(a.length)
+                    {
+                        var found_names = $.grep(stockList, function(v) {
+                            return v.text === a;
+                        });
+                        $(this).parent().next().children().removeAttr('disabled');
+                        $(this).parent().next().next().children().removeAttr('disabled');
+                        $(this).parent().next().children().attr('max', found_names[0].quantity);
+                    }else {
+                        $(this).parent().next().children().val('');
+                        $(this).parent().next().next().children().val('');
+                        $(this).parent().next().children().prop('disabled', true);
+                        $(this).parent().next().next().children().prop('disabled', true);
+                        Materialize.updateTextFields();
+                    }
+
                 });
             });
         </script>

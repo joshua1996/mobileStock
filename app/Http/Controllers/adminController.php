@@ -22,6 +22,7 @@ class adminController extends Controller
         $stock = new stockModel();
         $stockR = $stock->where('shopID', '=', Session::get('shopID'))
             ->where('remove', '=', false)
+            ->where('quantity', '>', 0)
             ->get();
         $staff = new staffModel();
         $staffR = $staff->join('user', 'staff.userID', '=', 'user.userID')
@@ -87,7 +88,9 @@ class adminController extends Controller
             ->where('remove', '=', false)->get();
         $stock = new stockModel();
         $stockR = $stock->where('shopID', '=', Session::get('shopID'))
-            ->where('remove', '=', false)->get();
+            ->where('remove', '=', false)
+            ->where('quantity', '>', 0)
+            ->get();
         $staff = new staffModel();
         $staffR = $staff->join('user', 'staff.userID', '=', 'user.userID')
             ->where('user.shopID', '=', Session::get('shopID'))->get();

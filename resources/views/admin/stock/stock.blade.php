@@ -71,11 +71,11 @@
                 <label for="stockName">Stock Name</label>
             </div>
             <div class="input-field col s6">
-                <input id="" type="text" class="validate addquantity">
+                <input id="" type="number" class="validate addquantity">
                 <label for="quantity">Quantity</label>
             </div>
             <div class="input-field col s6">
-                <input id="" type="text" class="validate addprice">
+                <input id="" type="number" class="validate addprice" step="0.01">
                 <label for="price">Price</label>
             </div>
             <div class="input-field col s6">
