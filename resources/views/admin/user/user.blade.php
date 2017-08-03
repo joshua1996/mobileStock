@@ -21,7 +21,7 @@
                         <td>{{ $i+1 }}</td>
                         <td class="a{{ $i+1 }}">{{ $value->username }}</td>
                         <td><a class="waves-effect waves-light btn" href="#modal1" ind="{{ $i + 1 }}"><i class="material-icons left">edit</i>edit</a></td>
-                        <td><a class="waves-effect waves-light btn delete" deleteid="{{ $value->userID }}"><i class="material-icons left">delete</i>delete</a></td>
+                        <td><a class="waves-effect waves-light btn " ind="{{ $i + 1 }}" href="#modal3"><i class="material-icons left">delete</i>delete</a></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -68,13 +68,24 @@
             </form>
         </div>
 
+        <div id="modal3" class="modal">
+            <div class="modal-content">
+                <div class="row">
+                    <h4>Warning!</h4>
+                    <p>Delete?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" deleteid="" class="modal-action modal-close waves-effect waves-green btn-flat delete">Delete</a>
+            </div>
+        </div>
+
         <script>
             $(document).ready(function () {
                         @if ($errors->any())
                          Materialize.toast(' {{ $errors->first('password') }}', 4000);
                         @endif
                 var index = 0;
-                $('#modal1').modal();
                 $('#modal1').modal({
                     ready: function(modal, trigger){
                         index = trigger.attr('ind');
@@ -85,6 +96,12 @@
                     }
                 });
                 $('#modal2').modal();
+                $('#modal3').modal({
+                    ready: function (modal, trigger) {
+                        index = trigger.attr('ind');
+                        $('.delete').attr('deleteid', $('.c' + trigger.attr('ind')).attr('userid'));
+                    }
+                });
 
                 $('.edit').on('click', function () {
                    var data = {
@@ -111,6 +128,7 @@
                         type:'post',
                         data:data,
                         success: function (data) {
+                            $('.c' + index).remove();
                             Materialize.toast('Delete Success!', 4000);
                         }
                     });

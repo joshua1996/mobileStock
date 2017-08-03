@@ -2,6 +2,13 @@
 @section('section')
 <div class="row">
     <div class="row">
+        <div class="input-field col s6">
+            <input id="" type="text" class="validate searchname">
+            <label for="Stock">Stock Name</label>
+        </div>
+        <a class="waves-effect waves-light btn search"><i class="material-icons left">search</i>Search</a>
+    </div>
+    <div class="row">
         <a href="#modal2" class="waves-effect waves-light btn"><i class="material-icons left">add</i>add stock</a>
     </div>
     <div class="row">
@@ -17,7 +24,7 @@
                 <th>Delete</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="stocktable">
             @foreach($stock as $i=>$value)
                 <tr stockID="{{ $value->stockID }}" class="e{{ $i+1 }}">
                     <td>{{ $i + 1 }}</td>
@@ -26,7 +33,7 @@
                     <td class="c{{ $i+1 }}">{{ $value->price }}</td>
                     <td class="d{{ $i+1 }}" stockType="{{ $value->stockTypeID }}">{{ $value->name }}</td>
                     <td><a class="waves-effect waves-light btn" href="#modal1" ind="{{ $i + 1 }}"><i class="material-icons left">edit</i>edit</a></td>
-                    <td><a class="waves-effect waves-light btn delete" deleteid="{{ $value->stockID }}"><i class="material-icons left">delete</i>delete</a></td>
+                    <td><a class="waves-effect waves-light btn " href="#modal3" ind="{{ $i + 1 }}"><i class="material-icons left">delete</i>delete</a></td>
                 </tr>
             @endforeach
             </tbody>
@@ -92,26 +99,12 @@
 <div id="modal3" class="modal">
     <div class="modal-content">
         <div class="row">
-            <div class="input-field col s6">
-                <input id="" value="" type="text" class="validate addstock">
-                <label for="stockName">Stock Name</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="" type="text" class="validate addquantity">
-                <label for="quantity">Quantity</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="" type="text" class="validate addprice">
-                <label for="price">Price</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="addStockType" type="text" class="validate addstocktype" autoid="">
-                <label for="stockType">Stock Type</label>
-            </div>
+            <h4>Warning!</h4>
+            <p>Delete?</p>
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat add">Delete</a>
+        <a href="#!" deleteid="" class="modal-action modal-close waves-effect waves-green btn-flat delete">Delete</a>
     </div>
 </div>
 
@@ -146,6 +139,12 @@
         });
 
         $('#modal2').modal();
+        $('#modal3').modal({
+            ready: function (modal, trigger) {
+                index = trigger.attr('ind');
+                $('.delete').attr('deleteid', $('.e' + trigger.attr('ind')).attr('stockid'));
+            }
+        });
 
         $('.edit').on('click', function(){
            var data = {
@@ -179,6 +178,7 @@
                 type:'post',
                 data:data,
                 success: function (data) {
+                    $('.e' + index).remove();
                     Materialize.toast('Delete Success!', 4000);
                 }
             });
@@ -199,6 +199,10 @@
                    Materialize.toast('Add Success!', 4000);
                }
            });
+        });
+
+        $('.search').on('click', function () {
+            window.location.replace('/admin/stock/'+$('.searchname').val()+'');
         });
     });
 </script>

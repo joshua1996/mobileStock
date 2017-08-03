@@ -41,9 +41,11 @@
             <li><a class="subheader">Supply</a></li>
             <li class="{{ (Request::is('*/supply') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('adminSupply') }}">Supply</a></li>
             <li class="{{ (Request::is('*/supplyHistory') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('supplyHistoryAdmin') }}">Supply History</a></li>
-            <li><a class="subheader">Other</a></li>
+            <li><a class="subheader">Stock</a></li>
             <li class="{{ (Request::is('*/stock') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('stockAdmin') }}">Stock</a></li>
             <li class="{{ (Request::is('*/stockType') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('stockTypeAdmin') }}">Stock Type</a></li>
+
+            <li><a class="subheader">Other</a></li>
             <li class="{{ (Request::is('*/supplyPerson') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('supplyPerson') }}">Supply Person</a></li>
             <li class="{{ (Request::is('*/user') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('userEditAdmin') }}">User</a></li>
             <li class="{{ (Request::is('*/staff') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('staffAdmin') }}">Staff</a></li>

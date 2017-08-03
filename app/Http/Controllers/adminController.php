@@ -200,6 +200,20 @@ class adminController extends Controller
         ]);
     }
 
+    public function stockSearch(Request $r)
+    {
+        $stock = new stockModel();
+        $stockR =  $stock
+            ->where('stock.shopID', '=', Session::get('shopID'))
+            ->where('stock.stockName', 'like', '%'.$r->stockname.'%')
+            ->where('stock.remove', '=', false)
+            ->join('stockType', 'stock.stockType', '=', 'stockType.stockTypeID')
+            ->paginate(20);
+        $stockType = new stockTypeModel();
+        $stockTypeR = $stockType->where('shopID', '=', Session::get('shopID'))->get();
+        return view('admin.stock.stock', ['stock'=> $stockR, 'stockType'=> $stockTypeR]);
+    }
+
     public function supplyPerson()
     {
         $supplyPerson = new supplyPersonModel();
@@ -212,6 +226,7 @@ class adminController extends Controller
     {
         $supplyPerson = new supplyPersonModel();
         $supplyPerson->where('shopID', '=', Session::get('shopID'))
+            ->where('supplyID', '=', $r->input('supplyID'))
             ->update([
                 'name' => $r->input('supplyPerson')
             ]);

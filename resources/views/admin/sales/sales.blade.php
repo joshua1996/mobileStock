@@ -6,7 +6,7 @@
             {{ csrf_field() }}
             <div class="formList row">
                 <div class="row">
-                    <div class="input-field col s9">
+                    <div class="input-field col s12">
                         <input type="hidden" name="staffID" value="" class="staffHidden" >
                         <input id="" type="text" class="validate staff" name="" autocomplete="off" required>
                         <label for="staff">Staff</label>

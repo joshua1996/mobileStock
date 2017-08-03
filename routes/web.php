@@ -65,6 +65,8 @@ Route::group(['middleware' => 'notAdmin'], function (){
     Route::get('/admin/supplyHistory', 'adminController@supplyHistory')->name('supplyHistoryAdmin');
     Route::get('/admin/supplyHistory/{startDate}/{endDate}', 'adminController@supplySearchDate')->name('supplyAdminSearchDate');
     Route::get('/admin/stock', 'adminController@stock')->name('stockAdmin');
+    Route::get('/admin/stock/{stockname}', 'adminController@stockSearch')->name('stockSearchAdmin');
+
     Route::get('/admin/supplyPerson', 'adminController@supplyPerson')->name('supplyPerson');
     Route::get('/admin/user', 'adminController@userEdit')->name('userEditAdmin');
     Route::get('/admin/staff', 'adminController@staff')->name('staffAdmin');
@@ -72,9 +74,7 @@ Route::group(['middleware' => 'notAdmin'], function (){
     //
     Route::post('/admin/logout', 'adminLoginController@logout')->name('adminLogout');
     Route::post('/admin/sales', 'adminController@adminSalesP')->name('adminSalesP');
-    //Route::post('/admin/salesSearchDate', 'adminController@salesSearchDate')->name('salesSearchDateAdmin');
     Route::post('/admin/supply', 'adminController@adminSupplyP')->name('adminSupplyP');
-   // Route::post('/admin/supplySearchDate', 'adminController@supplySearchDate')->name('supplyAdminSearchDate');
     Route::post('/admin/stockEdit', 'adminController@stockEdit')->name('stockEditAdmin');
     Route::post('/admin/stockDelete', 'adminController@stockDelete')->name('stockDeleteAdmin');
     Route::post('/admin/stockAdd', 'adminController@stockAdd')->name('stockAddAdmin');

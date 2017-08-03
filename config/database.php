@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => 'pgsql',//env('DB_CONNECTION', 'pgsql'),
+    'default' => 'pgsql1',//env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -69,18 +69,18 @@ return [
             'sslmode' => 'prefer',
         ],
 
-//        'pgsql' => [
-//            'driver' => 'pgsql',
-//            'host' => 'localhost',
-//            'port' => '5432',
-//            'database' => '11_7_17_stocksystem',
-//            'username' => 'postgres',
-//            'password' => '',
-//            'charset' => 'utf8',
-//            'prefix' => '',
-//            'schema' => 'public',
-//            'sslmode' => 'prefer',
-//        ],
+        'pgsql1' => [
+            'driver' => 'pgsql',
+            'host' => 'localhost',
+            'port' => '5432',
+            'database' => '11_7_17_stocksystem',
+            'username' => 'postgres',
+            'password' => '',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => 'public',
+            'sslmode' => 'prefer',
+        ],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',

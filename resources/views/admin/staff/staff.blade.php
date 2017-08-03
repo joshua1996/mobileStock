@@ -78,7 +78,6 @@
             $(document).ready(function() {
                 var index = 0;
                 $('#userselect').material_select();
-                $('.modal').modal();
                 $('#modal1').modal({
                     ready: function(modal, trigger){
                         index = trigger.attr('ind');
