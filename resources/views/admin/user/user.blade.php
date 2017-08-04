@@ -29,41 +29,43 @@
         </div>
 
         <div id="modal1" class="modal ">
-            <div class="modal-content">
-                <div class="row">
-                    <input type="hidden" name="userID" class="userid">
-                    <div class="input-field col s6">
-                        <input id="" value="" type="text" class="validate username">
-                        <label for="username">Username</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="" value="" type="text" class="validate password">
-                        <label for="password">Password</label>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat edit">EDIT</a>
-            </div>
-        </div>
-
-        <div id="modal2" class="modal ">
-            <form action="{{ route('userAddAdmin') }}" method="post">
-                {{ csrf_field() }}
+            <form action="" id="edit">
                 <div class="modal-content">
                     <div class="row">
+                        <input type="hidden" name="userID" class="userid">
                         <div class="input-field col s6">
-                            <input id="" value="" type="text" class="validate" name="username">
+                            <input id="" value="" type="text" class="validate username" required>
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="" value="" type="text" class="validate" name="password">
+                            <input id="" value="" type="text" class="validate password" required>
                             <label for="password">Password</label>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input class="modal-action modal-close waves-effect waves-green btn-flat" value="Add" type="submit">
+                    <button class="waves-effect waves-light  btn-flat " type="submit" name="action">edit</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="modal2" class="modal ">
+            <form action="" method="post" id="add">
+                <div class="modal-content">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="" value="" type="text" class="validate addusername" name="username" required>
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="" value="" type="text" class="validate addpassword" name="password" required>
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    {{--<input class="modal-action modal-close waves-effect waves-green btn-flat" value="Add" type="submit">--}}
+                    <button class="waves-effect waves-light  btn-flat " type="submit" name="action">add</button>
                 </div>
             </form>
         </div>
@@ -103,7 +105,8 @@
                     }
                 });
 
-                $('.edit').on('click', function () {
+                $('#edit').on('submit', function (e) {
+                    e.preventDefault();
                    var data = {
                        userID: $('.userid').val(),
                        username: $('.username').val(),
@@ -114,9 +117,30 @@
                        type: 'post',
                        data: data,
                        success: function () {
+                           $('.a'+index).text($('.username').val());
                            Materialize.toast('Edit Success!', 4000);
                        }
                    });
+                   $('#modal1').modal('close');
+                   return false;
+                });
+
+                $('#add').on('submit', function (e) {
+                   e.preventDefault();
+                    var data = {
+                        username: $('.addusername').val(),
+                        password: $('.addpassword').val()
+                    }
+                    $.ajax({
+                        url:'{{ route('userAddAdmin') }}',
+                        type:'post',
+                        data:data,
+                        success: function (data) {
+                            Materialize.toast('Add Success!', 4000);
+                        }
+                    });
+                    $('#modal2').modal('close');
+                    return false;
                 });
 
                 $('.delete').on('click', function () {

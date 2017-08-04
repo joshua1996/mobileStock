@@ -34,18 +34,20 @@
         </div>
 
         <div id="modal1" class="modal">
-            <div class="modal-content">
-               <div class="row">
-                   <input type="hidden" value="" class="staffid">
-                   <div class="input-field col s12">
-                       <input id="" type="text" class="validate staffname">
-                       <label for="Name">Name</label>
-                   </div>
-               </div>
-            </div>
-            <div class="modal-footer">
-                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat edit">Edit</a>
-            </div>
+            <form action="" id="edit">
+                <div class="modal-content">
+                    <div class="row">
+                        <input type="hidden" value="" class="staffid">
+                        <div class="input-field col s12">
+                            <input id="" type="text" class="validate staffname" required>
+                            <label for="Name">Name</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="waves-effect waves-light  btn-flat " type="submit" name="action">edit</button>
+                </div>
+            </form>
         </div>
 
         <div id="modal2" class="modal">
@@ -61,17 +63,19 @@
         </div>
 
         <div id="modal3" class="modal">
-            <div class="modal-content">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="" type="text" class="validate staffnameadd">
-                        <label for="Name">Name</label>
+            <form action="" id="add">
+                <div class="modal-content">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="" type="text" class="validate staffnameadd" required>
+                            <label for="Name">Name</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat staffadd" staffid="">add</a>
-            </div>
+                <div class="modal-footer">
+                    <button class="waves-effect waves-light  btn-flat " type="submit" name="action">add</button>
+                </div>
+            </form>
         </div>
 
         <script>
@@ -94,6 +98,8 @@
                     }
                 });
 
+                $('#modal3').modal();
+
                 $('#userselect').on('change', function () {
                     var data= {
                         userid: $(this).val()
@@ -113,7 +119,8 @@
                    });
                 });
 
-                $('.edit').on('click', function () {
+                $('#edit').on('submit', function (e) {
+                    e.preventDefault();
                    var data = {
                        staffID: $('.staffid').val(),
                        name: $('.staffname').val()
@@ -127,6 +134,8 @@
                            Materialize.toast('Edit Success!', 4000);
                        }
                    });
+                   $('#modal1').modal('close');
+                   return false;
                 });
                 
                 $('.delete').on('click', function () {
@@ -144,7 +153,8 @@
                    });
                 });
 
-                $('.staffadd').on('click', function () {
+                $('#add').on('submit', function (e) {
+                    e.preventDefault();
                     var data = {
                         staffid: $('.staffnameadd').val(),
                         userid: $('#userselect').val()
@@ -154,10 +164,11 @@
                         type: 'post',
                         data: data,
                         success: function (data) {
-                            $('.b' + index).remove();
                             Materialize.toast('Add Success!', 4000);
                         }
                     });
+                    $('#modal3').modal('close');
+                    return false;
                 });
             });
         </script>

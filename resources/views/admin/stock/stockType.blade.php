@@ -31,32 +31,36 @@
     </div>
 
     <div id="modal1" class="modal">
-        <div class="modal-content">
-            <div class="row">
-                <div class="input-field col s6">
-                    <input id="" value="" type="text" class="validate stocktypename">
-                    <label for="name">Name</label>
+        <form action="" id="add">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="" value="" type="text" class="validate stocktypename" required>
+                        <label for="name">Name</label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat add">Add</a>
-        </div>
+            <div class="modal-footer">
+                <button class="waves-effect waves-light  btn-flat " type="submit" name="action">add</button>
+            </div>
+        </form>
     </div>
 
     <div id="modal2" class="modal">
-        <div class="modal-content">
-            <div class="row">
-                <div class="input-field col s6">
+        <form action="" id="edit">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="input-field col s6">
 
-                    <input id="" value="" type="text" class="validate editname">
-                    <label for="name">Name</label>
+                        <input id="" value="" type="text" class="validate editname" required>
+                        <label for="name">Name</label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat edit">Edit</a>
-        </div>
+            <div class="modal-footer">
+                <button class="waves-effect waves-light  btn-flat " type="submit" name="action">edit</button>
+            </div>
+        </form>
     </div>
 
     <div id="modal3" class="modal">
@@ -91,7 +95,8 @@
                 }
             });
 
-            $('.add').on('click', function () {
+            $('#add').on('submit', function (e) {
+                e.preventDefault();
                 var data = {
                     name: $('.stocktypename').val()
                 };
@@ -103,9 +108,12 @@
                         Materialize.toast('Add Success!', 4000);
                     }
                 });
+                $('#modal1').modal('close');
+                return false;
             });
 
-            $('.edit').on('click', function(){
+            $('#edit').on('submit', function(e){
+                e.preventDefault();
                 var data = {
                     name:$('.editname').val(),
                     stockTypeID: stockTypeID
@@ -120,6 +128,8 @@
                         $('.b' + index).val(stockTypeID);
                     }
                 });
+                $('#modal2').modal('close');
+                return false;
             });
 
             $('.delete').on('click', function () {

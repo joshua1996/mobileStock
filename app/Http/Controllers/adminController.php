@@ -241,6 +241,7 @@ class adminController extends Controller
             'shopID' => Session::get('shopID'),
             'remove' => false
         ]);
+
     }
 
     public function supplyPersonDelete(Request $r)
@@ -263,25 +264,33 @@ class adminController extends Controller
 
     public function userAdd(Request $r)
     {
-        $vali =  Validator::make($r->all(), [
-            'username' => 'required|string|max:255|unique:user',
-            'password' => 'required|string|min:6',
+//        $vali =  Validator::make($r->all(), [
+//            'username' => 'required|string|max:255|unique:user',
+//            'password' => 'required|string|min:6',
+//        ]);
+//        if ($vali->fails())
+//        {
+//            return redirect()->route('userEditAdmin')->withErrors($vali)->withInput();
+//        }else{
+//            $user = new userModel();
+//            $user->insert([
+//                'userID' => 'user'.uniqid(),
+//                'username' => $r->username,
+//                'password' => bcrypt($r->password),
+//                'shopID' => Session::get('shopID'),
+//                'remove' => false
+//            ]);
+//            return redirect()->route('userEditAdmin');
+//        }
+        $user = new userModel();
+        $user->insert([
+            'userID' => 'user'.uniqid(),
+            'username' => $r->username,
+            'password' => bcrypt($r->password),
+            'shopID' => Session::get('shopID'),
+            'remove' => false
         ]);
-        if ($vali->fails())
-        {
-            return redirect()->route('userEditAdmin')->withErrors($vali)->withInput();
-        }else{
-            $user = new userModel();
-            $user->insert([
-                'userID' => 'user'.uniqid(),
-                'username' => $r->username,
-                'password' => bcrypt($r->password),
-                'shopID' => Session::get('shopID'),
-                'remove' => false
-            ]);
-            return redirect()->route('userEditAdmin');
-        }
-
+     //   return redirect()->route('userEditAdmin');
     }
 
     public function userEditP(Request $r)

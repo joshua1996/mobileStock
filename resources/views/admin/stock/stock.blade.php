@@ -44,56 +44,64 @@
 
 </div>
 <div id="modal1" class="modal ">
-    <div class="modal-content">
-        <div class="row">
-            <input type="hidden" value="" id="stockID">
-            <div class="input-field col s6">
-                <input id="stockName" value="" type="text" class="validate">
-                <label for="stockName">Stock Name</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="quantity" type="text" class="validate">
-                <label for="quantity">Quantity</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="price" type="text" class="validate">
-                <label for="price">Price</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="stockType" type="text" class="validate" autoid="">
-                <label for="stockType">Stock Type</label>
+    <form action="" id="edit">
+        <div class="modal-content">
+            <div class="row">
+                <input type="hidden" value="" id="stockID">
+                <div class="input-field col s6">
+                    <input id="stockName" value="" type="text" class="validate" required>
+                    <label for="stockName">Stock Name</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="quantity" type="number" class="validate" required>
+                    <label for="quantity">Quantity</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="price" type="number" class="validate" required>
+                    <label for="price">Price</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="stockType" type="text" class="validate" autoid="" required>
+                    <label for="stockType">Stock Type</label>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat edit">EDIT</a>
-    </div>
+        <div class="modal-footer">
+            <button class="waves-effect waves-light  btn-flat add" type="submit" name="action">edit</button>
+        </div>
+    </form>
+
 </div>
 
 <div id="modal2" class="modal">
-    <div class="modal-content">
-        <div class="row">
-            <div class="input-field col s6">
-                <input id="" value="" type="text" class="validate addstock">
-                <label for="stockName">Stock Name</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="" type="number" class="validate addquantity">
-                <label for="quantity">Quantity</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="" type="number" class="validate addprice" step="0.01">
-                <label for="price">Price</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="addStockType" type="text" class="validate addstocktype" autoid="">
-                <label for="stockType">Stock Type</label>
+    <form action="" id="add">
+        <div class="modal-content">
+
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="" value="" type="text" class="validate addstock" required>
+                    <label for="stockName">Stock Name</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="" type="number" class="validate addquantity" required>
+                    <label for="quantity">Quantity</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="" type="number" class="validate addprice" step="0.01" required>
+                    <label for="price">Price</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="addStockType" type="text" class="validate addstocktype" autoid="" required autocomplete="off">
+                    <label for="stockType">Stock Type</label>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat add">add</a>
-    </div>
+        <div class="modal-footer">
+            <button class="waves-effect waves-light  btn-flat add" type="submit" name="action">add</button>
+            {{--<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat add">add</a>--}}
+        </div>
+    </form>
+
 </div>
 
 <div id="modal3" class="modal">
@@ -146,28 +154,32 @@
             }
         });
 
-        $('.edit').on('click', function(){
-           var data = {
+        $('#edit').on('submit', function (e) {
+           e.preventDefault();
+            var data = {
                 stockName:$('#stockName').val(),
-               quantity:$('#quantity').val(),
-               price:$('#price').val(),
-               stockType: $('#stockType').attr('autoid'),
-               stockID: $('#stockID').val()
-           };
-           $.ajax({
-               url:'{{ route('stockEditAdmin') }}',
-               type:'post',
-               data:data,
-               success: function (data) {
-                   Materialize.toast('Edit Success!', 4000)
-                   $('.a' + index).text($('#stockName').val());
-                   $('.b' + index).text($('#quantity').val());
-                   $('.c' + index).text($('#price').val());
-                   $('.d' + index).text($('#stockType').val());
-                   $('.d' + index).attr('stocktype', $('#stockType').attr('autoid'));
-               }
-           });
+                quantity:$('#quantity').val(),
+                price:$('#price').val(),
+                stockType: $('#stockType').attr('autoid'),
+                stockID: $('#stockID').val()
+            };
+            $.ajax({
+                url:'{{ route('stockEditAdmin') }}',
+                type:'post',
+                data:data,
+                success: function (data) {
+                    Materialize.toast('Edit Success!', 4000)
+                    $('.a' + index).text($('#stockName').val());
+                    $('.b' + index).text($('#quantity').val());
+                    $('.c' + index).text($('#price').val());
+                    $('.d' + index).text($('#stockType').val());
+                    $('.d' + index).attr('stocktype', $('#stockType').attr('autoid'));
+                }
+            });
+            $('#modal1').modal('close');
+            return false;
         });
+
 
         $('.delete').on('click', function () {
             var data = {
@@ -184,22 +196,25 @@
             });
         });
 
-        $('.add').on('click', function () {
-           var data = {
-               stockname: $('.addstock').val(),
-               quantity: $('.addquantity').val(),
-               price: $('.addprice').val(),
-               stocktype: $('.addstocktype').attr('autoid')
-           };
-           $.ajax({
-               url:'{{ route('stockAddAdmin') }}',
-               type:'post',
-               data:data,
-               success: function(data){
-                   Materialize.toast('Add Success!', 4000);
-               }
-           });
-        });
+        $('#add').submit(function (e) {
+            e.preventDefault();
+            var data = {
+                stockname: $('.addstock').val(),
+                quantity: $('.addquantity').val(),
+                price: $('.addprice').val(),
+                stocktype: $('.addstocktype').attr('autoid')
+            };
+            $.ajax({
+                url:'{{ route('stockAddAdmin') }}',
+                type:'post',
+                data:data,
+                success: function(data){
+                    Materialize.toast('Add Success!', 4000);
+                }
+            });
+            $('#modal2').modal('close');
+            return false;
+        })
 
         $('.search').on('click', function () {
             window.location.replace('/admin/stock/'+$('.searchname').val()+'');

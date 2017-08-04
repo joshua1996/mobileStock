@@ -20,7 +20,7 @@
                     <tr class="b{{ $i+1 }}" supplypersonid="{{ $value->supplyID }}">
                         <td>{{ $i+1 }}</td>
                         <td class="a{{ $i+1 }}">{{ $value->name }}</td>
-                        <td><a class="waves-effect waves-light btn" id="edit" href="#modal1" ind="{{ $i + 1 }}"><i class="material-icons left">edit</i>edit</a></td>
+                        <td><a class="waves-effect waves-light btn"  href="#modal1" ind="{{ $i + 1 }}"><i class="material-icons left">edit</i>edit</a></td>
                         <td><a class="waves-effect waves-light btn " ind="{{ $i + 1 }}" href="#modal3"><i class="material-icons left">delete</i>delete</a></td>
                     </tr>
                     @endforeach
@@ -30,31 +30,35 @@
     </div>
 
     <div id="modal1" class="modal ">
-        <div class="modal-content">
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="" value="" class="supplyPerson" type="text" class="validate">
-                    <label for="name">Supply Name</label>
+        <form action="" id="edit" supplyid="">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="" value=""  type="text" class="validate supplyPerson" required>
+                        <label for="name">Supply Name</label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat edit">EDIT</a>
-        </div>
+            <div class="modal-footer">
+                <button class="waves-effect waves-light  btn-flat " type="submit" name="action">edit</button>
+            </div>
+        </form>
     </div>
 
     <div id="modal2" class="modal ">
-        <div class="modal-content">
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="" value="" class="supplyPersonAdd" type="text" class="validate">
-                    <label for="name">Supply Name</label>
+        <form action="" id="add">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="" value=""  type="text" class="validate supplyPersonAdd" required>
+                        <label for="name">Supply Name</label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat add">add</a>
-        </div>
+            <div class="modal-footer">
+                <button class="waves-effect waves-light  btn-flat " type="submit" name="action">add</button>
+            </div>
+        </form>
     </div>
 
     <div id="modal3" class="modal">
@@ -76,7 +80,7 @@
                 ready: function(modal, trigger){
                     index = trigger.attr('ind');
                     $('.supplyPerson').val($('.a'+ trigger.attr('ind')).text());
-                    $('.edit').attr('supplyid', $('.b'+ trigger.attr('ind')).attr('supplypersonid'))
+                    $('#edit').attr('supplyid', $('.b'+ trigger.attr('ind')).attr('supplypersonid'));
                     Materialize.updateTextFields();
                 }
             });
@@ -91,7 +95,8 @@
                 }
             });
 
-            $('.edit').on('click', function () {
+            $('#edit').on('submit', function (e) {
+                e.preventDefault();
                 var data = {
                     supplyPerson : $('.supplyPerson').val(),
                     supplyID: $(this).attr('supplyid')
@@ -105,9 +110,12 @@
                         $('.a' + index).text($('.supplyPerson').val());
                     }
                 });
+                $('#modal1').modal('close');
+                return false;
             });
 
-            $('.add').on('click', function () {
+            $('#add').on('submit', function (e) {
+                e.preventDefault();
                 var data = {
                   supplyPerson:  $('.supplyPersonAdd').val()
                 };
@@ -119,6 +127,8 @@
                         Materialize.toast('Add Success!', 4000);
                     }
                 });
+                $('#modal2').modal('close');
+                return false;
             });
 
             $('.delete').on('click', function () {
