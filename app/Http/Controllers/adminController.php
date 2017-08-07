@@ -38,7 +38,7 @@ class adminController extends Controller
         foreach ($r->input('stock') as $i=>$value)
         {
             $sales->insert([
-                'salesID' => 'stock'.uniqid(),
+                'salesID' => 'sales'.uniqid(),
                 'name' => $r->input('stock')[$i],
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
@@ -108,7 +108,7 @@ class adminController extends Controller
         foreach ($r->input('stock') as $i=>$item) {
 
             $supply->insert([
-                'toSupplyID' => 'supply'.uniqid(),
+                'toSupplyID' => 'toSupply'.uniqid(),
                 'stockName' => $r->input('stock')[$i],
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
