@@ -2,6 +2,11 @@
 @section('section')
 
     <div class="">
+        <style>
+            td{
+                padding: 0px 5px;
+            }
+        </style>
         <div class="row">
             <div class="col s6">
                 <label for="">Start Date</label>
@@ -23,10 +28,12 @@
                 <tr>
                     <th>No</th>
                     <th>Name</th>
+                    <th>Remark</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Time</th>
                     <th>Staff Name</th>
+
                 </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -34,6 +41,7 @@
                     <tr>
                         <td>{{ (($sales->currentPage() - 1 ) * $sales->perPage() ) + $loop->iteration }}</td>
                         <td>{{ $value->stockName }}</td>
+                        <td>{{ $value->remark }}</td>
                         <td>{{ $value->salesquantity }}</td>
                         <td>{{ $value->salesprice }}</td>
                         <td>{{ $value->dateTime }}</td>

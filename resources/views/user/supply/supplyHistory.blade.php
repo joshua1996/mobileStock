@@ -1,6 +1,11 @@
 @extends('layout.sideBar')
 @section('section')
 <div class="">
+    <style>
+        td{
+            padding: 0px 5px;
+        }
+    </style>
     <div class="row">
         <div class="col s6">
             <label for="">Start Date</label>
@@ -24,6 +29,7 @@
                 <th>No</th>
                 <th>Person</th>
                 <th>Stock Name</th>
+                <th>Remark</th>
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Time</th>
@@ -36,6 +42,7 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $value->supplyName }}</td>
                     <td>{{ $value->stockstockname }}</td>
+                    <td>{{ $value->remark }}</td>
                     <td>{{ $value->supplyquantity }}</td>
                     <td>{{ $value->supplyprice }}</td>
                     <td>{{ $value->dateTime }}</td>

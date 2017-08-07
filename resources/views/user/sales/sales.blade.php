@@ -14,20 +14,24 @@
                     </div>
                 </div>
                 <div class="formListTool row" >
-                    <div class="input-field col s3">
+                    <div class="input-field col s4">
                         <input type="hidden" name="stock[]" class="stocknamehidden">
                         <input id="" type="text" class="validate stock"  autocomplete="off" required>
                         <label for="last_name">Stock</label>
                     </div>
-                    <div class="input-field col s3">
+                    <div class="input-field col s1">
                         <input  type="number" min="1" class="validate quantity" disabled id="" name="quantity[]" required>
                         <label for="disabled">Quantity</label>
                     </div>
-                    <div class="input-field col s3">
+                    <div class="input-field col s1">
                         <input  type="number" min="1" class="validate" name="price[]" required disabled step=".01">
-                        <label for="last_name">Price</label>
+                        <label for="">Price</label>
                     </div>
-                    <div class="col s3">
+                    <div class="input-field col s4">
+                        <input  type="text" class="validate" name="remark[]" required >
+                        <label for="remark">Remark</label>
+                    </div>
+                    <div class="col s2">
                         {{--<a class="deleteList waves-effect waves-light btn"><i class="material-icons left">delete</i>delete</a>--}}
                     </div>
                 </div>
@@ -58,7 +62,7 @@
                 });
 
                 $('.addList').on('click', function () {
-                    var appendList = $('<div class="formListTool row" > <div class="input-field col s3"> <input type="hidden" name="stock[]" class="stocknamehidden"> <input id="" type="text" class="validate stock" autocomplete="off" required> <label for="last_name">Stock</label> </div> <div class="input-field col s3"> <input type="number" min="1" class="validate quantity" disabled id="" name="quantity[]" required> <label for="disabled">Quantity</label> </div> <div class="input-field col s3"> <input type="number" min="1" class="validate" name="price[]" required disabled step=".01"> <label for="last_name">Price</label> </div> <div class="col s3"> <a class="deleteList waves-effect waves-light btn"><i class="material-icons left">delete</i>delete</a> </div> </div>');
+                    var appendList = $('<div class="formListTool row" > <div class="input-field col s4"> <input type="hidden" name="stock[]" class="stocknamehidden"> <input id="" type="text" class="validate stock" autocomplete="off" required> <label for="last_name">Stock</label> </div> <div class="input-field col s1"> <input type="number" min="1" class="validate quantity" disabled id="" name="quantity[]" required> <label for="disabled">Quantity</label> </div> <div class="input-field col s1"> <input type="number" min="1" class="validate" name="price[]" required disabled step=".01"> <label for="">Price</label> </div> <div class="input-field col s4"> <input type="text" class="validate" name="" required > <label for="remark">Remark</label> </div> <div class="col s2"> <a class="deleteList waves-effect waves-light btn"><i class="material-icons left">delete</i>delete</a> </div> </div>');
                     $('.formList').append(appendList);
                     $('input.stock', appendList).autocomplete2({
                         data:stockList

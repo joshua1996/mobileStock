@@ -19,18 +19,22 @@
                 </div>
 
                 <div class="formListTool row">
-                    <div class="input-field col s3">
+                    <div class="input-field col s4">
                         <input type="hidden" name="stock[]" value="" class="stockhidden">
                         <input id="" type="text" class="validate stock" name="" autocomplete="off" required>
                         <label for="last_name">Stock Name</label>
                     </div>
-                    <div class="input-field col s3">
+                    <div class="input-field col s1">
                         <input  type="number" min="1" class="validate" name="quantity[]" required disabled>
                         <label for="last_name">Quantity</label>
                     </div>
-                    <div class="input-field col s3">
-                        <input  type="number" min="0.01" class="validate" name="price[]" required disabled>
+                    <div class="input-field col s1">
+                        <input  type="number"  class="validate" name="price[]" required disabled>
                         <label for="last_name">Price</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input  type="text" class="validate" name="remark[]" required >
+                        <label for="remark">Remark</label>
                     </div>
                     <div class="col s3">
                         {{--<a class="deleteList waves-effect waves-light btn">delete row</a>--}}
@@ -74,7 +78,7 @@
                 });
 
                 $('.addList').on('click', function () {
-                    var appendList = $(' <div class="formListTool row"> <div class="input-field col s3"> <input type="hidden" name="stock[]" value="" class="stockhidden"> <input id="" type="text" class="validate stock" name="" autocomplete="off" required> <label for="last_name">Stock Name</label> </div> <div class="input-field col s3"> <input type="number" min="1" class="validate" name="quantity[]" required disabled> <label for="last_name">Quantity</label> </div> <div class="input-field col s3"> <input type="number" min="0.01" class="validate" name="price[]" required disabled> <label for="last_name">Price</label> </div> <div class="col s3"><a class="deleteList waves-effect waves-light btn"><i class="material-icons left">delete</i>delete row</a> </div> </div>');
+                    var appendList = $('<div class="formListTool row"> <div class="input-field col s4"> <input type="hidden" name="stock[]" value="" class="stockhidden"> <input id="" type="text" class="validate stock" name="" autocomplete="off" required> <label for="last_name">Stock Name</label> </div> <div class="input-field col s1"> <input type="number" min="1" class="validate" name="quantity[]" required disabled> <label for="last_name">Quantity</label> </div> <div class="input-field col s1"> <input type="number" min="0.01" class="validate" name="price[]" required disabled> <label for="last_name">Price</label> </div> <div class="input-field col s4"> <input type="text" class="validate" name="remark[]" required > <label for="remark">Remark</label> </div> <div class="col s2"> <a class="deleteList waves-effect waves-light btn">delete</a> </div> </div>');
                     $('.formList').append(appendList);
                     $('.stock', appendList).autocomplete2({
                         data:stockList

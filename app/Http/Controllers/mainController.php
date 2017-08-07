@@ -36,12 +36,14 @@ class mainController extends Controller
         {
 
             $sales->insert([
+                'salesID' => 'stock'.uniqid(),
                 'name' => $r->input('stock')[$i],
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
                 'staffID' => $r->input('staff'),
-                'shopID' => Session::get('shopID')
+                'shopID' => Session::get('shopID'),
+                'remark' => $r->input('remark')[$i]
             ]);
             $stockR = $stock->where('stockID', '=', $r->input('stock')[$i])->first();
             $stock->where('stockID', '=', $r->input('stock')[$i])
@@ -91,7 +93,8 @@ class mainController extends Controller
     public function supply()
     {
         $supplyPerson = new supplyPersonModel();
-        $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))->get();
+        $supplyPersonR = $supplyPerson->where('shopID', '=', Session::get('shopID'))
+            ->where('remove', '=', false)->get();
         $stock = new stockModel();
         $stockR = $stock->where('shopID', '=', Session::get('shopID'))
             ->where('remove', '=', false)->get();
@@ -108,13 +111,15 @@ class mainController extends Controller
         $supplyPerson = new supplyPersonModel();
         foreach ($r->input('stock') as $i=>$item) {
             $supply->insert([
+                'toSupplyID' => 'supply'.uniqid(),
                'stockName' => $r->input('stock')[$i],
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
                 'person' => $r->input('supply'),
                 'staffID' => $r->input('staff'),
-                'shopID' => Session::get('shopID')
+                'shopID' => Session::get('shopID'),
+                'remark' => $r->input('remark')[$i]
             ]);
             $stockR = $stock->where('stockID', '=', $r->input('stock')[$i])->first();
             $stock->where('stockID', '=', $r->input('stock')[$i])

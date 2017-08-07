@@ -22,6 +22,7 @@
                 <tr>
                     <th>No</th>
                     <th>Name</th>
+                    <th>Remark</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Time</th>
@@ -34,6 +35,7 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $value->stockName }}</td>
+                        <td>{{ $value->remark }}</td>
                         <td>{{ $value->salesquantity }}</td>
                         <td>{{ $value->salesprice }}</td>
                         <td>{{ $value->dateTime }}</td>

@@ -38,12 +38,14 @@ class adminController extends Controller
         foreach ($r->input('stock') as $i=>$value)
         {
             $sales->insert([
+                'salesID' => 'stock'.uniqid(),
                 'name' => $r->input('stock')[$i],
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
                 'staffID' => $r->input('staffID'),
-                'shopID' => Session::get('shopID')
+                'shopID' => Session::get('shopID'),
+                'remark' => $r->input('remark')[$i],
             ]);
             $stockR = $stock->where('stockID', '=', $r->input('stock')[$i])->first();
             $stock->where('stockID', '=', $r->input('stock')[$i])
@@ -106,13 +108,15 @@ class adminController extends Controller
         foreach ($r->input('stock') as $i=>$item) {
 
             $supply->insert([
+                'toSupplyID' => 'supply'.uniqid(),
                 'stockName' => $r->input('stock')[$i],
                 'quantity' => $r->input('quantity')[$i],
                 'price' => $r->input('price')[$i],
                 'dateTime' => $datetime,
                 'person' => $r->input('supply'),
                 'staffID' => $r->input('staff'),
-                'shopID' => Session::get('shopID')
+                'shopID' => Session::get('shopID'),
+                'remark' => $r->input('remark')[$i]
             ]);
             $stockR = $stock->where('stockID', '=', $r->input('stock')[$i])->first();
             $stock->where('stockID', '=', $r->input('stock')[$i])
