@@ -39,7 +39,7 @@
             <tbody id="tableBody">
             @foreach($supply as $index=>$value)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ (($supply->currentPage() - 1 ) * $supply->perPage() ) + $loop->iteration }}</td>
                     <td>{{ $value->supplyName }}</td>
                     <td>{{ $value->stockstockname }}</td>
                     <td>{{ $value->remark }}</td>

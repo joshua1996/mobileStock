@@ -1,6 +1,11 @@
 @extends('layout.sidebarAdmin')
 @section('section')
 <div class="row">
+    <style>
+        td{
+            padding: 0px 5px;
+        }
+    </style>
     <div class="col s6">
         <label for="">Start Date</label>
         <input type="date" class="datepicker" name="searchDate" id="searchDate">
@@ -29,7 +34,7 @@
         @foreach($supply as $index=>$value)
 
             <tr>
-                <td>{{ $index + 1 }}</td>
+                <td>{{ (($supply->currentPage() - 1 ) * $supply->perPage() ) + $loop->iteration }}</td>
                 <td>{{ $value->supplyName }}</td>
                 <td>{{ $value->stockstockname }}</td>
                 <td>{{ $value->remark }}</td>

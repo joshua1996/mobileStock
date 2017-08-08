@@ -1,6 +1,11 @@
 @extends('layout.sidebarAdmin')
 @section('section')
 <div class="row">
+    <style>
+        td{
+            padding: 1px 0px;
+        }
+    </style>
     <div class="row">
         <a href="#modal1" class="waves-effect waves-light btn"><i class="material-icons left">add</i>add</a>
     </div>

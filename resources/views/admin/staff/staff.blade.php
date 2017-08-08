@@ -1,6 +1,11 @@
 @extends('layout.sidebarAdmin')
 @section('section')
     <div class="row">
+        <style>
+            td{
+                padding: 1px 0px;
+            }
+        </style>
         <div class="row">
             <div class="input-field col s12">
                 <select id="userselect">

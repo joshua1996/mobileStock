@@ -39,11 +39,7 @@ Route::group(['middleware' => 'notUser'], function (){
     //
     Route::post('/logout', 'userLoginController@logout')->name('logout');
     Route::post('/sales', 'mainController@sales')->name('sales');
-
-//    Route::post('/salesSearchDate', 'mainController@salesSearchDate')->name('salesSearchDate');
-
     Route::post('/supply', 'mainController@supplyP')->name('supplyP');
-   // Route::post('/supplySearchDate', 'mainController@supplySearchDate')->name('supplySearchDate');
 
 });
 

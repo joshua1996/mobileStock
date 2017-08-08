@@ -2,6 +2,11 @@
 @section('section')
 
     <div class="">
+        <style>
+            td{
+                padding: 0px 5px;
+            }
+        </style>
         <form action="{{ route('supplyP') }}" method="post" class="supplyform">
             {{ csrf_field() }}
             <div class="formList row">

@@ -162,6 +162,7 @@ class adminController extends Controller
         $stockR = $stock->where('stock.shopID', '=', Session::get('shopID'))
             ->where('stock.remove', '=', false)
             ->join('stockType', 'stock.stockType', '=', 'stockType.stockTypeID')
+            ->orderBy('stock.stockName', 'asc')
             ->paginate(20);
         $stockType = new stockTypeModel();
         $stockTypeR = $stockType->where('shopID', '=', Session::get('shopID'))->get();
@@ -209,7 +210,7 @@ class adminController extends Controller
         $stock = new stockModel();
         $stockR =  $stock
             ->where('stock.shopID', '=', Session::get('shopID'))
-            ->where('stock.stockName', 'like', '%'.$r->stockname.'%')
+            ->where('stock.stockName', 'ILIKE', '%'.$r->stockname.'%')
             ->where('stock.remove', '=', false)
             ->join('stockType', 'stock.stockType', '=', 'stockType.stockTypeID')
             ->paginate(20);

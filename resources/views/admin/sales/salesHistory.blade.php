@@ -1,6 +1,11 @@
 @extends('layout.sidebarAdmin')
 @section('section')
     <div class="row">
+        <style>
+            td{
+                padding: 0px 5px;
+            }
+        </style>
         <div class="row">
             <div class="col s6">
                 <label for="">Start Date</label>
@@ -33,7 +38,7 @@
                 @foreach($sales as $index=>$value)
 
                     <tr>
-                        <td>{{ $index + 1 }}</td>
+                        <td>{{ (($sales->currentPage() - 1 ) * $sales->perPage() ) + $loop->iteration }}</td>
                         <td>{{ $value->stockName }}</td>
                         <td>{{ $value->remark }}</td>
                         <td>{{ $value->salesquantity }}</td>

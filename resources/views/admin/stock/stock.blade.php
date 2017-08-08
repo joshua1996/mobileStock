@@ -1,6 +1,11 @@
 @extends('layout.sidebarAdmin')
 @section('section')
 <div class="row">
+    <style>
+        td{
+            padding: 1px 0px;
+        }
+    </style>
     <div class="row">
         <div class="input-field col s6">
             <input id="" type="text" class="validate searchname">
@@ -27,7 +32,7 @@
             <tbody class="stocktable">
             @foreach($stock as $i=>$value)
                 <tr stockID="{{ $value->stockID }}" class="e{{ $i+1 }}">
-                    <td>{{ $i + 1 }}</td>
+                    <td>{{ (($stock->currentPage() - 1 ) * $stock->perPage() ) + $loop->iteration }}</td>
                     <td class="a{{ $i+1 }}">{{ $value->stockName }}</td>
                     <td class="b{{ $i+1 }}">{{ $value->quantity }}</td>
                     <td class="c{{ $i+1 }}">{{ $value->price }}</td>
