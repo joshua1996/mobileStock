@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class admin
+class notBoss
 {
     /**
      * Handle an incoming request.
@@ -16,16 +16,9 @@ class admin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guard('admin')->check())
+        if (!Auth::guard('boss')->check())
         {
-            return redirect('/admin/sales');
-        }
-        elseif(Auth::guard('user')->check())
-        {
-            return redirect()->route('home');
-        }
-        elseif (Auth::guard('boss')->check()) {
-            return redirect()->route('shop');
+            return redirect('/boss/login');
         }
         return $next($request);
     }

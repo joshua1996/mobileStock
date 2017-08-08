@@ -19,9 +19,13 @@ class user
         if (Auth::guard('user')->check())
         {
             return redirect('/');
-        }elseif (Auth::guard('admin')->check())
+        }
+        elseif (Auth::guard('admin')->check())
         {
             return redirect()->route('adminSales');
+        }
+        elseif (Auth::guard('boss')->check()) {
+            return redirect()->route('shop');
         }
         return $next($request);
     }

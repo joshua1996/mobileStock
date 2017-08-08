@@ -20,12 +20,12 @@
                     @endforeach
                 </ul>
             @endif
-            <form action="{{ route('loginP') }}" method="post" class="">
+            <form action="{{ route('bossLoginP') }}" method="post" class="">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="input-field col s6">
-                        <input id="" type="text" class="validate" name="username">
-                        <label for="username">Username</label>
+                        <input id="" type="text" class="validate" name="bossName">
+                        <label for="bossname">Boss name</label>
                     </div>
                 </div>
                 <div class="row">

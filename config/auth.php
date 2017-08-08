@@ -55,6 +55,11 @@ return [
             'driver' => 'session',
             'provider' => 'user',
         ],
+
+        'boss' => [
+            'driver' => 'session',
+            'provider' => 'boss',
+        ],
     ],
 
 
@@ -90,6 +95,11 @@ return [
         'user' => [
             'driver' => 'eloquent',
             'model' => App\userModel::class,
+        ],
+
+        'boss' => [
+            'driver' => 'eloquent',
+            'model' => App\bossModel::class,
         ],
 
         // 'users' => [

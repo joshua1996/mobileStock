@@ -91,7 +91,16 @@ Route::group(['middleware' => 'notAdmin'], function (){
 
 });
 
+Route::group(['middleware' => 'boss'], function () {
+    Route::get('/boss/login', 'bossLoginController@bossLogin');
+    //
+    Route::post('/boss/login', 'bossLoginController@login')->name('bossLoginP');
+});
 
-
-
-
+Route::group(['middleware' => 'notBoss'], function () {
+    Route::get('/boss/empty', 'bossController@index');
+    Route::get('/boss/shop', 'bossController@shop')->name('shop');
+    //
+    Route::post('/boss/logout', 'bossLoginController@logout')->name('logoutBoss');
+    Route::post('/boss/shopadd', 'bossController@shopadd')->name('shopadd');
+});
