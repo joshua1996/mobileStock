@@ -133,6 +133,7 @@
         $('#stockType').autocomplete2({
             data:stockType
         });
+        $('#addStockType').autocomplete2({
            data: stockType
         });
 
@@ -154,7 +155,6 @@
         $('#modal3').modal({
             ready: function (modal, trigger) {
                 index = trigger.attr('ind');
-                $('#addStockType').autocomplete2({
                 $('.delete').attr('deleteid', $('.e' + trigger.attr('ind')).attr('stockid'));
             }
         });

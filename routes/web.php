@@ -103,4 +103,6 @@ Route::group(['middleware' => 'notBoss'], function () {
     //
     Route::post('/boss/logout', 'bossLoginController@logout')->name('logoutBoss');
     Route::post('/boss/shopadd', 'bossController@shopadd')->name('shopadd');
+    Route::post('/boss/shopedit', 'bossController@shopEdit')->name('shopedit');
+    Route::post('/boss/shopdelete', 'bossController@shopDelete')->name('shopdelete');
 });
