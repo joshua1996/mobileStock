@@ -16,6 +16,7 @@
 //});
 
 //TODO edit all table 's edit and update button!!!! dropdown
+          //finish admin site
 //TODO all table add created_at and updated_at
 //TODO sync all sidebar collapse
 //TODO code insert change to create

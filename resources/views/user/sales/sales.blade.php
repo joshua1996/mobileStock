@@ -92,6 +92,7 @@
                 });
 
                 $('#stockform').on('submit', function () {
+                    checkPreloader(true);
                     $('.staffHidden').val($('.staff').attr('autoid'));
                     $('.stock').each(function (index) {
                         $(this).prev().val($(this).attr('autoid'));

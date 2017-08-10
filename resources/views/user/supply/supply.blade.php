@@ -94,12 +94,12 @@
                 });
 
                 $('.supplyform').on('submit', function () {
+                    checkPreloader(true);
                     $('.supplyhidden').val($('#person').attr('autoid'));
                     $('.staffhidden').val($('.staff').attr('autoid'));
                     $('.stock').each(function (index) {
                         $(this).prev().val($(this).attr('autoid'));
                     });
-                   // $('.stockhidden').val($('.stock').attr('autoid'));
                 });
 
                 $('.stock').on('blur', function () {
