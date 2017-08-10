@@ -90,6 +90,7 @@
 
 
             $('#adminselect').on('change', function () {
+                checkPreloader(true);
                 var data= {
                     shopID: $(this).val()
                 };
@@ -98,6 +99,7 @@
                     type: 'post',
                     data: data,
                     success: function (data) {
+                        checkPreloader(false);
                         $('.userlist').empty();
                         $.each(data.shop, function (i, v) {
                             $('.userlist').append(' <tr class="b'+(i+1)+'" adminID="'+ v.adminID +'"> <td>'+(i+1)+'</td> <td class="a'+ (i+1) +'">'+(v.adminName)+'</td> <td><a class="dropdown-button btn" href="#" data-activates="dropdown'+ (i+1) +'">Edit</a> <ul id="dropdown'+ (i+1) +'" class="dropdown-content"> <li><a href="#modal2" ind="'+ (i+1) +'"><i class="material-icons">edit</i>Modify</a></li> <li><a href="#modal3" ind="'+ (i+1) +'"><i class="material-icons">delete</i>Delete</a></li> </ul></td></tr>');
@@ -125,7 +127,7 @@
             });
 
             $('#add').on('submit', function (e) {
-                $('#preloaderBlock').addClass('preloader-background');
+                checkPreloader(true);
                 e.preventDefault();
                 var data = {
                     shopID: $('#adminselect').val(),
@@ -137,7 +139,7 @@
                     type: 'post',
                     data: data,
                     success: function (d) {
-                        $('#preloaderBlock').removeClass('preloader-background');
+                        checkPreloader(false);
                         $('#modal1').modal('close');
                         Materialize.toast('Add Success!', 4000);
                     }
@@ -146,7 +148,7 @@
             });
 
             $('#edit').on('submit', function (e) {
-                $('#preloaderBlock').addClass('preloader-background');
+                checkPreloader(true);
                 e.preventDefault();
                 var data = {
                     adminID: $('.b' + index).attr('adminid'),
@@ -158,7 +160,7 @@
                     type: 'post',
                     data: data,
                     success: function (d) {
-                        $('#preloaderBlock').removeClass('preloader-background');
+                        checkPreloader(false);
                         $('.a' + index).text($('.adminnameedit').val());
                         $('#modal2').modal('close');
                         Materialize.toast('Modify Success!', 4000);
@@ -168,7 +170,7 @@
             });
 
             $('.delete').on('click', function (e) {
-                $('#preloaderBlock').addClass('preloader-background');
+                checkPreloader(true);
                 var data = {
                     adminID: $('.b' + index).attr('adminid')
                 };
@@ -179,7 +181,7 @@
                     success: function (d) {
                         $('.b' + index).remove();
                         $('#modal3').modal('close');
-                        $('#preloaderBlock').removeClass('preloader-background');
+                        checkPreloader(false);
                         Materialize.toast('Delete Success!', 4000);
                     }
                 });

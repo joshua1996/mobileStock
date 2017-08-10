@@ -89,6 +89,7 @@
             });
 
             $('#add').on('submit', function (e) {
+                checkPreloader(true);
                 e.preventDefault();
                 var data = {
                    shopName :  $('.shopname').val()
@@ -98,6 +99,7 @@
                     type: 'post',
                     data: data,
                     success: function (d) {
+                        checkPreloader(false);
                         $('#modal1').modal('close');
                         Materialize.toast('Add Success!', 4000);
                     }
@@ -106,6 +108,7 @@
             });
 
             $('#edit').on('submit', function (e) {
+                checkPreloader(true);
                 e.preventDefault();
                 var data = {
                     shopName :  $('.shopnameedit').val(),
@@ -116,6 +119,7 @@
                     type: 'post',
                     data: data,
                     success: function (d) {
+                        checkPreloader(false);
                         $('.a' + index).text($('.shopnameedit').val());
                         $('#modal2').modal('close');
                         Materialize.toast('Modify Success!', 4000);
@@ -125,6 +129,7 @@
             });
 
             $('.delete').on('click', function (e) {
+                checkPreloader(true);
                 var data = {
                     shopID: $('.b' + index).attr('shopid')
                 };
@@ -133,6 +138,7 @@
                     type: 'post',
                     data: data,
                     success: function (d) {
+                        checkPreloader(false);
                         $('.b' + index).remove();
                         $('#modal3').modal('close');
                         Materialize.toast('Delete Success!', 4000);
