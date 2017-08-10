@@ -100,9 +100,15 @@ Route::group(['middleware' => 'boss'], function () {
 Route::group(['middleware' => 'notBoss'], function () {
     Route::get('/boss/empty', 'bossController@index');
     Route::get('/boss/shop', 'bossController@shop')->name('shop');
+    Route::get('/boss/admin', 'bossController@admin')->name('adminBoss');
     //
     Route::post('/boss/logout', 'bossLoginController@logout')->name('logoutBoss');
     Route::post('/boss/shopadd', 'bossController@shopadd')->name('shopadd');
     Route::post('/boss/shopedit', 'bossController@shopEdit')->name('shopedit');
     Route::post('/boss/shopdelete', 'bossController@shopDelete')->name('shopdelete');
+    Route::post('/boss/admin', 'bossController@shopSelect')->name('shopSelect');
+    Route::post('/boss/adminAdd', 'bossController@adminAdd')->name('adminAdd');
+    Route::post('/boss/adminEdit', 'bossController@adminEdit')->name('adminEdit');
+    Route::post('/boss/adminDelete', 'bossController@adminDelete')->name('adminDelete');
+
 });

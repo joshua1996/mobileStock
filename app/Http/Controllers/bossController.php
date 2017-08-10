@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\adminModel;
 use Illuminate\Http\Request;
 use App\shopModel;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class bossController extends Controller
@@ -28,7 +30,8 @@ class bossController extends Controller
         $shop->create([
             'shopID'=> 'shop'.uniqid(),
             'shopName' => $r->input('shopName'),
-            'bossID' => Auth::guard('boss')->user()->bossID
+            'bossID' => Auth::guard('boss')->user()->bossID,
+            'remove' => false
         ]);
     }
 
@@ -45,6 +48,62 @@ class bossController extends Controller
     {
         $shop = new shopModel();
         $shop->where('shopID', '=', $r->input('shopID'))
+            ->update([
+                'remove' => true
+            ]);
+    }
+    //TODO edit all table 's edit and update button!!!! dropdown
+    //TODO all table add created_at and updated_at
+    //TODO sync all sidebar collapse
+    //TODO code insert change to create
+
+
+    public function admin()
+    {
+        $shop = new shopModel();
+        $shopR = $shop->where('bossID', '=', Auth::guard('boss')->user()->bossID)
+            ->where('remove', '=', false)
+            ->get();
+        return view('boss.admin.admin', ['shop' => $shopR]);
+    }
+
+    public function shopSelect(Request $r)
+    {
+        $shop = new shopModel();
+        $shopR = $shop->where('shop.shopID', '=', $r->input('shopID'))
+            ->where('shop.remove', '=', false)
+            ->where('admin.remove', '=', false)
+            ->join('admin', 'shop.shopID', '=', 'admin.shopID')
+            ->get();
+        return Response()->json(['shop' => $shopR]);
+    }
+
+    public function adminAdd(Request $r)
+    {
+        $admin = new adminModel();
+        $admin->create([
+            'adminID' => 'admin'.uniqid(),
+            'adminName' => $r->input('adminName'),
+            'password' => bcrypt($r->input('password')),
+            'shopID' => $r->input('shopID'),
+            'remove' => false
+        ]);
+    }
+
+    public function adminEdit(Request $request)
+    {
+        $admin = new adminModel();
+        $admin->where('adminID', '=', $request->input('adminID'))
+            ->update([
+                'adminName' => $request->input('adminName'),
+                'password' => bcrypt($request->input('password'))
+            ]);
+    }
+
+    public function adminDelete(Request $request)
+    {
+        $admin = new adminModel();
+        $admin->where('adminID', '=', $request->input('adminID'))
             ->update([
                 'remove' => true
             ]);

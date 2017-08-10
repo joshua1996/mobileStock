@@ -35,22 +35,46 @@
                     <a href="#!email"><span class="white-text email"></span></a>
                 </div>
             </li>
-            <li><a class="subheader">Sales</a></li>
-            <li class="{{ (Request::is('*/sales') ? 'active' : '') }}"> <a class="waves-effect" href="{{ route('adminSales') }}">Sales</a></li>
-            <li class="{{ (Request::is('*/salesHistory') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('salesHistoryAdmin') }}">Sales History</a></li>
-            <li><a class="subheader">Supply</a></li>
-            <li class="{{ (Request::is('*/supply') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('adminSupply') }}">Supply</a></li>
-            <li class="{{ (Request::is('*/supplyHistory') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('supplyHistoryAdmin') }}">Supply History</a></li>
-            <li><a class="subheader">Stock</a></li>
-            <li class="{{ (Request::is('*/stock') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('stockAdmin') }}">Stock</a></li>
-            <li class="{{ (Request::is('*/stockType') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('stockTypeAdmin') }}">Stock Type</a></li>
+            <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                    <li class="bold"><a class="collapsible-header waves-effect waves-teal">Sales</a>
+                        <div class="collapsible-body" style="display: none;">
+                            <ul>
+                                <li class="{{ (Request::is('*/sales') ? 'active' : '') }}"> <a class="waves-effect" href="{{ route('adminSales') }}">Sales</a></li>
+                                <li class="{{ (Request::is('*/salesHistory') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('salesHistoryAdmin') }}">Sales History</a></li>
 
-            <li><a class="subheader">Other</a></li>
-            <li class="{{ (Request::is('*/supplyPerson') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('supplyPerson') }}">Supply Person</a></li>
-            <li class="{{ (Request::is('*/user') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('userEditAdmin') }}">User</a></li>
-            <li class="{{ (Request::is('*/staff') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('staffAdmin') }}">Staff</a></li>
-            <li ><a href="{{ route('adminLogout') }}" onclick="event.preventDefault();
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="bold"><a class="collapsible-header waves-effect waves-teal">Supply</a>
+                        <div class="collapsible-body" style="display: none;">
+                            <ul>
+                                <li class="{{ (Request::is('*/supply') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('adminSupply') }}">Supply</a></li>
+                                <li class="{{ (Request::is('*/supplyHistory') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('supplyHistoryAdmin') }}">Supply History</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="bold"><a class="collapsible-header waves-effect waves-teal">Stock</a>
+                        <div class="collapsible-body" style="display: none;">
+                            <ul>
+                                <li class="{{ (Request::is('*/stock') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('stockAdmin') }}">Stock</a></li>
+                                <li class="{{ (Request::is('*/stockType') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('stockTypeAdmin') }}">Stock Type</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="bold"><a class="collapsible-header waves-effect waves-teal">Other</a>
+                        <div class="collapsible-body" style="display: none;">
+                            <ul>
+                                <li class="{{ (Request::is('*/supplyPerson') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('supplyPerson') }}">Supply Person</a></li>
+                                <li class="{{ (Request::is('*/user') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('userEditAdmin') }}">User</a></li>
+                                <li class="{{ (Request::is('*/staff') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('staffAdmin') }}">Staff</a></li>
+                                <li ><a href="{{ route('adminLogout') }}" onclick="event.preventDefault();
 document.getElementById('logout').submit();">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <script>
            $(document).ready(function () {

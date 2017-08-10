@@ -37,6 +37,7 @@
             </li>
             <li><a class="subheader">Shop</a></li>
             <li class="{{ (Request::is('*/shop') ? 'active' : '') }}"> <a class="waves-effect" href="{{ route('adminSales') }}">Shop</a></li>
+            <li class="{{ (Request::is('*/admin') ? 'active' : '') }}"> <a class="waves-effect" href="{{ route('adminBoss') }}">Admin</a></li>
             <li ><a href="{{ route('logoutBoss') }}" onclick="event.preventDefault();
 document.getElementById('logout').submit();">Log Out</a></li>
         </ul>
