@@ -12,7 +12,6 @@
                         <th>No</th>
                         <th>name</th>
                         <th>Edit</th>
-                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,9 +19,12 @@
                     <tr class="b{{ $i+1 }}" supplypersonid="{{ $value->supplyID }}">
                         <td>{{ $i+1 }}</td>
                         <td class="a{{ $i+1 }}">{{ $value->name }}</td>
-                        <td><a class="waves-effect waves-light btn"  href="#modal1" ind="{{ $i + 1 }}"><i class="material-icons left">edit</i>edit</a></td>
-                        <td><a class="waves-effect waves-light btn " ind="{{ $i + 1 }}" href="#modal3"><i class="material-icons left">delete</i>delete</a></td>
-                    </tr>
+                        <td><a class='dropdown-button btn' href='#' data-activates='dropdown{{ $i+1 }}'>Edit</a>
+                            <ul id='dropdown{{ $i+1 }}' class='dropdown-content'>
+                                <li><a href="#modal1" ind="{{ $i+1 }}"><i class="material-icons">edit</i>Modify</a></li>
+                                <li><a href="#modal3" ind="{{ $i+1 }}"><i class="material-icons">delete</i>Delete</a></li>
+                            </ul></td>
+                         </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -75,6 +77,10 @@
 
     <script>
         $(document).ready(function () {
+            $('.dropdown-button').dropdown({
+                    constrainWidth: false
+                }
+            );
             var index = 0;
             $('#modal1').modal({
                 ready: function(modal, trigger){
@@ -96,6 +102,7 @@
             });
 
             $('#edit').on('submit', function (e) {
+                checkPreloader(true);
                 e.preventDefault();
                 var data = {
                     supplyPerson : $('.supplyPerson').val(),
@@ -106,6 +113,7 @@
                     type: 'post',
                     data: data,
                     success: function () {
+                        checkPreloader(false);
                         Materialize.toast('Edit Success!', 4000);
                         $('.a' + index).text($('.supplyPerson').val());
                     }
@@ -115,6 +123,7 @@
             });
 
             $('#add').on('submit', function (e) {
+                checkPreloader(true);
                 e.preventDefault();
                 var data = {
                   supplyPerson:  $('.supplyPersonAdd').val()
@@ -124,6 +133,7 @@
                     type: 'post',
                     data: data,
                     success: function(){
+                        checkPreloader(false);
                         Materialize.toast('Add Success!', 4000);
                     }
                 });
@@ -132,6 +142,7 @@
             });
 
             $('.delete').on('click', function () {
+                checkPreloader(true);
                 var data = {
                     supplyID :$(this).attr('deleteid')
                 }
@@ -140,6 +151,7 @@
                     type:'post',
                     data:data,
                     success: function (data) {
+                        checkPreloader(false);
                         $('.b' + index).remove();
                         Materialize.toast('Delete Success!', 4000);
                     }

@@ -27,7 +27,7 @@
                         <label for="price">Price</label>
                     </div>
                     <div class="input-field col s4">
-                        <input  type="text" class="validate" name="remark[]" required >
+                        <input  type="text" class="validate" name="remark[]"  >
                         <label for="remark">Remark</label>
                     </div>
                     <div class="col s2">
@@ -54,6 +54,7 @@
             ];
 
             $(document).ready(function () {
+
                 $('.stock').autocomplete2({
                     data:stockList,
                     change: function (event, ui) {
@@ -65,7 +66,7 @@
                 });
 
                 $('.addList').on('click', function () {
-                    var appendList = $('<div class="formListTool row"> <div class="input-field col s4"> <input type="hidden" name="stock[]" id="stocknamehidden"> <input type="text" class="validate stock" autocomplete="off" autoid="" required> <label for="stock">Stock</label> </div> <div class="input-field col s1"> <input id="" type="number" min="1" class="validate" name="quantity[]" required disabled=""> <label for="Quantity">Quantity</label> </div> <div class="input-field col s1"> <input id="" type="number" class="validate" name="price[]" required disabled step=".01"> <label for="price">Price</label> </div> <div class="input-field col s4"> <input type="text" class="validate" name="remark[]" required > <label for="remark">Remark</label> </div> <div class="col s2"> <a class="deleteList waves-effect waves-light btn">delete</a> </div> </div>');
+                    var appendList = $('<div class="formListTool row"> <div class="input-field col s4"> <input type="hidden" name="stock[]" id="stocknamehidden"> <input type="text" class="validate stock" autocomplete="off" autoid="" required> <label for="stock">Stock</label> </div> <div class="input-field col s1"> <input id="" type="number" min="1" class="validate" name="quantity[]" required disabled=""> <label for="Quantity">Quantity</label> </div> <div class="input-field col s1"> <input id="" type="number" class="validate" name="price[]" required disabled step=".01"> <label for="price">Price</label> </div> <div class="input-field col s4"> <input type="text" class="validate" name="remark[]"  > <label for="remark">Remark</label> </div> <div class="col s2"> <a class="deleteList waves-effect waves-light btn">delete</a> </div> </div>');
                     $('.formList').append(appendList);
 
                     $('.stock', appendList).autocomplete2({
@@ -98,17 +99,18 @@
 
 
                 $('#stockform').on('submit', function () {
+                    checkPreloader(true);
                     $('.staffHidden').val($('.staff').attr('autoid'));
                     $('.stock').each(function (index) {
                         $(this).prev().val($(this).attr('autoid'));
                     });
+
                 });
 
                 $('.stock').on('blur', function () {
                     var a = $(this).val();
                     if(a.length)
                     {
-                        console.log('aa');
                         var found_names = $.grep(stockList, function(v) {
                             return v.text === a;
                         });
@@ -116,7 +118,6 @@
                         $(this).parent().next().next().children().removeAttr('disabled');
                         $(this).parent().next().children().attr('max', found_names[0].quantity);
                     }else {
-                        console.log('gg');
                         $(this).parent().next().children().val('');
                         $(this).parent().next().next().children().val('');
                         $(this).parent().next().children().prop('disabled', true);

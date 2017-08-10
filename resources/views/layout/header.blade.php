@@ -26,20 +26,18 @@
                 }
             });
         });
+
+        function checkPreloader(x) {
+            if (x == true) {
+                $('#preloaderBlock').addClass('preloader-background');
+            }else {
+                $('#preloaderBlock').removeClass('preloader-background');
+            }
+        }
     </script>
     <style>
-        .preloaderblock.active{
-            height: auto;
-            left: 0;
-            min-height: 100%;
-            position: absolute;
-            right: 0;
-            top: 0;
-            z-index: 2000;
-        }
-
         .preloader-background {
-            display: flex;
+            display: flex !important;
             align-items: center;
             justify-content: center;
             position: fixed;
@@ -50,16 +48,13 @@
             bottom: 0;
             background-color: black;
             opacity: 0.5;
+
         }
     </style>
 </head>
 <body>
 @yield('body')
-
-{{--<div style="" class="preloaderblock active">--}}
-
-{{--</div>--}}
-<div class="" id="preloaderBlock">
+<div class="" id="preloaderBlock" style="display: none;">
     <div class="preloader-wrapper big active">
         <div class="spinner-layer spinner-blue">
             <div class="circle-clipper left">

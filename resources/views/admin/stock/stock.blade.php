@@ -26,7 +26,6 @@
                 <th>Price</th>
                 <th>Stock Type</th>
                 <th>Edit</th>
-                <th>Delete</th>
             </tr>
             </thead>
             <tbody class="stocktable">
@@ -37,9 +36,12 @@
                     <td class="b{{ $i+1 }}">{{ $value->quantity }}</td>
                     <td class="c{{ $i+1 }}">{{ $value->price }}</td>
                     <td class="d{{ $i+1 }}" stockType="{{ $value->stockTypeID }}">{{ $value->name }}</td>
-                    <td><a class="waves-effect waves-light btn" href="#modal1" ind="{{ $i + 1 }}"><i class="material-icons left">edit</i>edit</a></td>
-                    <td><a class="waves-effect waves-light btn " href="#modal3" ind="{{ $i + 1 }}"><i class="material-icons left">delete</i>delete</a></td>
-                </tr>
+                    <td><a class='dropdown-button btn' href='#' data-activates='dropdown{{ $i+1 }}'>Edit</a>
+                        <ul id='dropdown{{ $i+1 }}' class='dropdown-content'>
+                            <li><a href="#modal1" ind="{{ $i+1 }}"><i class="material-icons">edit</i>Modify</a></li>
+                            <li><a href="#modal3" ind="{{ $i+1 }}"><i class="material-icons">delete</i>Delete</a></li>
+                        </ul></td>
+                   </tr>
             @endforeach
             </tbody>
         </table>
@@ -124,6 +126,10 @@
 <script>
     //3282 - 3454
     $(document).ready(function(){
+        $('.dropdown-button').dropdown({
+                constrainWidth: false
+            }
+        );
         var index=  0;
         var stockType = [
                 @foreach($stockType as $i)
@@ -160,6 +166,7 @@
         });
 
         $('#edit').on('submit', function (e) {
+            checkPreloader(true);
            e.preventDefault();
             var data = {
                 stockName:$('#stockName').val(),
@@ -173,6 +180,7 @@
                 type:'post',
                 data:data,
                 success: function (data) {
+                    checkPreloader(false);
                     Materialize.toast('Edit Success!', 4000)
                     $('.a' + index).text($('#stockName').val());
                     $('.b' + index).text($('#quantity').val());
@@ -187,6 +195,7 @@
 
 
         $('.delete').on('click', function () {
+            checkPreloader(true);
             var data = {
                 stockID :$(this).attr('deleteid')
             }
@@ -195,6 +204,7 @@
                 type:'post',
                 data:data,
                 success: function (data) {
+                    checkPreloader(false);
                     $('.e' + index).remove();
                     Materialize.toast('Delete Success!', 4000);
                 }
@@ -202,6 +212,7 @@
         });
 
         $('#add').submit(function (e) {
+            checkPreloader(true);
             e.preventDefault();
             var data = {
                 stockname: $('.addstock').val(),
@@ -214,6 +225,7 @@
                 type:'post',
                 data:data,
                 success: function(data){
+                    checkPreloader(false);
                     Materialize.toast('Add Success!', 4000);
                 }
             });
@@ -222,6 +234,7 @@
         })
 
         $('.search').on('click', function () {
+            checkPreloader(true);
             window.location.replace('/admin/stock/'+$('.searchname').val()+'');
         });
     });

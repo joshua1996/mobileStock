@@ -30,7 +30,6 @@
                     <th>No</th>
                     <th>Name</th>
                     <th>Edit</th>
-                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody class="userlist">
@@ -106,6 +105,7 @@
                 $('#modal3').modal();
 
                 $('#userselect').on('change', function () {
+                    checkPreloader(true);
                     var data= {
                         userid: $(this).val()
                     };
@@ -114,17 +114,23 @@
                        type: 'post',
                        data: data,
                        success: function (data) {
+                           checkPreloader(false);
                            console.log(data.staff.length);
                            $('.userlist').empty();
                            $.each(data.staff, function (i, v) {
-                               $('.userlist').append('<tr class="b'+(i+1)+'" staffid="'+ v.staffID +'"> <td>'+(i+1)+'</td><td class="a'+ (i+1) +'">'+(v.name)+'</td><td><a class="waves-effect waves-light btn modal-trigger" href="#modal1" ind="'+(i+1)+'"><i class="material-icons left">edit</i>Edit</a></td><td><a class="waves-effect waves-light btn modal-trigger" href="#modal2" ind="'+(i+1)+'"><i class="material-icons left">delete</i>Delete</a></td></tr>');
+                               $('.userlist').append('<tr class="b'+(i+1)+'" staffid="'+ v.staffID +'"> <td>'+(i+1)+'</td><td class="a'+ (i+1) +'">'+(v.name)+'</td> <td><a class="dropdown-button btn" href="#" data-activates="dropdown'+(i+1)+'">Edit</a> <ul id="dropdown'+(i+1)+'" class="dropdown-content"> <li><a href="#modal1" ind="'+(i+1)+'"><i class="material-icons">edit</i>Modify</a></li> <li><a href="#modal2" ind="'+(i+1)+'"><i class="material-icons">delete</i>Delete</a></li> </ul></td></tr>');
                            });
                            $('.add').removeClass('disabled').addClass('waves-effect waves-light"');
+                           $('.dropdown-button').dropdown({
+                                   constrainWidth: false
+                               }
+                           );
                        }
                    });
                 });
 
                 $('#edit').on('submit', function (e) {
+                    checkPreloader(true);
                     e.preventDefault();
                    var data = {
                        staffID: $('.staffid').val(),
@@ -135,6 +141,7 @@
                        type: 'post',
                        data: data,
                        success: function (data) {
+                           checkPreloader(false);
                            $('.a' + index).text($('.staffname').val());
                            Materialize.toast('Edit Success!', 4000);
                        }
@@ -144,6 +151,7 @@
                 });
                 
                 $('.delete').on('click', function () {
+                    checkPreloader(true);
                    var data = {
                        staffid: $(this).attr('staffid')
                    } ;
@@ -152,6 +160,7 @@
                        type: 'post',
                        data: data,
                        success: function (data) {
+                           checkPreloader(false);
                            $('.b' + index).remove();
                            Materialize.toast('Delete Success!', 4000);
                        }
@@ -159,6 +168,7 @@
                 });
 
                 $('#add').on('submit', function (e) {
+                    checkPreloader(true);
                     e.preventDefault();
                     var data = {
                         staffid: $('.staffnameadd').val(),
@@ -169,6 +179,7 @@
                         type: 'post',
                         data: data,
                         success: function (data) {
+                            checkPreloader(false);
                             Materialize.toast('Add Success!', 4000);
                         }
                     });

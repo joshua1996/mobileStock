@@ -33,7 +33,7 @@
                         <label for="price">Price</label>
                     </div>
                     <div class="input-field col s4">
-                        <input  type="text" class="validate" name="remark[]" required >
+                        <input  type="text" class="validate" name="remark[]" >
                         <label for="remark">Remark</label>
                     </div>
                     <div class="col s2">
@@ -82,7 +82,7 @@
                 });
 
                 $('.addList').on('click', function () {
-                    var appendList = $(' <div class="formListTool row"> <div class="input-field col s4"> <input type="hidden" name="stock[]" value="" class="stockhidden"> <input id="" type="text" class="validate stock" name="" autocomplete="off" required> <label for="stock">Stock Name</label> </div> <div class="input-field col s1"> <input type="number" min="1" class="validate" name="quantity[]" required disabled> <label for="quantity">Quantity</label> </div> <div class="input-field col s1"> <input type="number" min="0.01" class="validate" name="price[]" required step="0.01" disabled> <label for="price">Price</label> </div> <div class="input-field col s4"> <input type="text" class="validate" name="remark[]" required > <label for="remark">Remark</label> </div> <div class="col s2"> <a class="deleteList waves-effect waves-light btn">delete</a> </div> </div>');
+                    var appendList = $(' <div class="formListTool row"> <div class="input-field col s4"> <input type="hidden" name="stock[]" value="" class="stockhidden"> <input id="" type="text" class="validate stock" name="" autocomplete="off" required> <label for="stock">Stock Name</label> </div> <div class="input-field col s1"> <input type="number" min="1" class="validate" name="quantity[]" required disabled> <label for="quantity">Quantity</label> </div> <div class="input-field col s1"> <input type="number" min="0.01" class="validate" name="price[]" required step="0.01" disabled> <label for="price">Price</label> </div> <div class="input-field col s4"> <input type="text" class="validate" name="remark[]"  > <label for="remark">Remark</label> </div> <div class="col s2"> <a class="deleteList waves-effect waves-light btn">delete</a> </div> </div>');
                     $('.formList').append(appendList);
                     $('.stock', appendList).autocomplete2({
                         data: stockList
@@ -114,12 +114,12 @@
 
 
                 $('.supplyform').on('submit', function () {
+                    checkPreloader(true);
                     $('.supplyhidden').val($('#person').attr('autoid'));
                     $('.staffhidden').val($('.staff').attr('autoid'));
                     $('.stock').each(function (index) {
                         $(this).prev().val($(this).attr('autoid'));
                     });
-                    // $('.stockhidden').val($('.stock').attr('autoid'));
                 });
 
                 $('.stock').on('blur', function () {

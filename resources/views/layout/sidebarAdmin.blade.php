@@ -62,12 +62,19 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="bold"><a class="collapsible-header waves-effect waves-teal">Staff</a>
+                        <div class="collapsible-body" style="display: none;">
+                            <ul>
+                                <li class="{{ (Request::is('*/user') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('userEditAdmin') }}">User</a></li>
+                                <li class="{{ (Request::is('*/staff') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('staffAdmin') }}">Staff</a></li>
+                            </ul>
+                        </div>
+                    </li>
                     <li class="bold"><a class="collapsible-header waves-effect waves-teal">Other</a>
                         <div class="collapsible-body" style="display: none;">
                             <ul>
                                 <li class="{{ (Request::is('*/supplyPerson') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('supplyPerson') }}">Supply Person</a></li>
-                                <li class="{{ (Request::is('*/user') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('userEditAdmin') }}">User</a></li>
-                                <li class="{{ (Request::is('*/staff') ? 'active' : '') }}"><a class="waves-effect" href="{{ route('staffAdmin') }}">Staff</a></li>
+
                                 <li ><a href="{{ route('adminLogout') }}" onclick="event.preventDefault();
 document.getElementById('logout').submit();">Log Out</a></li>
                             </ul>
@@ -85,6 +92,7 @@ document.getElementById('logout').submit();">Log Out</a></li>
                    draggable: true // Choose whether you can drag to open on touch screens,
 
                });
+               $('.collapsible').collapsible();
            });
         </script>
     </header>

@@ -12,7 +12,6 @@
                     <th>No</th>
                     <th>Username</th>
                     <th>Edit</th>
-                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -20,9 +19,12 @@
                     <tr userid="{{ $value->userID }}" class="c{{ $i+1 }}">
                         <td>{{ $i+1 }}</td>
                         <td class="a{{ $i+1 }}">{{ $value->username }}</td>
-                        <td><a class="waves-effect waves-light btn" href="#modal1" ind="{{ $i + 1 }}"><i class="material-icons left">edit</i>edit</a></td>
-                        <td><a class="waves-effect waves-light btn " ind="{{ $i + 1 }}" href="#modal3"><i class="material-icons left">delete</i>delete</a></td>
-                    </tr>
+                        <td><a class='dropdown-button btn' href='#' data-activates='dropdown{{ $i+1 }}'>Edit</a>
+                            <ul id='dropdown{{ $i+1 }}' class='dropdown-content'>
+                                <li><a href="#modal1" ind="{{ $i+1 }}"><i class="material-icons">edit</i>Modify</a></li>
+                                <li><a href="#modal3" ind="{{ $i+1 }}"><i class="material-icons">delete</i>Delete</a></li>
+                            </ul></td>
+                         </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -84,6 +86,10 @@
 
         <script>
             $(document).ready(function () {
+                $('.dropdown-button').dropdown({
+                        constrainWidth: false
+                    }
+                );
                         @if ($errors->any())
                          Materialize.toast(' {{ $errors->first('password') }}', 4000);
                         @endif
@@ -106,6 +112,7 @@
                 });
 
                 $('#edit').on('submit', function (e) {
+                    checkPreloader(true);
                     e.preventDefault();
                    var data = {
                        userID: $('.userid').val(),
@@ -117,6 +124,7 @@
                        type: 'post',
                        data: data,
                        success: function () {
+                           checkPreloader(false);
                            $('.a'+index).text($('.username').val());
                            Materialize.toast('Edit Success!', 4000);
                        }
@@ -126,6 +134,7 @@
                 });
 
                 $('#add').on('submit', function (e) {
+                    checkPreloader(true);
                    e.preventDefault();
                     var data = {
                         username: $('.addusername').val(),
@@ -136,6 +145,7 @@
                         type:'post',
                         data:data,
                         success: function (data) {
+                            checkPreloader(false);
                             Materialize.toast('Add Success!', 4000);
                         }
                     });
@@ -144,6 +154,7 @@
                 });
 
                 $('.delete').on('click', function () {
+                    checkPreloader(true);
                     var data = {
                         userID :$(this).attr('deleteid')
                     }
@@ -152,6 +163,7 @@
                         type:'post',
                         data:data,
                         success: function (data) {
+                            checkPreloader(false);
                             $('.c' + index).remove();
                             Materialize.toast('Delete Success!', 4000);
                         }

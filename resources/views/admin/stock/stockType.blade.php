@@ -17,7 +17,6 @@
                 <th>NO</th>
                 <th>Stock Type</th>
                 <th>Edit</th>
-                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -25,8 +24,11 @@
                 <tr stockTypeID="{{ $value->stockTypeID }}" class="b{{ $i+1 }}">
                     <td>{{ $i + 1 }}</td>
                     <td class="a{{ $i+1 }}">{{ $value->name }}</td>
-                    <td><a class="waves-effect waves-light btn" href="#modal2" ind="{{ $i + 1 }}"><i class="material-icons left">edit</i>edit</a></td>
-                    <td><a class="waves-effect waves-light btn " href="#modal3"  ind="{{ $i + 1 }}"><i class="material-icons left">delete</i>delete</a></td>
+                    <td><a class='dropdown-button btn' href='#' data-activates='dropdown{{ $i+1 }}'>Edit</a>
+                        <ul id='dropdown{{ $i+1 }}' class='dropdown-content'>
+                            <li><a href="#modal2" ind="{{ $i+1 }}"><i class="material-icons">edit</i>Modify</a></li>
+                            <li><a href="#modal3" ind="{{ $i+1 }}"><i class="material-icons">delete</i>Delete</a></li>
+                        </ul></td>
                 </tr>
             @endforeach
             </tbody>
@@ -81,6 +83,10 @@
 
     <script>
         $(document).ready(function () {
+            $('.dropdown-button').dropdown({
+                    constrainWidth: false
+                }
+            );
             var index=  0;
             var stockTypeID = '';
             $('#modal1').modal();
@@ -101,6 +107,7 @@
             });
 
             $('#add').on('submit', function (e) {
+                checkPreloader(true);
                 e.preventDefault();
                 var data = {
                     name: $('.stocktypename').val()
@@ -110,6 +117,7 @@
                     type:'post',
                     data:data,
                     success: function(data){
+                        checkPreloader(false);
                         Materialize.toast('Add Success!', 4000);
                     }
                 });
@@ -118,6 +126,7 @@
             });
 
             $('#edit').on('submit', function(e){
+                checkPreloader(true);
                 e.preventDefault();
                 var data = {
                     name:$('.editname').val(),
@@ -128,6 +137,7 @@
                     type:'post',
                     data:data,
                     success: function (data) {
+                        checkPreloader(false);
                         Materialize.toast('Edit Success!', 4000)
                         $('.a' + index).text($('.editname').val());
                         $('.b' + index).val(stockTypeID);
@@ -138,6 +148,7 @@
             });
 
             $('.delete').on('click', function () {
+                checkPreloader(true);
                 var data = {
                     stockTypeID :$(this).attr('deleteid')
                 }
@@ -146,6 +157,7 @@
                     type:'post',
                     data:data,
                     success: function (data) {
+                        checkPreloader(false);
                         $('.b' + index).remove();
                         Materialize.toast('Delete Success!', 4000);
                     }

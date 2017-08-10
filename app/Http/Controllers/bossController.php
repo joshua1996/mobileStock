@@ -52,10 +52,7 @@ class bossController extends Controller
                 'remove' => true
             ]);
     }
-    //TODO edit all table 's edit and update button!!!! dropdown
-    //TODO all table add created_at and updated_at
-    //TODO sync all sidebar collapse
-    //TODO code insert change to create
+
 
 
     public function admin()
